@@ -1,4 +1,9 @@
 {
   "private": true,
-  "workspaces": ["@offcourse/public-badges-drawer"]
+  "workspaces": [
+    "@offcourse/public-badges-drawer"
+  ],
+  "devDependencies": {
+    "workspace-release": "^0.5.1"
+  }
 }
