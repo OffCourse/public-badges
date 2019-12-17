@@ -40,7 +40,7 @@ export class MyComponent {
               if (loading) {
                   return 'Loading...';
               }
-              return <h1>{name}</h1>
+              return <h2>{name}</h2>
           }}
           </GetAllBadgesComponent>
           </apollo-provider>
