@@ -1,0 +1,12 @@
+query GetAllBadges {
+  getAllBadges {
+    badgeId
+    tags
+    description
+    name
+    status
+    valueCase {
+      name
+    }
+  }
+}
