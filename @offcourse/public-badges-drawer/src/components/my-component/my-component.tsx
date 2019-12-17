@@ -34,7 +34,7 @@ export class MyComponent {
           <apollo-provider client={client}>
               <GetAllBadgesComponent>
           {({ data, loading }) => {
-              const { name, badgeId} = data.getAllBadges[0];
+              const { name } = data.getAllBadges[0];
 
               console.log
               if (loading) {
