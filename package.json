@@ -5,5 +5,8 @@
   ],
   "devDependencies": {
     "workspace-release": "^0.5.1"
+  },
+  "scripts": {
+    "release": "yarn workspace-version"
   }
 }
