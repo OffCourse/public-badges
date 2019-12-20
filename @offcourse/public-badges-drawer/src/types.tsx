@@ -17,6 +17,8 @@ export type Scalars = {
    * specified in RFC822: https://www.w3.org/Protocols/rfc822/.
  */
   EmailAddress: any,
+  /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
+  URL: any,
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any,
 };
@@ -29,9 +31,10 @@ export type ApprovedOrganization = Organization & {
   name: Scalars['String'],
   contact: Contact,
   admin: Contact,
-  domains: Domains,
   approvedBy: Scalars['EmailAddress'],
   approvedOn: Scalars['String'],
+  identity: Identity,
+  urls?: Maybe<Array<Maybe<Scalars['URL']>>>,
 };
 
 export type ApprovedPublicBadge = PublicBadge & {
@@ -64,18 +67,14 @@ export type ContactInput = {
   email: Scalars['EmailAddress'],
 };
 
-export type Domains = {
-   __typename?: 'Domains',
-  main: Scalars['String'],
-  other?: Maybe<Array<Maybe<Scalars['String']>>>,
-};
-
-export type DomainsInput = {
-  main: Scalars['String'],
-  other?: Maybe<Array<Maybe<Scalars['String']>>>,
+export type DomainNameIdentity = {
+   __typename?: 'DomainNameIdentity',
+  domainName: Scalars['URL'],
 };
 
 
+
+export type Identity = DomainNameIdentity;
 
 
 export type Mutation = {
@@ -145,18 +144,18 @@ export type Organization = {
   name: Scalars['String'],
   contact: Contact,
   admin: Contact,
-  domains: Domains,
+  identity: Identity,
+  urls?: Maybe<Array<Maybe<Scalars['URL']>>>,
 };
 
 export type OrganizationInput = {
   name: Scalars['String'],
   contact: ContactInput,
   admin: ContactInput,
-  domains: DomainsInput,
+  domainName: Scalars['URL'],
 };
 
 export enum OrganizationStatus {
-  Requested = 'REQUESTED',
   Pending = 'PENDING',
   Approved = 'APPROVED'
 }
@@ -168,7 +167,8 @@ export type PendingOrganization = Organization & {
   name: Scalars['String'],
   contact: Contact,
   admin: Contact,
-  domains: Domains,
+  identity: Identity,
+  urls?: Maybe<Array<Maybe<Scalars['URL']>>>,
 };
 
 export type Proof = {
@@ -212,7 +212,8 @@ export type QueryGetBadgeArgs = {
 
 
 export type QueryGetOrganizationArgs = {
-  organizationId: Scalars['ID']
+  organizationId?: Maybe<Scalars['ID']>,
+  domainName?: Maybe<Scalars['URL']>
 };
 
 export type RequestedPublicBadge = PublicBadge & {
@@ -257,6 +258,7 @@ export enum Status {
   Signed = 'SIGNED'
 }
 
+
 export type ValueCase = {
    __typename?: 'ValueCase',
   valueCaseId: Scalars['ValueCaseId'],
@@ -285,24 +287,26 @@ export type GetAllBadgesQuery = (
   & { getAllBadges: Maybe<Array<Maybe<(
     { __typename?: 'ApprovedPublicBadge' }
     & Pick<ApprovedPublicBadge, 'badgeId' | 'tags' | 'description' | 'name' | 'status'>
-    & { valueCase: (
-      { __typename?: 'ValueCase' }
-      & Pick<ValueCase, 'name'>
-    ) }
   ) | (
     { __typename?: 'RequestedPublicBadge' }
     & Pick<RequestedPublicBadge, 'badgeId' | 'tags' | 'description' | 'name' | 'status'>
-    & { valueCase: (
-      { __typename?: 'ValueCase' }
-      & Pick<ValueCase, 'name'>
-    ) }
   ) | (
     { __typename?: 'SignedPublicBadge' }
     & Pick<SignedPublicBadge, 'badgeId' | 'tags' | 'description' | 'name' | 'status'>
-    & { valueCase: (
-      { __typename?: 'ValueCase' }
-      & Pick<ValueCase, 'name'>
-    ) }
+  )>>> }
+);
+
+export type GetAllOrganizationsQueryVariables = {};
+
+
+export type GetAllOrganizationsQuery = (
+  { __typename?: 'Query' }
+  & { getAllOrganizations: Maybe<Array<Maybe<(
+    { __typename?: 'PendingOrganization' }
+    & Pick<PendingOrganization, 'name' | 'status'>
+  ) | (
+    { __typename?: 'ApprovedOrganization' }
+    & Pick<ApprovedOrganization, 'name' | 'status'>
   )>>> }
 );
 
@@ -316,9 +320,6 @@ export const GetAllBadgesDocument = gql`
     description
     name
     status
-    valueCase {
-      name
-    }
   }
 }
     `;
@@ -331,5 +332,24 @@ export type GetAllBadgesProps = {
 
 export const GetAllBadgesComponent = (props: GetAllBadgesProps, children: [StencilApollo.QueryRenderer<GetAllBadgesQuery, GetAllBadgesQueryVariables>]) => (
   <apollo-query query={ GetAllBadgesDocument } { ...props } renderer={ children[0] } />
+);
+      
+export const GetAllOrganizationsDocument = gql`
+    query getAllOrganizations {
+  getAllOrganizations {
+    name
+    status
+  }
+}
+    `;
+
+export type GetAllOrganizationsProps = {
+    variables ?: GetAllOrganizationsQueryVariables;
+    inlist ?: StencilApollo.QueryRenderer<GetAllOrganizationsQuery, GetAllOrganizationsQueryVariables>;
+};
+      
+
+export const GetAllOrganizationsComponent = (props: GetAllOrganizationsProps, children: [StencilApollo.QueryRenderer<GetAllOrganizationsQuery, GetAllOrganizationsQueryVariables>]) => (
+  <apollo-query query={ GetAllOrganizationsDocument } { ...props } renderer={ children[0] } />
 );
       

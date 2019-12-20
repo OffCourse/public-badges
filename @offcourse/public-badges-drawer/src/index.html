@@ -3,15 +3,33 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
-  <title>Stencil Component Starter</title>
+  <title>Public Badges</title>
 
-  <script type="module" src="/build/public-badges-drawer.esm.js"></script>
-  <script nomodule src="/build/public-badges-drawer.js"></script>
+  <script type="module" src="/build/publicbadges.esm.js"></script>
+  <script nomodule src="/build/publicbadges.js"></script>
+  <style>
+    html, body {
+      height: 100%;
+    }
 
+    body {
+      display: flex;
+      flex-direction: column-reverse;
+      margin: 0;
+    }
+
+    footer {
+      background: #eee;
+      text-align: center;
+      padding: 5rem;
+    }
+  </style>
 </head>
 <body>
 
-  <my-component first="Stencil" last="'Don't call me a framework' JS"></my-component>
-
+  <!-- <my-component first="Stencil" last="'Don't call me a framework' JS"></my-component> -->
+  <footer>
+    <publicbadges-drawer badge-color-mode="dark" modal-color-mode="light" modal-z-index="9999"></publicbadges-drawer>
+  </footer>
 </body>
 </html>

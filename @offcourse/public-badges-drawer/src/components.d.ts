@@ -7,22 +7,27 @@
 
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
-
+import {
+  PublicBadge,
+} from './types';
 
 export namespace Components {
-  interface MyComponent {
-    /**
-    * The first name
-    */
-    'first': string;
-    /**
-    * The last name
-    */
-    'last': string;
-    /**
-    * The middle name
-    */
-    'middle': string;
+  interface MyComponent {}
+  interface PublicbadgesCircle {
+    'badgesCount': number;
+    'colorMode': string;
+    'interactive': boolean;
+  }
+  interface PublicbadgesDrawer {
+    'badgeColorMode': string;
+    'modalColorMode': string;
+    'modalZIndex': string;
+  }
+  interface PublicbadgesModal {
+    'badges': Array<PublicBadge>;
+    'modalColorMode': string;
+    'modalZIndex': string;
+    'top': string;
   }
 }
 
@@ -34,29 +39,57 @@ declare global {
     prototype: HTMLMyComponentElement;
     new (): HTMLMyComponentElement;
   };
+
+  interface HTMLPublicbadgesCircleElement extends Components.PublicbadgesCircle, HTMLStencilElement {}
+  var HTMLPublicbadgesCircleElement: {
+    prototype: HTMLPublicbadgesCircleElement;
+    new (): HTMLPublicbadgesCircleElement;
+  };
+
+  interface HTMLPublicbadgesDrawerElement extends Components.PublicbadgesDrawer, HTMLStencilElement {}
+  var HTMLPublicbadgesDrawerElement: {
+    prototype: HTMLPublicbadgesDrawerElement;
+    new (): HTMLPublicbadgesDrawerElement;
+  };
+
+  interface HTMLPublicbadgesModalElement extends Components.PublicbadgesModal, HTMLStencilElement {}
+  var HTMLPublicbadgesModalElement: {
+    prototype: HTMLPublicbadgesModalElement;
+    new (): HTMLPublicbadgesModalElement;
+  };
   interface HTMLElementTagNameMap {
     'my-component': HTMLMyComponentElement;
+    'publicbadges-circle': HTMLPublicbadgesCircleElement;
+    'publicbadges-drawer': HTMLPublicbadgesDrawerElement;
+    'publicbadges-modal': HTMLPublicbadgesModalElement;
   }
 }
 
 declare namespace LocalJSX {
-  interface MyComponent {
-    /**
-    * The first name
-    */
-    'first'?: string;
-    /**
-    * The last name
-    */
-    'last'?: string;
-    /**
-    * The middle name
-    */
-    'middle'?: string;
+  interface MyComponent {}
+  interface PublicbadgesCircle {
+    'badgesCount'?: number;
+    'colorMode'?: string;
+    'interactive'?: boolean;
+  }
+  interface PublicbadgesDrawer {
+    'badgeColorMode'?: string;
+    'modalColorMode'?: string;
+    'modalZIndex'?: string;
+  }
+  interface PublicbadgesModal {
+    'badges'?: Array<PublicBadge>;
+    'modalColorMode'?: string;
+    'modalZIndex'?: string;
+    'onCloseDrawer'?: (event: CustomEvent<any>) => void;
+    'top'?: string;
   }
 
   interface IntrinsicElements {
     'my-component': MyComponent;
+    'publicbadges-circle': PublicbadgesCircle;
+    'publicbadges-drawer': PublicbadgesDrawer;
+    'publicbadges-modal': PublicbadgesModal;
   }
 }
 
@@ -67,6 +100,9 @@ declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
       'my-component': LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+      'publicbadges-circle': LocalJSX.PublicbadgesCircle & JSXBase.HTMLAttributes<HTMLPublicbadgesCircleElement>;
+      'publicbadges-drawer': LocalJSX.PublicbadgesDrawer & JSXBase.HTMLAttributes<HTMLPublicbadgesDrawerElement>;
+      'publicbadges-modal': LocalJSX.PublicbadgesModal & JSXBase.HTMLAttributes<HTMLPublicbadgesModalElement>;
     }
   }
 }

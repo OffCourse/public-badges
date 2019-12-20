@@ -5,8 +5,5 @@ query GetAllBadges {
     description
     name
     status
-    valueCase {
-      name
-    }
   }
 }

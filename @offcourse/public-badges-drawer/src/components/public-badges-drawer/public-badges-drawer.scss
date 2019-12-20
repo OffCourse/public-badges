@@ -1,0 +1,55 @@
+// --badge-color: #3C3C3C;
+// --modal-color-bg: #FFFFFF;
+// --modal-color-fg: #3C3C3C;
+
+:host {
+  display: block;
+  //contain: content;
+  position: relative;
+  width: 120px;
+  height: 120px;
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+h1, h2 {
+  line-height: 1.2em;
+  margin: 0;
+}
+
+h1 {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+h2 {
+  margin-bottom: 0.5em;
+  font-size: 19px;
+  font-weight: 400;
+}
+
+p {
+  line-height: 1.4em;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+li {
+  line-height: 1.4em;
+}
+
+strong {
+  font-weight: 700;
+}
+
+a {
+  color: var(--modal-color-fg);
+
+  &:hover {
+    text-decoration: none;
+  }
+}

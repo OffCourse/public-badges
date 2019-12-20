@@ -1,0 +1,58 @@
+
+svg {
+  all: initial;
+
+  &.interactive {
+    cursor: pointer;
+  }
+}
+
+.logo {
+  fill: var(--badge-color);
+}
+
+.circle {
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  fill: none;
+  stroke: var(--badge-color);
+  stroke-width: 2;
+  //animation: spin 300ms ease paused;
+  transition: transform 300ms ease;
+  transform: rotate(-90deg);
+}
+.interactive:hover .circle {
+  transform: rotate(-100deg);
+}
+
+// svg:hover .circle {
+//   animation-play-state: running;
+// }
+// @keyframes spin {
+//   from { transform: rotate(-90deg); }
+//   to { transform: rotate(270deg); }
+// }
+
+.badges circle {
+  fill: var(--badge-color);
+  transition: transform 400ms ease, opacity 200ms ease;
+  transform-origin: 50% 50%;
+}
+.interactive:hover .badges circle {
+  transform: scale(3) translate(0, 73.5px);
+
+  //&:not(:first-child) {
+    opacity: 0;
+  //}
+}
+
+.info {
+  fill: var(--badge-color);
+  opacity: 0;
+  transition: opacity 100ms ease;
+}
+
+.interactive:hover .info {
+  opacity: 1;
+  transition: opacity 300ms ease;
+}
