@@ -1,73 +1,80 @@
-import { Component, Element, Prop, State, Listen, Host, h } from '@stencil/core';
-import ApolloClient from 'apollo-boost';
-import { GetAllBadgesComponent } from "../../types";
-
+import { Component, Element, Prop, State, Listen, Host, h } from "@stencil/core";
+import ApolloClient from "apollo-boost";
+import { GetAllBadgesComponent, PublicBadge } from "../../types";
 
 const client = new ApolloClient({
   uri: "https://7b265855kb.execute-api.us-east-1.amazonaws.com/dev/graphql"
 });
 
 @Component({
-  tag: 'publicbadges-drawer',
-  styleUrl: 'public-badges-drawer.scss',
+  tag: "publicbadges-drawer",
+  styleUrl: "public-badges-drawer.scss",
   shadow: true
 })
 
 export class PublicbadgesDrawer {
-  @Element() el: HTMLElement;
+  @Element() public el: HTMLElement;
 
-  @Prop() badgeColorMode: string;
-  @Prop() modalColorMode: string;
-  @Prop() modalZIndex: string;
+  @Prop() public badgeColorMode: string;
+  @Prop() public modalColorMode: string;
+  @Prop() public modalZIndex: string;
 
-  @State() open = false;
-
+  @State() public open = false;
 
   // Lifecycle Methods
-  componentWillLoad() {
+  public componentWillLoad() {
     // set css vars
-    const badgeColor = this.badgeColorMode === 'light' ? "#FFF" : "#3C3C3C";
-    const modalColorBg = this.modalColorMode === 'dark' ? "#3C3C3C" : "#FFF";
-    const modalColorFg = this.modalColorMode === 'dark' ? "#FFF" : "#3C3C3C";
+    const badgeColor = this.badgeColorMode === "light" ? "#FFF" : "#3C3C3C";
+    const modalColorBg = this.modalColorMode === "dark" ? "#3C3C3C" : "#FFF";
+    const modalColorFg = this.modalColorMode === "dark" ? "#FFF" : "#3C3C3C";
     this.el.style.setProperty("--badge-color", badgeColor);
     this.el.style.setProperty("--modal-color-bg", modalColorBg);
     this.el.style.setProperty("--modal-color-fg", modalColorFg);
 
     // add font css
-    var linkNode = document.createElement("link"); 
+    const linkNode = document.createElement("link");
     linkNode.type = "text/css";
     linkNode.rel = "stylesheet";
     linkNode.href = "http://publicbadges.ao.waag.org/geomanist/font.css";
     document.head.appendChild(linkNode);
   }
 
-
   // Handlers
-  openDrawer = () => { this.open = true }
+  public openDrawer = () => { this.open = true; };
 
-  @Listen('closeDrawer')
-  closeDrawer() { this.open = false }
-
+  @Listen("closeDrawer")
+  public closeDrawer() { this.open = false; }
 
   // Render
-  render() {
+  public render() {
     return (
       <apollo-provider client={client}>
         <GetAllBadgesComponent>
           {({ data, loading }) => {
-            if (loading) return <p>Loading...</p>;
+            if (loading) { return <p>Loading...</p>; }
 
-            //const badges = data.getAllBadges
+            // const badges = data.getAllBadges
 
             return (
               <Host>
-                <publicbadges-circle colorMode={this.badgeColorMode} badgesCount={data.getAllBadges.length} interactive={this.open ? false : true} onClick={ this.openDrawer }></publicbadges-circle>
-                { this.open && <publicbadges-modal badges={data.getAllBadges} modalColorMode={this.modalColorMode} modalZIndex={this.modalZIndex} top={this.el.offsetTop.toString()}></publicbadges-modal> }
+                <publicbadges-circle
+                  colorMode={this.badgeColorMode}
+                  badgesCount={data.getAllBadges.length}
+                  interactive={this.open ? false : true}
+                  onClick={ this.openDrawer }>
+                </publicbadges-circle>
+                { this.open &&
+                  <publicbadges-modal
+                    badges={data.getAllBadges as PublicBadge[]}
+                    modalColorMode={this.modalColorMode}
+                    modalZIndex={this.modalZIndex}
+                    top={this.el.offsetTop.toString()}>
+                  </publicbadges-modal> }
               </Host>
-            )
+            );
           }}
         </GetAllBadgesComponent>
       </apollo-provider>
-    )
+    );
   }
 }

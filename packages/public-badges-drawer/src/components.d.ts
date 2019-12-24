@@ -24,7 +24,7 @@ export namespace Components {
     'modalZIndex': string;
   }
   interface PublicbadgesModal {
-    'badges': Array<PublicBadge>;
+    'badges': PublicBadge[];
     'modalColorMode': string;
     'modalZIndex': string;
     'top': string;
@@ -78,7 +78,7 @@ declare namespace LocalJSX {
     'modalZIndex'?: string;
   }
   interface PublicbadgesModal {
-    'badges'?: Array<PublicBadge>;
+    'badges'?: PublicBadge[];
     'modalColorMode'?: string;
     'modalZIndex'?: string;
     'onCloseDrawer'?: (event: CustomEvent<any>) => void;

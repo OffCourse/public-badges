@@ -1,22 +1,21 @@
-import { Component, Prop, Event, EventEmitter, Listen, h } from '@stencil/core';
-import { IconClose, IconCheck, IconArrowDown, IconMore } from "../../assets/icons"
-import { PublicBadge } from "../../types";
-
+import { Component, Prop, Event, EventEmitter, Listen, h } from "@stencil/core";
+import { IconClose, IconCheck, IconArrowDown, IconMore } from "../../assets/icons";
+import {  PublicBadge } from "../../types";
 
 @Component({
-  tag: 'publicbadges-modal',
-  styleUrl: 'public-badges-modal.scss',
+  tag: "publicbadges-modal",
+  styleUrl: "public-badges-modal.scss",
 })
 
 export class PublicbadgesModal {
-  @Prop() badges: Array<PublicBadge> = [];
-  @Prop() modalColorMode: string;
-  @Prop() modalZIndex: string;
-  @Prop() top: string;
+  @Prop() public badges: PublicBadge[] = [];
+  @Prop() public modalColorMode: string;
+  @Prop() public modalZIndex: string;
+  @Prop() public top: string;
 
-  @Event() closeDrawer: EventEmitter;
+  @Event() public closeDrawer: EventEmitter;
 
-  closeModalHandler = () => {
+  public closeModalHandler = () => {
     this.closeDrawer.emit();
   }
 
@@ -25,8 +24,8 @@ export class PublicbadgesModal {
   //   console.log('key: ', ev.key)
   // }
 
-  render() {
-
+  public render() {
+    const baseURL = "https://publicspaces.net";
     return (
       [
         <div id="modal-bg" onClick={ this.closeModalHandler }></div>,
@@ -39,17 +38,41 @@ export class PublicbadgesModal {
               <publicbadges-circle colorMode={"dark"} interactive={false}></publicbadges-circle>
             </div>
             <div id="badges" class="column">
-              <ul>{ [this.badges[0]].map(badge => { return <li><IconCheck /><span><strong>{badge.name}</strong><br />{badge.description}</span><IconArrowDown /></li>}) }</ul>
+              <ul>
+                { [this.badges[0]].map((badge) => (
+                  <li>
+                     <IconCheck />
+                     <span>
+                       <strong>{badge.name}</strong>
+                       <br />
+                       {badge.description}
+                     </span>
+                    <IconArrowDown />
+                  </li>)) }
+              </ul>
             </div>
             <div id="about" class="column">
               <h1>PublicSpaces</h1>
               <h2>internet for the common good</h2>
-              <p>PublicSpaces reclaims the internet as a force for the common good and advocates a new internet that strengthens the public domain. <a href="https://publicspaces.net/manifesto/" target="_blank" rel="noopener noreferrer">Read our manifesto</a> to see the values we want to see at the core of our digital lives.</p>
-              <p><a class="more" href="https://publicspaces.net/" target="_blank" rel="noopener noreferrer">more about PublicSpaces<IconMore /></a></p>
+              <p>PublicSpaces reclaims the internet as a force for the common
+                good and advocates a new internet that strengthens the public
+                domain.
+                <a href={`${baseURL}/manifesto`}target="_blank" rel="noopener noreferrer">
+                  Read our manifesto
+                </a>
+                 to see the values we want to see at the core of our digital lives.
+              </p>
+              <p>
+                <a class="more"
+                  href={baseURL}
+                  target="_blank"
+                   rel="noopener noreferrer">more about PublicSpaces<IconMore />
+                </a>
+              </p>
             </div>
           </div>
-        </div>
+        </div >
       ]
-    )
+    );
   }
 }
