@@ -1,4 +1,4 @@
-import { Component, Prop, Event, EventEmitter, Listen, h } from "@stencil/core";
+import { Component, Prop, Event, EventEmitter, h } from "@stencil/core";
 import { IconClose, IconCheck, IconArrowDown, IconMore } from "../../assets/icons";
 import {  PublicBadge } from "../../types";
 
@@ -9,11 +9,13 @@ import {  PublicBadge } from "../../types";
 
 export class PublicbadgesModal {
   @Prop() public badges: PublicBadge[] = [];
-  @Prop() public modalColorMode: string;
-  @Prop() public modalZIndex: string;
-  @Prop() public top: string;
+  @Prop() public modalColorMode: string = "";
+  @Prop() public modalZIndex: string = "";
+  @Prop() public top: string = "";
 
-  @Event() public closeDrawer: EventEmitter;
+  @Event() public closeDrawer: EventEmitter = ({
+    emit: (e) => e
+  });
 
   public closeModalHandler = () => {
     this.closeDrawer.emit();

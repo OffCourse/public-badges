@@ -12,7 +12,6 @@ import {
 } from './types';
 
 export namespace Components {
-  interface MyComponent {}
   interface PublicbadgesCircle {
     'badgesCount': number;
     'colorMode': string;
@@ -34,12 +33,6 @@ export namespace Components {
 declare global {
 
 
-  interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {}
-  var HTMLMyComponentElement: {
-    prototype: HTMLMyComponentElement;
-    new (): HTMLMyComponentElement;
-  };
-
   interface HTMLPublicbadgesCircleElement extends Components.PublicbadgesCircle, HTMLStencilElement {}
   var HTMLPublicbadgesCircleElement: {
     prototype: HTMLPublicbadgesCircleElement;
@@ -58,7 +51,6 @@ declare global {
     new (): HTMLPublicbadgesModalElement;
   };
   interface HTMLElementTagNameMap {
-    'my-component': HTMLMyComponentElement;
     'publicbadges-circle': HTMLPublicbadgesCircleElement;
     'publicbadges-drawer': HTMLPublicbadgesDrawerElement;
     'publicbadges-modal': HTMLPublicbadgesModalElement;
@@ -66,7 +58,6 @@ declare global {
 }
 
 declare namespace LocalJSX {
-  interface MyComponent {}
   interface PublicbadgesCircle {
     'badgesCount'?: number;
     'colorMode'?: string;
@@ -86,7 +77,6 @@ declare namespace LocalJSX {
   }
 
   interface IntrinsicElements {
-    'my-component': MyComponent;
     'publicbadges-circle': PublicbadgesCircle;
     'publicbadges-drawer': PublicbadgesDrawer;
     'publicbadges-modal': PublicbadgesModal;
@@ -99,7 +89,6 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
-      'my-component': LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
       'publicbadges-circle': LocalJSX.PublicbadgesCircle & JSXBase.HTMLAttributes<HTMLPublicbadgesCircleElement>;
       'publicbadges-drawer': LocalJSX.PublicbadgesDrawer & JSXBase.HTMLAttributes<HTMLPublicbadgesDrawerElement>;
       'publicbadges-modal': LocalJSX.PublicbadgesModal & JSXBase.HTMLAttributes<HTMLPublicbadgesModalElement>;

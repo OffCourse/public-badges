@@ -3,7 +3,7 @@ import ApolloClient from "apollo-boost";
 import { GetAllBadgesComponent, PublicBadge } from "../../types";
 
 const client = new ApolloClient({
-  uri: "https://7b265855kb.execute-api.us-east-1.amazonaws.com/dev/graphql"
+  uri: "https://ez41w8cz80.execute-api.us-east-1.amazonaws.com/dev/graphql"
 });
 
 @Component({
@@ -13,11 +13,10 @@ const client = new ApolloClient({
 })
 
 export class PublicbadgesDrawer {
-  @Element() public el: HTMLElement;
-
-  @Prop() public badgeColorMode: string;
-  @Prop() public modalColorMode: string;
-  @Prop() public modalZIndex: string;
+  @Element() public el: HTMLElement | undefined;
+  @Prop() public badgeColorMode: string = "";
+  @Prop() public modalColorMode: string = "";
+  @Prop() public modalZIndex: string = "";
 
   @State() public open = false;
 
@@ -27,9 +26,11 @@ export class PublicbadgesDrawer {
     const badgeColor = this.badgeColorMode === "light" ? "#FFF" : "#3C3C3C";
     const modalColorBg = this.modalColorMode === "dark" ? "#3C3C3C" : "#FFF";
     const modalColorFg = this.modalColorMode === "dark" ? "#FFF" : "#3C3C3C";
-    this.el.style.setProperty("--badge-color", badgeColor);
-    this.el.style.setProperty("--modal-color-bg", modalColorBg);
-    this.el.style.setProperty("--modal-color-fg", modalColorFg);
+    if (this.el) {
+      this.el.style.setProperty("--badge-color", badgeColor);
+      this.el.style.setProperty("--modal-color-bg", modalColorBg);
+      this.el.style.setProperty("--modal-color-fg", modalColorFg);
+    }
 
     // add font css
     const linkNode = document.createElement("link");
@@ -53,22 +54,22 @@ export class PublicbadgesDrawer {
           {({ data, loading }) => {
             if (loading) { return <p>Loading...</p>; }
 
-            // const badges = data.getAllBadges
+            const badges = data.getAllBadges;
 
             return (
               <Host>
                 <publicbadges-circle
                   colorMode={this.badgeColorMode}
-                  badgesCount={data.getAllBadges.length}
+                  badgesCount={badges?.length}
                   interactive={this.open ? false : true}
                   onClick={ this.openDrawer }>
                 </publicbadges-circle>
                 { this.open &&
                   <publicbadges-modal
-                    badges={data.getAllBadges as PublicBadge[]}
+                    badges={badges as PublicBadge[]}
                     modalColorMode={this.modalColorMode}
                     modalZIndex={this.modalZIndex}
-                    top={this.el.offsetTop.toString()}>
+                    top={this.el ? this.el.offsetTop.toString() : "0" }>
                   </publicbadges-modal> }
               </Host>
             );
