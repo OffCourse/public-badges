@@ -7,23 +7,25 @@
 
 ## Properties
 
-| Property      | Attribute      | Description | Type     | Default  |
-| ------------- | -------------- | ----------- | -------- | -------- |
-| `badgesCount` | `badges-count` |             | `number` | `1`      |
-| `colorMode`   | `color-mode`   |             | `string` | `"dark"` |
+| Property      | Attribute      | Description | Type      | Default |
+| ------------- | -------------- | ----------- | --------- | ------- |
+| `badgesCount` | `badges-count` |             | `number`  | `0`     |
+| `interactive` | `interactive`  |             | `boolean` | `false` |
 
 
 ## Dependencies
 
 ### Used by
 
- - [public-badges-drawer](../public-badges-drawer)
+ - [publicbadges-drawer](../public-badges-drawer)
+ - [publicbadges-modal](../public-badges-modal)
 
 ### Graph
 ```mermaid
 graph TD;
-  public-badges-drawer --> public-badges-circle
-  style public-badges-circle fill:#f9f,stroke:#333,stroke-width:4px
+  publicbadges-drawer --> publicbadges-circle
+  publicbadges-modal --> publicbadges-circle
+  style publicbadges-circle fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

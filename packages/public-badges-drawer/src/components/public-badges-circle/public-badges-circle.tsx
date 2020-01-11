@@ -6,7 +6,7 @@ import { Component, Prop, h } from "@stencil/core";
 })
 
 export class PublicbadgesCircle {
-  @Prop() public colorMode: string = "dark";
+  //@Prop() public colorMode: string = "dark";
   @Prop() public badgesCount: number = 0;
   @Prop() public interactive: boolean = false;
 
@@ -27,7 +27,8 @@ export class PublicbadgesCircle {
       badges.push(<circle cx="60" cy="0" r={badgeRadius} transform={`translate(${xOffset} 100)`}></circle>);
     }
 
-    const classes = [this.colorMode];
+    //const classes = [this.colorMode];
+    const classes = [];
     if (this.interactive) { classes.push("interactive"); }
 
     return (

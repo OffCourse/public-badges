@@ -7,24 +7,26 @@
 
 ## Properties
 
-| Property         | Attribute          | Description | Type     | Default     |
-| ---------------- | ------------------ | ----------- | -------- | ----------- |
-| `badgeColorMode` | `badge-color-mode` |             | `string` | `undefined` |
-| `modalColorMode` | `modal-color-mode` |             | `string` | `undefined` |
-| `modalZIndex`    | `modal-z-index`    |             | `string` | `undefined` |
+| Property     | Attribute     | Description | Type     | Default |
+| ------------ | ------------- | ----------- | -------- | ------- |
+| `badgeTheme` | `badge-theme` |             | `string` | `""`    |
+| `modalTheme` | `modal-theme` |             | `string` | `""`    |
 
 
 ## Dependencies
 
 ### Depends on
 
-- [public-badges-circle](../public-badges-circle)
+- [publicbadges-circle](../public-badges-circle)
+- [publicbadges-modal](../public-badges-modal)
 
 ### Graph
 ```mermaid
 graph TD;
-  public-badges-drawer --> public-badges-circle
-  style public-badges-drawer fill:#f9f,stroke:#333,stroke-width:4px
+  publicbadges-drawer --> publicbadges-circle
+  publicbadges-drawer --> publicbadges-modal
+  publicbadges-modal --> publicbadges-circle
+  style publicbadges-drawer fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

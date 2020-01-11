@@ -40,7 +40,7 @@ export type ApprovedOrganization = Organization & {
 export type ApprovedPublicBadge = PublicBadge & {
    __typename?: 'ApprovedPublicBadge',
   badgeId: Scalars['GUID'],
-  status: Status,
+  status: PublicBadgeStatus,
   valueCaseId: Scalars['ID'],
   valueCase: ValueCase,
   name: Scalars['String'],
@@ -49,6 +49,7 @@ export type ApprovedPublicBadge = PublicBadge & {
   narrative: Scalars['String'],
   recipientId: Scalars['ID'],
   evidence: Array<Maybe<Proof>>,
+  recipient: Organization,
 };
 
 export enum CacheControlScope {
@@ -72,13 +73,13 @@ export type ContactInput = {
 
 export type Mutation = {
    __typename?: 'Mutation',
-  proposeValueCase: Scalars['String'],
+  applyForBadge?: Maybe<PublicBadge>,
   registerOrganization?: Maybe<PendingOrganization>,
 };
 
 
-export type MutationProposeValueCaseArgs = {
-  input: ValueCaseInput
+export type MutationApplyForBadgeArgs = {
+  input: PublicBadgeInput
 };
 
 
@@ -94,12 +95,6 @@ export type OpenBadge = {
   issuedOn: Scalars['String'],
   expires: Scalars['String'],
   evidence: Array<Maybe<OpenBadgeProof>>,
-};
-
-export type OpenBadgeArtifact = {
-   __typename?: 'OpenBadgeArtifact',
-  json: Scalars['JSON'],
-  js: OpenBadge,
 };
 
 export type OpenBadgeClass = {
@@ -164,6 +159,20 @@ export type PendingOrganization = Organization & {
   urls?: Maybe<Array<Maybe<Scalars['URL']>>>,
 };
 
+export type PendingPublicBadge = PublicBadge & {
+   __typename?: 'PendingPublicBadge',
+  badgeId: Scalars['GUID'],
+  status: PublicBadgeStatus,
+  valueCaseId: Scalars['ID'],
+  valueCase: ValueCase,
+  name: Scalars['String'],
+  tags: Array<Maybe<Scalars['String']>>,
+  description: Scalars['String'],
+  narrative: Scalars['String'],
+  recipientId: Scalars['ID'],
+  recipient: Organization,
+};
+
 export type Proof = {
    __typename?: 'Proof',
   proofId: Scalars['GUID'],
@@ -173,14 +182,9 @@ export type Proof = {
   narrative: Scalars['String'],
 };
 
-export type ProposedBy = {
-   __typename?: 'ProposedBy',
-  organizationId: Scalars['String'],
-};
-
 export type PublicBadge = {
   badgeId: Scalars['GUID'],
-  status: Status,
+  status: PublicBadgeStatus,
   valueCaseId: Scalars['ID'],
   valueCase: ValueCase,
   name: Scalars['String'],
@@ -188,7 +192,19 @@ export type PublicBadge = {
   description: Scalars['String'],
   narrative: Scalars['String'],
   recipientId: Scalars['ID'],
+  recipient: Organization,
 };
+
+export type PublicBadgeInput = {
+  valueCaseId: Scalars['ID'],
+  domainName: Scalars['URL'],
+};
+
+export enum PublicBadgeStatus {
+  Pending = 'PENDING',
+  Approved = 'APPROVED',
+  Signed = 'SIGNED'
+}
 
 export type Query = {
    __typename?: 'Query',
@@ -196,6 +212,8 @@ export type Query = {
   getAllBadges?: Maybe<Array<Maybe<PublicBadge>>>,
   getOrganization?: Maybe<Organization>,
   getAllOrganizations?: Maybe<Array<Maybe<Organization>>>,
+  getValueCase?: Maybe<ValueCase>,
+  getAllValueCases?: Maybe<Array<Maybe<ValueCase>>>,
 };
 
 
@@ -214,17 +232,9 @@ export type QueryGetAllOrganizationsArgs = {
   filter?: Maybe<OrganizationStatus>
 };
 
-export type RequestedPublicBadge = PublicBadge & {
-   __typename?: 'RequestedPublicBadge',
-  badgeId: Scalars['GUID'],
-  status: Status,
-  valueCaseId: Scalars['ID'],
-  valueCase: ValueCase,
-  name: Scalars['String'],
-  tags: Array<Maybe<Scalars['String']>>,
-  description: Scalars['String'],
-  narrative: Scalars['String'],
-  recipientId: Scalars['ID'],
+
+export type QueryGetValueCaseArgs = {
+  valueCaseId: Scalars['ID']
 };
 
 export type Scenario = {
@@ -236,7 +246,7 @@ export type Scenario = {
 export type SignedPublicBadge = PublicBadge & {
    __typename?: 'SignedPublicBadge',
   badgeId: Scalars['GUID'],
-  status: Status,
+  status: PublicBadgeStatus,
   valueCaseId: Scalars['ID'],
   valueCase: ValueCase,
   name: Scalars['String'],
@@ -247,7 +257,8 @@ export type SignedPublicBadge = PublicBadge & {
   evidence: Array<Maybe<Proof>>,
   issuedOn: Scalars['String'],
   expires: Scalars['String'],
-  artifact: OpenBadgeArtifact,
+  artifact: Scalars['JSON'],
+  recipient: Organization,
 };
 
 export enum Status {
@@ -260,7 +271,7 @@ export enum Status {
 export type ValueCase = {
    __typename?: 'ValueCase',
   valueCaseId: Scalars['ValueCaseId'],
-  name?: Maybe<Scalars['String']>,
+  name: Scalars['String'],
   tags: Array<Maybe<Scalars['String']>>,
   proposedBy: Organization,
   approvedBy: Scalars['String'],
@@ -271,6 +282,7 @@ export type ValueCase = {
 
 
 export type ValueCaseInput = {
+  domainName: Scalars['URL'],
   name: Scalars['String'],
   tags: Array<Maybe<Scalars['String']>>,
   narrative: Scalars['String'],
@@ -286,8 +298,8 @@ export type GetAllBadgesQuery = (
     { __typename?: 'ApprovedPublicBadge' }
     & Pick<ApprovedPublicBadge, 'badgeId' | 'tags' | 'description' | 'name' | 'status'>
   ) | (
-    { __typename?: 'RequestedPublicBadge' }
-    & Pick<RequestedPublicBadge, 'badgeId' | 'tags' | 'description' | 'name' | 'status'>
+    { __typename?: 'PendingPublicBadge' }
+    & Pick<PendingPublicBadge, 'badgeId' | 'tags' | 'description' | 'name' | 'status'>
   ) | (
     { __typename?: 'SignedPublicBadge' }
     & Pick<SignedPublicBadge, 'badgeId' | 'tags' | 'description' | 'name' | 'status'>

@@ -1,10 +1,5 @@
 import { Component, Element, Prop, State, Listen, Host, h } from "@stencil/core";
-import ApolloClient from "apollo-boost";
-import { GetAllBadgesComponent, PublicBadge } from "../../types";
-
-const client = new ApolloClient({
-  uri: "https://ez41w8cz80.execute-api.us-east-1.amazonaws.com/dev/graphql"
-});
+import { ApprovedPublicBadge } from "../../types";
 
 @Component({
   tag: "publicbadges-drawer",
@@ -14,19 +9,27 @@ const client = new ApolloClient({
 
 export class PublicbadgesDrawer {
   @Element() public el: HTMLElement | undefined;
-  @Prop() public badgeColorMode: string = "";
-  @Prop() public modalColorMode: string = "";
-  @Prop() public modalZIndex: string = "";
 
-  @State() public open = false;
+  // Props
+  @Prop() public badgeTheme: string = "";
+  @Prop() public modalTheme: string = "";
+
+  // State
+  @State() public open: boolean = false;
+  @State() public modalMode: string = "";
+  @State() public modalLeft: number = 0;
+  @State() public modalOrigin: string = "";
+  @State() public badges: ApprovedPublicBadge[] | undefined;
+
 
   // Lifecycle Methods
   public componentWillLoad() {
+
     // set css vars
-    const badgeColor = this.badgeColorMode === "light" ? "#FFF" : "#3C3C3C";
-    const modalColorBg = this.modalColorMode === "dark" ? "#3C3C3C" : "#FFF";
-    const modalColorFg = this.modalColorMode === "dark" ? "#FFF" : "#3C3C3C";
-    if (this.el) {
+    const badgeColor = this.badgeTheme === "light" ? "#FFF" : "#3C3C3C";
+    const modalColorBg = this.modalTheme === "dark" ? "#3C3C3C" : "#FFF";
+    const modalColorFg = this.modalTheme === "dark" ? "#FFF" : "#3C3C3C";
+    if(this.el) {
       this.el.style.setProperty("--badge-color", badgeColor);
       this.el.style.setProperty("--modal-color-bg", modalColorBg);
       this.el.style.setProperty("--modal-color-fg", modalColorFg);
@@ -38,44 +41,91 @@ export class PublicbadgesDrawer {
     linkNode.rel = "stylesheet";
     linkNode.href = "http://publicbadges.ao.waag.org/geomanist/font.css";
     document.head.appendChild(linkNode);
+
+    // fetch badges
+    fetch('https://ez41w8cz80.execute-api.us-east-1.amazonaws.com/dev/graphql', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: '{ getAllBadges { badgeId tags description name status } }' }),
+    }).then(res => {
+      return res.json()
+    }).then(res => {
+      this.badges = res.data.getAllBadges.slice(0,3)
+    });
+
   }
 
+  //
+  private calculatePositioning() {
+    const top: number = this.el ? this.el.offsetTop : 0;
+    const left: number = this.el ? this.el.offsetLeft : 0;
+
+    const width: number = this.el ? this.el.offsetWidth : 0;
+    const height: number = this.el ? this.el.offsetHeight : 0;
+
+    const docWidth: number = window.innerWidth
+    const docHeight: number = Math.max(
+      document.body.scrollHeight,
+      document.body.offsetHeight, 
+      document.documentElement.clientHeight,
+      document.documentElement.scrollHeight,
+      document.documentElement.offsetHeight
+    );
+
+    const spaceBottom = docHeight - top - height;
+    const spaceRight  = docWidth - left - width;
+
+    this.modalMode = docWidth < 980 ? "vertical" : "horizontal";
+    this.modalLeft = Math.min(0, spaceRight + 40 - (docWidth < 980 ? 340 : 820));
+    this.modalOrigin = top > spaceBottom ? "bottom" : "top";
+  }
+
+
   // Handlers
-  public openDrawer = () => { this.open = true; };
+  public openDrawer = () => {
+    this.calculatePositioning();
+
+    this.open = true;
+  };
+
+  @Listen('keydown', { target: 'window' })
+  handleKeyDown(ev: KeyboardEvent){
+    if(ev.key === "Escape") {
+      this.open = false;
+    }
+  }
 
   @Listen("closeDrawer")
-  public closeDrawer() { this.open = false; }
+  public closeDrawer() {
+    this.open = false;
+  }
+
+  @Listen('resize', { target: 'window' })
+  handleWindowResize(){
+    if(this.open) this.calculatePositioning();
+  }
+
 
   // Render
   public render() {
-    return (
-      <apollo-provider client={client}>
-        <GetAllBadgesComponent>
-          {({ data, loading }) => {
-            if (loading) { return <p>Loading...</p>; }
-
-            const badges = data.getAllBadges;
-
-            return (
-              <Host>
-                <publicbadges-circle
-                  colorMode={this.badgeColorMode}
-                  badgesCount={badges?.length}
-                  interactive={this.open ? false : true}
-                  onClick={ this.openDrawer }>
-                </publicbadges-circle>
-                { this.open &&
-                  <publicbadges-modal
-                    badges={badges as PublicBadge[]}
-                    modalColorMode={this.modalColorMode}
-                    modalZIndex={this.modalZIndex}
-                    top={this.el ? this.el.offsetTop.toString() : "0" }>
-                  </publicbadges-modal> }
-              </Host>
-            );
-          }}
-        </GetAllBadgesComponent>
-      </apollo-provider>
-    );
+    if(this.badges) {
+      return (
+        <Host>
+          <publicbadges-circle
+            badgesCount={this.badges?.length}
+            interactive={this.open ? false : true}
+            onClick={ this.openDrawer }>
+          </publicbadges-circle>
+          { this.open &&
+            <publicbadges-modal
+              theme={this.modalTheme}
+              mode={this.modalMode}
+              left={this.modalLeft}
+              origin={this.modalOrigin}
+              badges={this.badges}>
+            </publicbadges-modal> }
+        </Host>
+      );
+    }
   }
 }

@@ -14,19 +14,18 @@ import {
 export namespace Components {
   interface PublicbadgesCircle {
     'badgesCount': number;
-    'colorMode': string;
     'interactive': boolean;
   }
   interface PublicbadgesDrawer {
-    'badgeColorMode': string;
-    'modalColorMode': string;
-    'modalZIndex': string;
+    'badgeTheme': string;
+    'modalTheme': string;
   }
   interface PublicbadgesModal {
     'badges': PublicBadge[];
-    'modalColorMode': string;
-    'modalZIndex': string;
-    'top': string;
+    'left': number;
+    'mode': string;
+    'origin': string;
+    'theme': string;
   }
 }
 
@@ -60,20 +59,19 @@ declare global {
 declare namespace LocalJSX {
   interface PublicbadgesCircle {
     'badgesCount'?: number;
-    'colorMode'?: string;
     'interactive'?: boolean;
   }
   interface PublicbadgesDrawer {
-    'badgeColorMode'?: string;
-    'modalColorMode'?: string;
-    'modalZIndex'?: string;
+    'badgeTheme'?: string;
+    'modalTheme'?: string;
   }
   interface PublicbadgesModal {
     'badges'?: PublicBadge[];
-    'modalColorMode'?: string;
-    'modalZIndex'?: string;
+    'left'?: number;
+    'mode'?: string;
     'onCloseDrawer'?: (event: CustomEvent<any>) => void;
-    'top'?: string;
+    'origin'?: string;
+    'theme'?: string;
   }
 
   interface IntrinsicElements {

@@ -8,6 +8,10 @@ svg {
 
 .logo {
   fill: var(--badge-color);
+
+  #modal & {
+    fill: var(--modal-color-fg);
+  }
 }
 
 
@@ -20,6 +24,10 @@ svg {
   //animation: spin 300ms ease paused;
   transition: transform 300ms ease;
   transform: rotate(-90deg);
+
+  #modal & {
+    stroke: var(--modal-color-fg);
+  }
 }
 .interactive:hover .circle {
   transform: rotate(-100deg);

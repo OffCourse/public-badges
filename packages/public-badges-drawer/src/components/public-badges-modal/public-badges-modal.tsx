@@ -1,4 +1,4 @@
-import { Component, Prop, Event, EventEmitter, h } from "@stencil/core";
+import { Component, Prop, State, Event, EventEmitter, h } from "@stencil/core";
 import { IconClose, IconCheck, IconArrowDown, IconMore } from "../../assets/icons";
 import {  PublicBadge } from "../../types";
 
@@ -8,47 +8,53 @@ import {  PublicBadge } from "../../types";
 })
 
 export class PublicbadgesModal {
+  @Prop() public theme: string = "";
+  @Prop() public mode: string = "";
+  @Prop() public left: number = 0;
+  @Prop() public origin: string = "top";
   @Prop() public badges: PublicBadge[] = [];
-  @Prop() public modalColorMode: string = "";
-  @Prop() public modalZIndex: string = "";
-  @Prop() public top: string = "";
+
+  @State() public openBadge: number | null = null
 
   @Event() public closeDrawer: EventEmitter = ({
     emit: (e) => e
   });
 
+
   public closeModalHandler = () => {
     this.closeDrawer.emit();
   }
 
-  // @Listen('keydown')
-  // handleKeyDown(ev){
-  //   console.log('key: ', ev.key)
-  // }
+  private toggleBadge = (i: number) => {
+    this.openBadge = this.openBadge === i ? null : i;
+  }
+
 
   public render() {
     const baseURL = "https://publicspaces.net";
+
     return (
       [
         <div id="modal-bg" onClick={ this.closeModalHandler }></div>,
-        <div id="modal" class={this.modalColorMode} style={{ zIndex: this.modalZIndex}}>
+        <div id="modal" class={`${this.mode} ${this.theme} ${this.origin}`} style={{ left: this.left.toString()+"px"}}>
           <button class="close" onClick={ this.closeModalHandler }>
             <IconClose />
           </button>
           <div id="modal-content">
-            <div class="column">
-              <publicbadges-circle colorMode={"dark"} interactive={false}></publicbadges-circle>
+            <div id="logo" class="column">
+              <publicbadges-circle interactive={false}></publicbadges-circle>
             </div>
             <div id="badges" class="column">
               <ul>
-                { [this.badges[0]].map((badge) => (
-                  <li>
+                { this.badges.map((badge, i) => (
+                  <li class={this.openBadge === i ? "open" : ""} onClick={()=> { this.toggleBadge(i) }}>
                      <IconCheck />
-                     <span>
-                       <strong>{badge.name}</strong>
-                       <br />
-                       {badge.description}
-                     </span>
+                     <div>
+                       <h3>{badge.name}</h3>
+                       <div class="badge-description">
+                        {badge.description}
+                       </div>
+                     </div>
                     <IconArrowDown />
                   </li>)) }
               </ul>
@@ -56,19 +62,12 @@ export class PublicbadgesModal {
             <div id="about" class="column">
               <h1>PublicSpaces</h1>
               <h2>internet for the common good</h2>
-              <p>PublicSpaces reclaims the internet as a force for the common
-                good and advocates a new internet that strengthens the public
-                domain.
-                <a href={`${baseURL}/manifesto`}target="_blank" rel="noopener noreferrer">
-                  Read our manifesto
-                </a>
-                 to see the values we want to see at the core of our digital lives.
-              </p>
+              <p>PublicSpaces reclaims the internet as a force for the common good and advocates a new internet that strengthens the public domain. <a href={`${baseURL}/manifesto`}target="_blank" rel="noopener noreferrer">Read our manifesto</a> to see the values we want to see at the core of our digital lives.</p>
               <p>
                 <a class="more"
                   href={baseURL}
                   target="_blank"
-                   rel="noopener noreferrer">more about PublicSpaces<IconMore />
+                  rel="noopener noreferrer">more about PublicSpaces<IconMore />
                 </a>
               </p>
             </div>

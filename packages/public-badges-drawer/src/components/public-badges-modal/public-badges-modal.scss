@@ -11,14 +11,15 @@
 #modal {
   all: initial;
   position: absolute;
-  left: 0px;
-  bottom: 0px;
   padding: 10px;
   background: var(--modal-color-bg);
   color: var(--modal-color-fg);
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.25);
   font-family: 'Geomanist', sans-serif;
   font-size: 14px;
+
+  &.bottom { bottom: 0; }
+  &.top { top: 0; }
 
   [class^="icon"] {
     path, polygon, rect, circle {
@@ -76,29 +77,35 @@
   justify-content: space-between;
   align-items: center;
 
-  @media (max-width: 960px) {
+  .vertical & {
     flex-direction: column;
   }
 }
 
 .column {
-  
+  width: 320px;
 
-  @media (min-width: 961px) {
-    padding: 20px 30px;
-  }
-  @media (max-width: 960px) {
+  .vertical & {
     padding: 20px 10px;
 
     &:last-child {
       padding-bottom: 10px;
     }
   }
+
+  .horizontal & {
+    padding: 20px 30px;
+  }
+}
+
+#logo {
+  width: 160px;
+  padding-right: 10px;
 }
 
 #badges {
   ul {
-    min-width: 300px;
+    //min-width: 300px;
     margin: 0;
     padding-left: 0;
     list-style: none;
@@ -108,18 +115,24 @@
       margin-bottom: 2em;
       padding: 0 20px 0 30px;
       cursor: pointer;
+      user-select: none;
 
       &:last-child {
         margin-bottom: 0;
       }
+
+      .badge-description {
+        max-height: 0;
+        overflow-y: hidden;
+        transition: all 150ms cubic-bezier(0, 1, 0.5, 1);
+      }
+
 
       .icon-check {
         position: absolute;
         width: 18px;
         left: 0;
         top: -1px;
-        // top: 50%;
-        // transform: translateY(-50%);
       }
 
       .icon-arrow-down {
@@ -127,29 +140,28 @@
         right: 1px;
         top: 4px;
         width: 10px;
+        transition: all 200ms ease;
+      }
+
+      &.open {
+        &.open .badge-description {
+          max-height: 10rem;
+        }
+
+        .icon-arrow-down {
+          transform: scaleY(-1);
+        }
       }
     }
   }
 }
 
 #about {
-  min-width: 320px;
-  max-width: 340px;
-
-  @media (min-width: 961px) {
-    border-left: 1px solid var(--modal-color-fg);
-  }
-  @media (max-width: 960px) {
+  .vertical & {
     border-top: 1px solid var(--modal-color-fg);
   }
 
-  // &:before {
-  //   content: " ";
-  //   position: absolute;
-  //   left: 0;
-  //   top: -10px;
-  //   bottom: -10px;
-  //   width: 1px;
-  //   background: var(--modal-color-fg);
-  // }
+  .horizontal & {
+    border-left: 1px solid var(--modal-color-fg);
+  }
 }

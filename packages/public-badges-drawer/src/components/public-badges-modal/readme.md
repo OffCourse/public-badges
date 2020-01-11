@@ -7,23 +7,38 @@
 
 ## Properties
 
-| Property      | Attribute      | Description | Type     | Default  |
-| ------------- | -------------- | ----------- | -------- | -------- |
-| `badgesCount` | `badges-count` |             | `number` | `1`      |
-| `colorMode`   | `color-mode`   |             | `string` | `"dark"` |
+| Property | Attribute | Description | Type            | Default |
+| -------- | --------- | ----------- | --------------- | ------- |
+| `badges` | --        |             | `PublicBadge[]` | `[]`    |
+| `left`   | `left`    |             | `number`        | `0`     |
+| `mode`   | `mode`    |             | `string`        | `""`    |
+| `origin` | `origin`  |             | `string`        | `"top"` |
+| `theme`  | `theme`   |             | `string`        | `""`    |
+
+
+## Events
+
+| Event         | Description | Type               |
+| ------------- | ----------- | ------------------ |
+| `closeDrawer` |             | `CustomEvent<any>` |
 
 
 ## Dependencies
 
 ### Used by
 
- - [public-badges-drawer](../public-badges-drawer)
+ - [publicbadges-drawer](../public-badges-drawer)
+
+### Depends on
+
+- [publicbadges-circle](../public-badges-circle)
 
 ### Graph
 ```mermaid
 graph TD;
-  public-badges-drawer --> public-badges-circle
-  style public-badges-circle fill:#f9f,stroke:#333,stroke-width:4px
+  publicbadges-modal --> publicbadges-circle
+  publicbadges-drawer --> publicbadges-modal
+  style publicbadges-modal fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
