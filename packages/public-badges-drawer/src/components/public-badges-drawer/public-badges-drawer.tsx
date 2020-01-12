@@ -39,7 +39,7 @@ export class PublicbadgesDrawer {
     const linkNode = document.createElement("link");
     linkNode.type = "text/css";
     linkNode.rel = "stylesheet";
-    linkNode.href = "http://publicbadges.ao.waag.org/geomanist/font.css";
+    linkNode.href = "http://publicbadges.ao.waag.org/manrope/font.css";
     document.head.appendChild(linkNode);
 
     // fetch badges

@@ -1,3 +1,9 @@
+ $f-weight-normal: 400;
+$vf-weight-normal: 450;
+ $f-weight-heading: 600;
+$vf-weight-heading: 650;
+
+
 #modal-bg {
   position: fixed;
   width: 100%;
@@ -15,9 +21,20 @@
   background: var(--modal-color-bg);
   color: var(--modal-color-fg);
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.25);
-  font-family: 'Geomanist', sans-serif;
+  //font-family: 'Geomanist', sans-serif;
   font-size: 14px;
+  font-family: 'Manrope VF', Manrope, sans-serif;
+  font-weight: $f-weight-normal;
+  font-variation-settings: 'wght' $vf-weight-normal;
+  font-variation-ligatures: normal;
+  font-feature-settings:'calt', 'liga';
 
+  *,*:before,*:after {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased; 
+  }
+  
   &.bottom { bottom: 0; }
   &.top { top: 0; }
 
@@ -28,7 +45,57 @@
   }
 }
 
-.more {
+// typography
+h1, h2, h3 {
+  line-height: 1.2em;
+  margin: 0;
+}
+
+h1 {
+  font-size: 19px;
+  font-weight: $f-weight-heading;
+  font-variation-settings: 'wght' $vf-weight-heading;
+}
+
+h2 {
+  margin-bottom: 0.5em;
+  font-size: 19px;
+  font-weight: $f-weight-normal;
+  font-variation-settings: 'wght' $vf-weight-normal;
+}
+
+h3 {
+  margin-bottom: 0.25em;
+  font-size: 16px;
+  font-weight: $f-weight-heading;
+  font-variation-settings: 'wght' $vf-weight-heading;
+}
+
+p {
+  line-height: 1.4em;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+li {
+  line-height: 1.4em;
+}
+
+strong {
+  font-weight: 700;
+}
+
+a {
+  color: var(--modal-color-fg);
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+a.more {
   text-decoration: none;
 
   svg {
@@ -71,6 +138,7 @@
     transition: transform 200ms ease;
   }
 }
+
 
 #modal-content {
   display: flex;
