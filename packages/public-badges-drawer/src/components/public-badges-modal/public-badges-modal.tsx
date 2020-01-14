@@ -45,7 +45,7 @@ export class PublicbadgesModal {
               <publicbadges-circle interactive={false}></publicbadges-circle>
             </div>
             <div id="badges" class="column">
-              <ul>
+              <ul class={this.badges.length !== 1 ? "accordeon" : ""} >
                 { this.badges.map((badge, i) => (
                   <li class={this.openBadge === i ? "open" : ""} onClick={()=> { this.toggleBadge(i) }}>
                      <IconCheck />
@@ -55,7 +55,7 @@ export class PublicbadgesModal {
                         {badge.description}
                        </div>
                      </div>
-                    <IconArrowDown />
+                    { this.badges.length !== 1 && <IconArrowDown /> }
                   </li>)) }
               </ul>
             </div>

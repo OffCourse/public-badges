@@ -50,7 +50,7 @@ export class PublicbadgesDrawer {
     }).then(res => {
       return res.json()
     }).then(res => {
-      this.badges = res.data.getAllBadges.slice(0,3)
+      this.badges = res.data.getAllBadges.slice(0,1)
     });
 
   }

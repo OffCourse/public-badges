@@ -72,7 +72,7 @@ h3 {
 }
 
 p {
-  line-height: 1.4em;
+  line-height: 1.5em;
 
   &:last-child {
     margin-bottom: 0;
@@ -80,7 +80,7 @@ p {
 }
 
 li {
-  line-height: 1.4em;
+  line-height: 1.5em;
 }
 
 strong {
@@ -162,7 +162,7 @@ a.more {
   }
 
   .horizontal & {
-    padding: 20px 30px;
+    padding: 35px 30px;
   }
 }
 
@@ -181,7 +181,7 @@ a.more {
     li {
       position: relative;
       margin-bottom: 2em;
-      padding: 0 20px 0 30px;
+      padding: 0 0 0 30px;
       cursor: pointer;
       user-select: none;
 
@@ -189,18 +189,23 @@ a.more {
         margin-bottom: 0;
       }
 
-      .badge-description {
-        max-height: 0;
-        overflow-y: hidden;
-        transition: all 150ms cubic-bezier(0, 1, 0.5, 1);
-      }
-
-
       .icon-check {
         position: absolute;
         width: 18px;
         left: 0;
         top: -1px;
+      }
+    }
+
+    &.accordeon {
+      li {
+        padding-right: 20px;
+      }
+
+      .badge-description {
+        max-height: 0;
+        overflow-y: hidden;
+        transition: all 150ms cubic-bezier(0, 1, 0.5, 1);
       }
 
       .icon-arrow-down {
@@ -211,8 +216,8 @@ a.more {
         transition: all 200ms ease;
       }
 
-      &.open {
-        &.open .badge-description {
+      li.open {
+        .badge-description {
           max-height: 10rem;
         }
 
