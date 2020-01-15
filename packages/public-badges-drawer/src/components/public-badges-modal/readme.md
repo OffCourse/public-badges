@@ -7,13 +7,13 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type            | Default |
-| -------- | --------- | ----------- | --------------- | ------- |
-| `badges` | --        |             | `PublicBadge[]` | `[]`    |
-| `left`   | `left`    |             | `number`        | `0`     |
-| `mode`   | `mode`    |             | `string`        | `""`    |
-| `origin` | `origin`  |             | `string`        | `"top"` |
-| `theme`  | `theme`   |             | `string`        | `""`    |
+| Property | Attribute | Description | Type                    | Default |
+| -------- | --------- | ----------- | ----------------------- | ------- |
+| `badges` | --        |             | `ApprovedPublicBadge[]` | `[]`    |
+| `left`   | `left`    |             | `number`                | `0`     |
+| `mode`   | `mode`    |             | `string`                | `""`    |
+| `origin` | `origin`  |             | `string`                | `"top"` |
+| `theme`  | `theme`   |             | `string`                | `""`    |
 
 
 ## Events

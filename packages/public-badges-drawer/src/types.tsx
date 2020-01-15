@@ -179,7 +179,7 @@ export type Proof = {
   name: Scalars['String'],
   genre: Scalars['String'],
   description: Scalars['String'],
-  narrative: Scalars['String'],
+  narrative: Array<Maybe<Scalars['String']>>,
 };
 
 export type PublicBadge = {
@@ -203,7 +203,8 @@ export type PublicBadgeInput = {
 export enum PublicBadgeStatus {
   Pending = 'PENDING',
   Approved = 'APPROVED',
-  Signed = 'SIGNED'
+  Signed = 'SIGNED',
+  Rejected = 'REJECTED'
 }
 
 export type Query = {
@@ -237,10 +238,25 @@ export type QueryGetValueCaseArgs = {
   valueCaseId: Scalars['ID']
 };
 
+export type RejectedPublicBadge = PublicBadge & {
+   __typename?: 'RejectedPublicBadge',
+  badgeId: Scalars['GUID'],
+  status: PublicBadgeStatus,
+  valueCaseId: Scalars['ID'],
+  valueCase: ValueCase,
+  name: Scalars['String'],
+  tags: Array<Maybe<Scalars['String']>>,
+  description: Scalars['String'],
+  narrative: Scalars['String'],
+  recipientId: Scalars['ID'],
+  evidence: Array<Maybe<Proof>>,
+  recipient: Organization,
+};
+
 export type Scenario = {
    __typename?: 'Scenario',
-  title: Scalars['String'],
-  statements: Array<Maybe<Scalars['String']>>,
+  description: Scalars['String'],
+  narrative: Array<Maybe<Scalars['String']>>,
 };
 
 export type SignedPublicBadge = PublicBadge & {
@@ -277,7 +293,7 @@ export type ValueCase = {
   approvedBy: Scalars['String'],
   description: Scalars['String'],
   narrative: Scalars['String'],
-  scenarios: Array<Maybe<Scenario>>,
+  scenarios: Array<Scenario>,
 };
 
 
@@ -296,13 +312,20 @@ export type GetAllBadgesQuery = (
   { __typename?: 'Query' }
   & { getAllBadges: Maybe<Array<Maybe<(
     { __typename?: 'ApprovedPublicBadge' }
-    & Pick<ApprovedPublicBadge, 'badgeId' | 'tags' | 'description' | 'name' | 'status'>
+    & Pick<ApprovedPublicBadge, 'badgeId' | 'name' | 'description' | 'status'>
   ) | (
     { __typename?: 'PendingPublicBadge' }
-    & Pick<PendingPublicBadge, 'badgeId' | 'tags' | 'description' | 'name' | 'status'>
+    & Pick<PendingPublicBadge, 'badgeId' | 'name' | 'description' | 'status'>
+  ) | (
+    { __typename?: 'RejectedPublicBadge' }
+    & Pick<RejectedPublicBadge, 'badgeId' | 'name' | 'description' | 'status'>
   ) | (
     { __typename?: 'SignedPublicBadge' }
-    & Pick<SignedPublicBadge, 'badgeId' | 'tags' | 'description' | 'name' | 'status'>
+    & Pick<SignedPublicBadge, 'badgeId' | 'name' | 'description' | 'status'>
+    & { evidence: Array<Maybe<(
+      { __typename?: 'Proof' }
+      & Pick<Proof, 'proofId' | 'name' | 'description'>
+    )>> }
   )>>> }
 );
 
@@ -312,10 +335,16 @@ export const GetAllBadgesDocument = gql`
     query GetAllBadges {
   getAllBadges {
     badgeId
-    tags
-    description
     name
+    description
     status
+    ... on SignedPublicBadge {
+      evidence {
+        proofId
+        name
+        description
+      }
+    }
   }
 }
     `;

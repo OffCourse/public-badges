@@ -46,7 +46,7 @@ export class PublicbadgesDrawer {
     fetch('https://ez41w8cz80.execute-api.us-east-1.amazonaws.com/dev/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: '{ getAllBadges { badgeId tags description name status } }' }),
+      body: JSON.stringify({ query: '{ getAllBadges { badgeId name description status ...on SignedPublicBadge { evidence { proofId name description } } } }' }),
     }).then(res => {
       return res.json()
     }).then(res => {
@@ -110,7 +110,7 @@ export class PublicbadgesDrawer {
   public render() {
     if(this.badges) {
       return (
-        <Host>
+        <Host style={{ zIndex: this.open ? "9999" : "1" }}>
           <publicbadges-circle
             badgesCount={this.badges?.length}
             interactive={this.open ? false : true}

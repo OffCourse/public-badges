@@ -29,19 +29,51 @@ $vf-weight-heading: 650;
   font-variation-ligatures: normal;
   font-feature-settings:'calt', 'liga';
 
+  
+  //clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);
+
   *,*:before,*:after {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     font-smoothing: antialiased; 
   }
   
-  &.bottom { bottom: 0; }
-  &.top { top: 0; }
+  &.bottom {
+    bottom: 0;
+    animation: from-bottom 250ms ease 1;
+  }
+  &.top {
+    top: 0;
+    animation: from-top 250ms ease 1;
+  }
 
   [class^="icon"] {
     path, polygon, rect, circle {
       fill: var(--modal-color-fg);
     }
+  }
+}
+
+
+@keyframes from-bottom {
+  from {
+    opacity: 0.5;
+    clip-path: polygon(-10% 110%, -10% 110%, 110% 110%, 110% 110%);
+  }
+  to   {
+    opacity: 1;
+    clip-path: polygon(-10% 110%, -10% -10%, 110% -10%, 110% 110%);
+  }
+}
+
+@keyframes from-top {
+  from {
+    opacity: 0.5;
+    clip-path: polygon(-10% -10%, -10% -10%, 110% -10%, 110% -10%);
+  }
+  to   {
+    opacity: 1;
+    clip-path: polygon(-10% -10%, -10% 110%, 110% 110%, 110% -10%);
   }
 }
 
@@ -69,6 +101,13 @@ h3 {
   font-size: 16px;
   font-weight: $f-weight-heading;
   font-variation-settings: 'wght' $vf-weight-heading;
+}
+
+h4 {
+  margin: 0em;
+  font-size: 14px;
+  font-weight: $f-weight-normal;
+  font-variation-settings: 'wght' $vf-weight-normal;
 }
 
 p {
@@ -167,8 +206,10 @@ a.more {
 }
 
 #logo {
-  width: 160px;
-  padding-right: 10px;
+  width: 150px;
+
+  .vertical &   { padding-right: 20px; }
+  .horizontal & { padding-right: 0px; }
 }
 
 #badges {
@@ -182,8 +223,6 @@ a.more {
       position: relative;
       margin-bottom: 2em;
       padding: 0 0 0 30px;
-      cursor: pointer;
-      user-select: none;
 
       &:last-child {
         margin-bottom: 0;
@@ -193,16 +232,18 @@ a.more {
         position: absolute;
         width: 18px;
         left: 0;
-        top: -1px;
+        top: 0;
       }
     }
 
     &.accordeon {
       li {
         padding-right: 20px;
+        cursor: pointer;
+        user-select: none;
       }
 
-      .badge-description {
+      .badge-info {
         max-height: 0;
         overflow-y: hidden;
         transition: all 150ms cubic-bezier(0, 1, 0.5, 1);
@@ -217,8 +258,8 @@ a.more {
       }
 
       li.open {
-        .badge-description {
-          max-height: 10rem;
+        .badge-info {
+          max-height: 16rem;
         }
 
         .icon-arrow-down {
@@ -226,15 +267,31 @@ a.more {
         }
       }
     }
+
+    .evidence {
+      margin: 0;
+
+      li {
+        margin-bottom: 10px;
+        padding-left: 16px;
+      }
+
+      .icon-check-small {
+        position: absolute;
+        left: 0;
+        top: 6px;
+        width: 16px;
+        height: 16px;
+      }
+    }
   }
 }
 
-#about {
-  .vertical & {
-    border-top: 1px solid var(--modal-color-fg);
-  }
+#badges {
+  .horizontal & { border-right: 1px solid var(--modal-color-fg); }
+}
 
-  .horizontal & {
-    border-left: 1px solid var(--modal-color-fg);
-  }
+#about {
+  .vertical & { border-top: 1px solid var(--modal-color-fg); }
+  .horizontal & { position: relative; left:-1px; border-left: 1px solid var(--modal-color-fg); }
 }

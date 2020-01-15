@@ -1,6 +1,6 @@
 import { Component, Prop, State, Event, EventEmitter, h } from "@stencil/core";
-import { IconClose, IconCheck, IconArrowDown, IconMore } from "../../assets/icons";
-import {  PublicBadge } from "../../types";
+import { IconClose, IconCheck, IconCheckSmall, IconArrowDown, IconMore } from "../../assets/icons";
+import { ApprovedPublicBadge } from "../../types";
 
 @Component({
   tag: "publicbadges-modal",
@@ -12,7 +12,7 @@ export class PublicbadgesModal {
   @Prop() public mode: string = "";
   @Prop() public left: number = 0;
   @Prop() public origin: string = "top";
-  @Prop() public badges: PublicBadge[] = [];
+  @Prop() public badges: ApprovedPublicBadge[] = [];
 
   @State() public openBadge: number | null = null
 
@@ -48,13 +48,21 @@ export class PublicbadgesModal {
               <ul class={this.badges.length !== 1 ? "accordeon" : ""} >
                 { this.badges.map((badge, i) => (
                   <li class={this.openBadge === i ? "open" : ""} onClick={()=> { this.toggleBadge(i) }}>
-                     <IconCheck />
-                     <div>
-                       <h3>{badge.name}</h3>
-                       <div class="badge-description">
-                        {badge.description}
-                       </div>
-                     </div>
+                    <IconCheck />
+                    <h3>{badge.name}</h3>
+                    <div class="badge-info">
+                      <p>{badge.description}</p>
+                      {badge.evidence && 
+                        <ul class="evidence">
+                          {badge.evidence.map(proof=> {
+                            return <li>
+                              <IconCheckSmall />
+                              <h4>{proof?.description}</h4>
+                            </li>
+                          })}
+                        </ul>
+                      }
+                    </div>
                     { this.badges.length !== 1 && <IconArrowDown /> }
                   </li>)) }
               </ul>

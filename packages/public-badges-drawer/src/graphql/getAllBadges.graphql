@@ -1,9 +1,15 @@
 query GetAllBadges {
   getAllBadges {
     badgeId
-    tags
-    description
     name
+    description
     status
+    ... on SignedPublicBadge {
+      evidence {
+        proofId
+        name
+        description
+      }
+    }
   }
 }

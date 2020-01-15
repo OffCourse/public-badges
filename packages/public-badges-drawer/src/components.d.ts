@@ -8,7 +8,7 @@
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
-  PublicBadge,
+  ApprovedPublicBadge,
 } from './types';
 
 export namespace Components {
@@ -21,7 +21,7 @@ export namespace Components {
     'modalTheme': string;
   }
   interface PublicbadgesModal {
-    'badges': PublicBadge[];
+    'badges': ApprovedPublicBadge[];
     'left': number;
     'mode': string;
     'origin': string;
@@ -66,7 +66,7 @@ declare namespace LocalJSX {
     'modalTheme'?: string;
   }
   interface PublicbadgesModal {
-    'badges'?: PublicBadge[];
+    'badges'?: ApprovedPublicBadge[];
     'left'?: number;
     'mode'?: string;
     'onCloseDrawer'?: (event: CustomEvent<any>) => void;

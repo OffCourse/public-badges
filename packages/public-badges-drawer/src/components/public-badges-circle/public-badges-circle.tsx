@@ -33,7 +33,7 @@ export class PublicbadgesCircle {
 
     return (
       // @ts-ignore
-      <svg class={ classes.join(" ") } height="120" width="120">
+      <svg class={ classes.join(" ") } viewBox="0 0 120 120">
         { badges && [
           // @ts-ignore
           <g class="badges">{ badges }</g>,
