@@ -85,7 +85,7 @@ and the variables are:
 When you have embedded the badge in your webpage, you are ready to apply for
 the zero-badge.
 
-You can call the api directly, or you can use out [graphql playground](https://ez41w8cz80.execute-api.us-east-1.amazonaws.com/dev/playground)
+You can call the api directly, or you can use our [graphql playground](https://ez41w8cz80.execute-api.us-east-1.amazonaws.com/dev/playground)
 
 #### Example Request
 
