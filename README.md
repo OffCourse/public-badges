@@ -8,6 +8,7 @@ Spaces coalition to show their affiliation on their website. It provides
 visible evidence to the user that the organization has the intention to
 implement the Public Spaces values in their online presence.
 
+
 ## Get Involved
 
 ### 1. Make sure that your organization meets the criteria for Zero Badge
@@ -21,50 +22,17 @@ If you're organization that is interested in joining the Public Spaces coalition
 please contact us: [contact@public-spaces.org](contact@public-spaces.org).
 
 
-### 2. Embed the Public Badges Drawer into your webpage
+### 2. Register Organization
 
-In order to acquire the zero badge, you have to include the Public Spaces Badge
-Container webcomponent on your organization's website.
+When you have embedded the badge in your webpage, you are ready to register the organization.
 
-You can download it from npm:
+You can call the api directly, or you can use our [graphql playground](https://ez41w8cz80.execute-api.us-east-1.amazonaws.com/dev/playground)
 
-```bash
-npm install @public-badges/container
-yarn add @public-badges/container
-```
-
-```js
-import public-badges-drawer from "@public-badges/drawer"
-```
-
-or host it directly:
-
-```html
-<script src="https://unpkg.com/@public-badges/container@1.0.0/umd/container.production.min.js" async></script>
-```
-
-The Public Spaces Badges Container is a [webcomponent](https://www.webcomponents.org/introduction)
-that you can use directly in your html.
-
-```html
-<PublicBadgesContainer />
-```
-
-Documentation for the use of webcomponents with your frontend framework of choice,
-can be found here: [https://stenciljs.com/docs/overview](https://stenciljs.com/docs/overview).
-
-
-### 3. Apply for the Zero Badge
-
-When you have embedded the badge in your webpage, you are ready to apply for
-the zero-badge.
-
-You can call the api directly, or you can use a [graphql client](https://graphql.org/code/#graphql-clients)
 
 #### Example Request
 
 ```bash
-curl -X POST 'https://graphql.publicbadges.com/v1'
+curl -X POST 'https://ez41w8cz80.execute-api.us-east-1.amazonaws.com/dev/graphql'
   -H "Content-Type: application/json"
   -d '{
     "query": "...",
@@ -72,22 +40,12 @@ curl -X POST 'https://graphql.publicbadges.com/v1'
   }'
 ```
 
-
 where query is:
 
 ```graphql
-mutation($badge: Badge, $organization: Organization){
-  applyForBadge(badge: $badge, organization: $organization){
-    badge {
-      id
-      url
-      status
-    }
-    organization {
-      id
-      url
-      status
-    }
+mutation Register($input: OrganizationInput!){
+  registerOrganization(input: $input) {
+    domainName
   }
 }
 ``` 
@@ -97,43 +55,115 @@ and the variables are:
 
 ```json
 {
-  "badge": {
-    type: "Zero Badge"
-  },
-  "organization": {
-    "name": "Waag",
+  "input": {
+    "name": "offcourse",
+    "domainName": "https://offcourse.io",
     "contact": {
-      "name": "John Doe",
-      "email": "johndoe@waag.org"
+      "name": "yeehaa",
+      "email": "contact@offcourse.io"
     },
     "admin": {
-      "name": "John Doer",
-      "email": "johndoer@waag.org"
+      "name": "yeehaa",
+      "email": "contact@offcourse.io"
     }
-    "domains": [
-      "https://www.waag.org"
-    ]
   }
+}
 ```
 
 **Example Response**
 
 ```json
 {
-  "badge": {
-    "id": "e79a6c18-787e-4868-8e65-e6a4530fb419",
-    "url": "https://public-badges.com/f79a6c18-083f-3852-4e62-e6b4520eb213/e79a6c18-787e-4868-8e65-e6a4530fb419",
-    "status": "Pending"
-  },
-  "organization": {
-    "id": "f79a6c18-083f-3852-4e62-e6b4520eb213",
-    "url": "https://public-badges.com/f79a6c18-083f-3852-4e62-e6b4520eb213",
-    "status": "Pending"
+  "badgeId": "e79a6c18-787e-4868-8e65-e6a4530fb419",
+  "status": "PENDING"
+}
+```
+
+
+### 3. Apply for the Zero Badge
+
+When you have embedded the badge in your webpage, you are ready to apply for
+the zero-badge.
+
+You can call the api directly, or you can use out [graphql playground](https://ez41w8cz80.execute-api.us-east-1.amazonaws.com/dev/playground)
+
+#### Example Request
+
+```bash
+curl -X POST 'https://ez41w8cz80.execute-api.us-east-1.amazonaws.com/dev/graphql'
+  -H "Content-Type: application/json"
+  -d '{
+    "query": "...",
+    "variables": "..."
+  }'
+```
+
+where query is:
+
+```graphql
+mutation($input: PublicBadgeInput!){
+  applyForBadge(input: $input){
+    badgeId
+    status
+  }
+}
+``` 
+The entire graphql schema can be [found here](/src-schema)
+
+and the variables are:
+
+```json
+{
+  "input": {
+    "valueCaseId": "88c7a930-3181-11ea-9858-b312ce22102d@zero",
+    "domainName": "https://offcourse.io"
   }
 }
 ```
 
-4. Wait for Acceptance
+**Example Response**
+
+```json
+{
+  "badgeId": "e79a6c18-787e-4868-8e65-e6a4530fb419",
+  "status": "PENDING"
+}
+```
+
+### 4. Embed the Public Badges Drawer into your webpage
+
+In order to acquire the Zero Badge, you have to include the Public Badges Drawer 
+webcomponent on your organization's website.
+
+You can download it from npm:
+
+```bash
+npm install @offcourse/public-badges-drawer
+yarn add @offcourse/public-badges-drawer
+```
+
+```js
+import publicbadges-drawer from "@offcourse/public-badges-drawer"
+```
+
+or host it directly:
+
+```html
+<script src="https://unpkg.com/@offcourse/public-badges-drawer@0.1.0/umd/container.production.min.js" async></script>
+```
+
+The Public Spaces Badges Container is a [webcomponent](https://www.webcomponents.org/introduction)
+that you can use directly in your html.
+
+```html
+<publicbadges-drawer />
+```
+
+Documentation for the use of webcomponents with your frontend framework of choice,
+can be found here: [https://stenciljs.com/docs/overview](https://stenciljs.com/docs/overview).
+
+
+### 5. Wait for Acceptance
 
 Upon submission of your application, we will check if your organization meets the
 requirements to get the zero badge. The two main criteria are:
