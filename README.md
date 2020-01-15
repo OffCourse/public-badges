@@ -21,10 +21,7 @@ If you're organization that is interested in joining the Public Spaces coalition
 please contact us: [contact@public-spaces.org](contact@public-spaces.org).
 
 
-### 2. Embed the Public Spaces Badges Container into your webpage
-
-[todo]: Decide on the name. 'Public Spaces Badges Container' is not exactly
-catchy...
+### 2. Embed the Public Badges Drawer into your webpage
 
 In order to acquire the zero badge, you have to include the Public Spaces Badge
 Container webcomponent on your organization's website.
@@ -37,7 +34,7 @@ yarn add @public-badges/container
 ```
 
 ```js
-import PublicBadgesContainer from "@public-badges/container"
+import public-badges-drawer from "@public-badges/drawer"
 ```
 
 or host it directly:
