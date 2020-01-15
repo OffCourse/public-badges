@@ -11,6 +11,7 @@ implement the Public Spaces values in their online presence.
 ## Get Involved
 
 ### 1. Make sure that your organization meets the criteria for Zero Badge
+
 During this phase of development, it is only possible for the founding
 partners of Public Spaces to apply for the Zero Badge.
 
