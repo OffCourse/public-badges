@@ -48,7 +48,7 @@ export type ApprovedPublicBadge = PublicBadge & {
   description: Scalars['String'],
   narrative: Scalars['String'],
   recipientId: Scalars['ID'],
-  evidence: Array<Maybe<Proof>>,
+  evidence: Array<Proof>,
   recipient: Organization,
 };
 
@@ -179,7 +179,7 @@ export type Proof = {
   name: Scalars['String'],
   genre: Scalars['String'],
   description: Scalars['String'],
-  narrative: Array<Maybe<Scalars['String']>>,
+  narrative: Array<Scalars['String']>,
 };
 
 export type PublicBadge = {
@@ -249,14 +249,14 @@ export type RejectedPublicBadge = PublicBadge & {
   description: Scalars['String'],
   narrative: Scalars['String'],
   recipientId: Scalars['ID'],
-  evidence: Array<Maybe<Proof>>,
+  evidence: Array<Proof>,
   recipient: Organization,
 };
 
 export type Scenario = {
    __typename?: 'Scenario',
   description: Scalars['String'],
-  narrative: Array<Maybe<Scalars['String']>>,
+  narrative: Array<Scalars['String']>,
 };
 
 export type SignedPublicBadge = PublicBadge & {
@@ -270,7 +270,7 @@ export type SignedPublicBadge = PublicBadge & {
   description: Scalars['String'],
   narrative: Scalars['String'],
   recipientId: Scalars['ID'],
-  evidence: Array<Maybe<Proof>>,
+  evidence: Array<Proof>,
   issuedOn: Scalars['String'],
   expires: Scalars['String'],
   artifact: Scalars['JSON'],
@@ -322,10 +322,10 @@ export type GetAllBadgesQuery = (
   ) | (
     { __typename?: 'SignedPublicBadge' }
     & Pick<SignedPublicBadge, 'badgeId' | 'name' | 'description' | 'status'>
-    & { evidence: Array<Maybe<(
+    & { evidence: Array<(
       { __typename?: 'Proof' }
       & Pick<Proof, 'proofId' | 'name' | 'description'>
-    )>> }
+    )> }
   )>>> }
 );
 

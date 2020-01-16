@@ -15,10 +15,12 @@ export namespace Components {
   interface PublicbadgesCircle {
     'badgesCount': number;
     'interactive': boolean;
+    'testMode': boolean;
   }
   interface PublicbadgesDrawer {
     'badgeTheme': string;
     'modalTheme': string;
+    'testMode': boolean;
   }
   interface PublicbadgesModal {
     'badges': ApprovedPublicBadge[];
@@ -60,10 +62,12 @@ declare namespace LocalJSX {
   interface PublicbadgesCircle {
     'badgesCount'?: number;
     'interactive'?: boolean;
+    'testMode'?: boolean;
   }
   interface PublicbadgesDrawer {
     'badgeTheme'?: string;
     'modalTheme'?: string;
+    'testMode'?: boolean;
   }
   interface PublicbadgesModal {
     'badges'?: ApprovedPublicBadge[];

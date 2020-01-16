@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property     | Attribute     | Description | Type     | Default |
-| ------------ | ------------- | ----------- | -------- | ------- |
-| `badgeTheme` | `badge-theme` |             | `string` | `""`    |
-| `modalTheme` | `modal-theme` |             | `string` | `""`    |
+| Property     | Attribute     | Description | Type      | Default |
+| ------------ | ------------- | ----------- | --------- | ------- |
+| `badgeTheme` | `badge-theme` |             | `string`  | `""`    |
+| `modalTheme` | `modal-theme` |             | `string`  | `""`    |
+| `testMode`   | `test-mode`   |             | `boolean` | `false` |
 
 
 ## Dependencies

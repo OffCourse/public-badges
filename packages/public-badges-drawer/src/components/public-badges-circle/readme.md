@@ -11,6 +11,7 @@
 | ------------- | -------------- | ----------- | --------- | ------- |
 | `badgesCount` | `badges-count` |             | `number`  | `0`     |
 | `interactive` | `interactive`  |             | `boolean` | `false` |
+| `testMode`    | `test-mode`    |             | `boolean` | `false` |
 
 
 ## Dependencies

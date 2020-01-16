@@ -13,6 +13,7 @@ export class PublicbadgesDrawer {
   // Props
   @Prop() public badgeTheme: string = "";
   @Prop() public modalTheme: string = "";
+  @Prop() public testMode: boolean = false;
 
   // State
   @State() public open: boolean = false;
@@ -114,6 +115,7 @@ export class PublicbadgesDrawer {
           <publicbadges-circle
             badgesCount={this.badges?.length}
             interactive={this.open ? false : true}
+            testMode={this.testMode}
             onClick={ this.openDrawer }>
           </publicbadges-circle>
           { this.open &&
