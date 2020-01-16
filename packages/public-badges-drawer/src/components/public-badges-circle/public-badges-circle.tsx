@@ -25,7 +25,7 @@ export class PublicbadgesCircle {
         xOffset = i % 2 === 0 ? xOffsetRight(i) : xOffsetLeft(i);
       }
 
-      badges.push(<circle cx="60" cy="0" r={badgeRadius} transform={`translate(${xOffset} 100)`}></circle>);
+      badges.push(<circle cx="60" cy="0" r={badgeRadius} style={{ transform: `translate(${xOffset}px, 100px)` }}></circle>);
     }
 
     //const classes = [this.colorMode];

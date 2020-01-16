@@ -43,15 +43,16 @@ svg {
 
 .badges circle {
   fill: var(--badge-color);
-  transition: transform 400ms ease, opacity 200ms ease;
+  stroke: var(--badge-color);
+  stroke-width: 0;
+  transition: stroke-width 400ms ease, transform 400ms ease, opacity 200ms ease;
   transform-origin: 50% 50%;
+  opacity: 1;
 }
 .interactive:hover .badges circle {
-  transform: scale(3) translate(0, 73.5px);
-
-  //&:not(:first-child) {
-    opacity: 0;
-  //}
+  stroke-width: 10;
+  transform: translate(0, 100px) !important;
+  opacity: 0;
 }
 
 .info {
