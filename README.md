@@ -152,12 +152,30 @@ or host it directly:
 <script src="https://unpkg.com/@offcourse/public-badges-drawer@0.1.0/umd/container.production.min.js" async></script>
 ```
 
-The Public Spaces Badges Container is a [webcomponent](https://www.webcomponents.org/introduction)
+The Public Spaces Badges drawer is a [webcomponent](https://www.webcomponents.org/introduction)
 that you can use directly in your html.
 
 ```html
-<publicbadges-drawer />
+<publicbadges-drawer badge-theme="dark" modal-theme="light" />
 ```
+
+To configure the badges drawer the following (optional) html attributes are available:
+
+| attribute   | values          | default   |
+|-------------|-----------------|-----------|
+| badge-theme | "dark", "light" | "dark"    |
+| modal-theme | "dark", "light" | "light"   |
+| test-mode   | "true", "false" | "false"   |
+
+##### badge-theme
+Depending on the background of where the drawer is placed this attribute allows setting it's color mode.
+ 
+##### modal-theme
+Sets the color scheme of the modal (that appears when the drawer is clicked).
+ 
+##### testMode
+Puts the badge drawer in test mode, handy for testing the positioning within the website.
+
 
 Documentation for the use of webcomponents with your frontend framework of choice,
 can be found here: [https://stenciljs.com/docs/overview](https://stenciljs.com/docs/overview).
