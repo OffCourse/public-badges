@@ -201,3 +201,14 @@ The exact scenarios that the we test can be found here: [Zero Badge Feature](/sr
 As soon as your organization is verified and the badge is issued, it will appear
 in automatically your badge container. You can also download the
 [open badge artifact](./src-fixture) manually through the link provided.
+
+## Maintainers
+
+[Jan Hein Hoogstad](https://github.com/yeehaa123): Concept development, system architecture, and backend development
+
+[Alain Otjens](https://github.com/alain0): UI/UX design and frontend development
+
+[Sander van der Waal](https://github.com/sandervdwaal): Community Management and Documentation
+
+Many thanks to Chris Julien, Laurens de Knijff, en Marieke Veling for their
+substantial contributions during earlier phases of this project's development.
