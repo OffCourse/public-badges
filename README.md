@@ -46,6 +46,8 @@ where query is:
 mutation Register($input: OrganizationInput!){
   registerOrganization(input: $input) {
     domainName
+    organizationId
+    status
   }
 }
 ``` 
@@ -74,10 +76,13 @@ and the variables are:
 
 ```json
 {
-  "badgeId": "e79a6c18-787e-4868-8e65-e6a4530fb419",
+  "organizationId": "e79a6c18-787e-4868-8e65-e6a4530fb419",
   "status": "PENDING"
 }
 ```
+
+An example of a complete curl request can be found here: [./sample-requests/register-organization.sh]
+(./sample-requests/register-organization.sh)
 
 
 ### 3. Apply for the Zero Badge
@@ -116,7 +121,7 @@ and the variables are:
 {
   "input": {
     "valueCaseId": "88c7a930-3181-11ea-9858-b312ce22102d@zero",
-    "domainName": "https://offcourse.io"
+    "domainName": "https://offcourse.io/"
   }
 }
 ```
@@ -129,6 +134,9 @@ and the variables are:
   "status": "PENDING"
 }
 ```
+
+An example of a complete curl request can be found here: 
+[./sample-requests/apply-for-badge.sh](./sample-requests/apply-for-badge.sh)
 
 ### 4. Embed the Public Badges Drawer into your webpage
 
