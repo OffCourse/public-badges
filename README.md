@@ -81,8 +81,7 @@ and the variables are:
 }
 ```
 
-An example of a complete curl request can be found here: [./sample-requests/register-organization.sh]
-(./sample-requests/register-organization.sh)
+An example of a complete curl request can be found here: [./sample-requests/register-organization.sh](./sample-requests/register-organization.sh)
 
 
 ### 3. Apply for the Zero Badge
@@ -135,8 +134,7 @@ and the variables are:
 }
 ```
 
-An example of a complete curl request can be found here: 
-[./sample-requests/apply-for-badge.sh](./sample-requests/apply-for-badge.sh)
+An example of a complete curl request can be found here: [./sample-requests/apply-for-badge.sh](./sample-requests/apply-for-badge.sh)
 
 ### 4. Embed the Public Badges Drawer into your webpage
 
