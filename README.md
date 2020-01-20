@@ -26,7 +26,8 @@ please contact us: [contact@public-spaces.org](contact@public-spaces.org).
 
 When you have embedded the badge in your webpage, you are ready to register the organization.
 
-You can call the api directly, or you can use our [graphql playground](https://ez41w8cz80.execute-api.us-east-1.amazonaws.com/dev/playground)
+You can call the api directly, or you can use our [graphql playground](https://ez41w8cz80.execute-api.us-east-1.amazonaws.com/dev/playground). 
+Here you can also find documentation on our graphql schema.
 
 
 #### Example Request
@@ -51,7 +52,6 @@ mutation Register($input: OrganizationInput!){
   }
 }
 ``` 
-The entire graphql schema can be [found here](/src-schema)
 
 and the variables are:
 
@@ -112,8 +112,6 @@ mutation($input: PublicBadgeInput!){
   }
 }
 ``` 
-The entire graphql schema can be [found here](/src-schema)
-
 and the variables are:
 
 ```json
@@ -201,6 +199,7 @@ The exact scenarios that the we test can be found here: [Zero Badge Feature](/sr
 As soon as your organization is verified and the badge is issued, it will appear
 in automatically your badge container. You can also download the
 [open badge artifact](./src-fixture) manually through the link provided.
+
 
 ## Maintainers
 
