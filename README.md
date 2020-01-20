@@ -208,7 +208,7 @@ in automatically your badge container. You can also download the
 
 [Alain Otjens](https://github.com/alain0): UI/UX design and frontend development
 
-[Sander van der Waal](https://github.com/sandervdwaal): Community Management and Documentation
+[Sander van der Waal](https://github.com/sandervdwaal): Community and Project Management and Documentation
 
 Many thanks to Chris Julien, Laurens de Knijff, en Marieke Veling for their
 substantial contributions during earlier phases of this project's development.
