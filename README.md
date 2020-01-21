@@ -26,14 +26,14 @@ please contact us: [contact@public-spaces.org](contact@public-spaces.org).
 
 When you have embedded the badge in your webpage, you are ready to register the organization.
 
-You can call the api directly, or you can use our [graphql playground](https://ez41w8cz80.execute-api.us-east-1.amazonaws.com/dev/playground). 
+You can call the api directly, or you can use our [graphql playground](https://api.publicbadges.com/pilot/playground). 
 Here you can also find documentation on our graphql schema.
 
 
 #### Example Request
 
 ```bash
-curl -X POST 'https://ez41w8cz80.execute-api.us-east-1.amazonaws.com/dev/graphql'
+curl -X POST 'https://api.publicbadges.com/pilot/graphql'
   -H "Content-Type: application/json"
   -d '{
     "query": "...",
@@ -89,12 +89,12 @@ An example of a complete curl request can be found here: [./sample-requests/regi
 When you have embedded the badge in your webpage, you are ready to apply for
 the zero-badge.
 
-You can call the api directly, or you can use our [graphql playground](https://ez41w8cz80.execute-api.us-east-1.amazonaws.com/dev/playground)
+You can call the api directly, or you can use our [graphql playground](https://api.publicbadges.com/pilot/playground)
 
 #### Example Request
 
 ```bash
-curl -X POST 'https://ez41w8cz80.execute-api.us-east-1.amazonaws.com/dev/graphql'
+curl -X POST 'https://api.publicbadges.com/pilot/graphql'
   -H "Content-Type: application/json"
   -d '{
     "query": "...",
