@@ -44,10 +44,10 @@ export class PublicbadgesDrawer {
     document.head.appendChild(linkNode);
 
     // fetch badges
-    fetch('https://ez41w8cz80.execute-api.us-east-1.amazonaws.com/dev/graphql', {
+    fetch('https://api.publicbadges.com/dev/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: '{ getAllBadges { badgeId name description status ...on SignedPublicBadge { evidence { proofId name description } } } }' }),
+      body: JSON.stringify({ query: '{ getAllBadges(domainName: "https://example.org/") { badgeId name description status ...on SignedPublicBadge { evidence { proofId name description } } } }' }),
     }).then(res => {
       return res.json()
     }).then(res => {

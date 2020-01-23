@@ -9,16 +9,15 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
+  /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
+  URL: any,
   /** A field whose value is a generic Globally Unique Identifier: https://en.wikipedia.org/wiki/Universally_unique_identifier. */
   GUID: any,
-  ValueCaseId: any,
   /** 
  * A field whose value conforms to the standard internet email address format as
    * specified in RFC822: https://www.w3.org/Protocols/rfc822/.
  */
   EmailAddress: any,
-  /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
-  URL: any,
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any,
 };
@@ -95,6 +94,12 @@ export type OpenBadge = {
   issuedOn: Scalars['String'],
   expires: Scalars['String'],
   evidence: Array<Maybe<OpenBadgeProof>>,
+};
+
+export type OpenBadgeArtifact = {
+   __typename?: 'OpenBadgeArtifact',
+  signature: Scalars['String'],
+  json: Scalars['JSON'],
 };
 
 export type OpenBadgeClass = {
@@ -209,33 +214,12 @@ export enum PublicBadgeStatus {
 
 export type Query = {
    __typename?: 'Query',
-  getBadge?: Maybe<PublicBadge>,
   getAllBadges?: Maybe<Array<Maybe<PublicBadge>>>,
-  getOrganization?: Maybe<Organization>,
-  getAllOrganizations?: Maybe<Array<Maybe<Organization>>>,
-  getValueCase?: Maybe<ValueCase>,
-  getAllValueCases?: Maybe<Array<Maybe<ValueCase>>>,
 };
 
 
-export type QueryGetBadgeArgs = {
-  badgeId: Scalars['ID']
-};
-
-
-export type QueryGetOrganizationArgs = {
-  organizationId?: Maybe<Scalars['ID']>,
-  domainName?: Maybe<Scalars['URL']>
-};
-
-
-export type QueryGetAllOrganizationsArgs = {
-  filter?: Maybe<OrganizationStatus>
-};
-
-
-export type QueryGetValueCaseArgs = {
-  valueCaseId: Scalars['ID']
+export type QueryGetAllBadgesArgs = {
+  domainName: Scalars['URL']
 };
 
 export type RejectedPublicBadge = PublicBadge & {
@@ -273,20 +257,15 @@ export type SignedPublicBadge = PublicBadge & {
   evidence: Array<Proof>,
   issuedOn: Scalars['String'],
   expires: Scalars['String'],
-  artifact: Scalars['JSON'],
+  artifact: OpenBadgeArtifact,
   recipient: Organization,
 };
-
-export enum Status {
-  Requested = 'REQUESTED',
-  Approved = 'APPROVED',
-  Signed = 'SIGNED'
-}
 
 
 export type ValueCase = {
    __typename?: 'ValueCase',
-  valueCaseId: Scalars['ValueCaseId'],
+  valueCaseId: Scalars['GUID'],
+  image: Scalars['URL'],
   name: Scalars['String'],
   tags: Array<Maybe<Scalars['String']>>,
   proposedBy: Organization,
@@ -296,7 +275,6 @@ export type ValueCase = {
   scenarios: Array<Scenario>,
 };
 
-
 export type ValueCaseInput = {
   domainName: Scalars['URL'],
   name: Scalars['String'],
@@ -305,7 +283,9 @@ export type ValueCaseInput = {
   description: Scalars['String'],
 };
 
-export type GetAllBadgesQueryVariables = {};
+export type GetAllBadgesQueryVariables = {
+  domainName: Scalars['URL']
+};
 
 
 export type GetAllBadgesQuery = (
@@ -332,8 +312,8 @@ export type GetAllBadgesQuery = (
 
 
 export const GetAllBadgesDocument = gql`
-    query GetAllBadges {
-  getAllBadges {
+    query GetAllBadges($domainName: URL!) {
+  getAllBadges(domainName: "https://example.org/") {
     badgeId
     name
     description

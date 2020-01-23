@@ -1,5 +1,5 @@
-query GetAllBadges {
-  getAllBadges {
+query GetAllBadges($domainName: URL!) {
+  getAllBadges(domainName: "https://example.org/") {
     badgeId
     name
     description
