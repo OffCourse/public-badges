@@ -11,8 +11,8 @@ export class PublicbadgesDrawer {
   @Element() public el: HTMLElement | undefined;
 
   // Props
-  @Prop() public badgeTheme: string = "";
-  @Prop() public modalTheme: string = "";
+  @Prop() public badgeTheme: string = "dark";
+  @Prop() public modalTheme: string = "light";
   @Prop() public testMode: boolean = false;
 
   // State
