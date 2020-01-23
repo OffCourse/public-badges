@@ -1,6 +1,3 @@
-import gql from 'graphql-tag';
-import * as StencilApollo from 'stencil-apollo';
-import { h } from '@stencil/core';
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -308,34 +305,3 @@ export type GetAllBadgesQuery = (
     )> }
   )>>> }
 );
-
-
-
-export const GetAllBadgesDocument = gql`
-    query GetAllBadges($domainName: URL!) {
-  getAllBadges(domainName: "https://example.org/") {
-    badgeId
-    name
-    description
-    status
-    ... on SignedPublicBadge {
-      evidence {
-        proofId
-        name
-        description
-      }
-    }
-  }
-}
-    `;
-
-export type GetAllBadgesProps = {
-    variables ?: GetAllBadgesQueryVariables;
-    inlist ?: StencilApollo.QueryRenderer<GetAllBadgesQuery, GetAllBadgesQueryVariables>;
-};
-      
-
-export const GetAllBadgesComponent = (props: GetAllBadgesProps, children: [StencilApollo.QueryRenderer<GetAllBadgesQuery, GetAllBadgesQueryVariables>]) => (
-  <apollo-query query={ GetAllBadgesDocument } { ...props } renderer={ children[0] } />
-);
-      
