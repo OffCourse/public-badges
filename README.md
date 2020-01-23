@@ -1,6 +1,7 @@
 PUBLIC BADGES
 =============
 
+
 # Zero Badge
 
 The Zero Badge is a way for organizations that are part of the Public
@@ -209,5 +210,5 @@ in automatically your badge container. You can also download the
 
 [Sander van der Waal](https://github.com/sandervdwaal): Community and Project Management and Documentation
 
-Many thanks to Chris Julien, Laurens de Knijff, en Marieke Veling for their
+Many thanks to Chris Julien, Laurens de Knijff, and Marieke Veling for their
 substantial contributions during earlier phases of this project's development.
