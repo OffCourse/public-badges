@@ -11,7 +11,7 @@ export class PublicbadgesDrawer {
   @Element() public el: HTMLElement | undefined;
 
   // Props
-  @Prop() public badgeTheme: string = "dark";
+  @Prop() public badgeColor: string = "#3C3C3C";
   @Prop() public modalTheme: string = "light";
   @Prop() public testMode: boolean = false;
 
@@ -27,7 +27,7 @@ export class PublicbadgesDrawer {
   public componentWillLoad() {
 
     // set css vars
-    const badgeColor = this.badgeTheme === "light" ? "#FFF" : "#3C3C3C";
+    const badgeColor = this.badgeColor;
     const modalColorBg = this.modalTheme === "dark" ? "#3C3C3C" : "#FFF";
     const modalColorFg = this.modalTheme === "dark" ? "#FFF" : "#3C3C3C";
     if(this.el) {
@@ -43,7 +43,8 @@ export class PublicbadgesDrawer {
     linkNode.href = "http://publicbadges.ao.waag.org/manrope/font.css";
     document.head.appendChild(linkNode);
 
-    const domainName: string = this.testMode ? "https://example.org" : window.location.origin
+    //const domainName: string = this.testMode ? "https://example.org" : window.location.origin
+    const domainName: string = "https://example.org"
 
 
     // fetch badges

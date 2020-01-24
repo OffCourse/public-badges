@@ -7,11 +7,11 @@
 
 ## Properties
 
-| Property     | Attribute     | Description | Type      | Default   |
-| ------------ | ------------- | ----------- | --------- | --------- |
-| `badgeTheme` | `badge-theme` |             | `string`  | `"dark"`  |
-| `modalTheme` | `modal-theme` |             | `string`  | `"light"` |
-| `testMode`   | `test-mode`   |             | `boolean` | `false`   |
+| Property     | Attribute     | Description | Type      | Default     |
+| ------------ | ------------- | ----------- | --------- | ----------- |
+| `badgeColor` | `badge-color` |             | `string`  | `"#3C3C3C"` |
+| `modalTheme` | `modal-theme` |             | `string`  | `"light"`   |
+| `testMode`   | `test-mode`   |             | `boolean` | `false`     |
 
 
 ## Dependencies
