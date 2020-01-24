@@ -43,15 +43,20 @@ export class PublicbadgesDrawer {
     linkNode.href = "http://publicbadges.ao.waag.org/manrope/font.css";
     document.head.appendChild(linkNode);
 
+    const domainName: string = this.testMode ? "https://example.org" : window.location.origin
+
+
     // fetch badges
     fetch('https://api.publicbadges.com/dev/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: '{ getAllBadges(domainName: "https://example.org/") { badgeId name description status ...on SignedPublicBadge { evidence { proofId name description } } } }' }),
+      body: JSON.stringify({ query: `{ getAllBadges(domainName: "${domainName}") { badgeId name description status ...on SignedPublicBadge { evidence { proofId name description } } } }` }),
     }).then(res => {
       return res.json()
     }).then(res => {
-      this.badges = res.data.getAllBadges.slice(0,1)
+      if(res.data.getAllBadges) {
+        this.badges = res.data.getAllBadges.slice(0,1)
+      }
     });
 
   }
