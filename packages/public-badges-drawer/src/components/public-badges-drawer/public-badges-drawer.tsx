@@ -11,9 +11,10 @@ export class PublicbadgesDrawer {
   @Element() public el: HTMLElement | undefined;
 
   // Props
-  @Prop() public badgeTheme: string = "dark";
+  @Prop() public badgeColor: string = "#3C3C3C";
   @Prop() public modalTheme: string = "light";
   @Prop() public testMode: boolean = false;
+  @Prop() public domainName: string = "https://example.org";
 
   // State
   @State() public open: boolean = false;
@@ -27,7 +28,7 @@ export class PublicbadgesDrawer {
   public componentWillLoad() {
 
     // set css vars
-    const badgeColor = this.badgeTheme === "light" ? "#FFF" : "#3C3C3C";
+    const badgeColor = this.badgeColor;
     const modalColorBg = this.modalTheme === "dark" ? "#3C3C3C" : "#FFF";
     const modalColorFg = this.modalTheme === "dark" ? "#FFF" : "#3C3C3C";
     if(this.el) {
@@ -43,15 +44,20 @@ export class PublicbadgesDrawer {
     linkNode.href = "http://publicbadges.ao.waag.org/manrope/font.css";
     document.head.appendChild(linkNode);
 
+    //const domainName: string = this.testMode ? "https://example.org" : window.location.origin
+
+
     // fetch badges
     fetch('https://api.publicbadges.com/dev/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: '{ getAllBadges(domainName: "https://example.org/") { badgeId name description status ...on SignedPublicBadge { evidence { proofId name description } } } }' }),
+      body: JSON.stringify({ query: `{ getAllBadges(domainName: "${this.domainName}") { badgeId name description status ...on SignedPublicBadge { evidence { proofId name description } } } }` }),
     }).then(res => {
       return res.json()
     }).then(res => {
-      this.badges = res.data.getAllBadges.slice(0,1)
+      if(res.data.getAllBadges) {
+        this.badges = res.data.getAllBadges.slice(0,1)
+      }
     });
 
   }
