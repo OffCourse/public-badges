@@ -47,7 +47,7 @@ $vf-weight-heading: 650;
     animation: from-top 250ms ease 1;
   }
 
-  [class^="icon"] {
+  [class^='icon'] {
     path, polygon, rect, circle {
       fill: var(--modal-color-fg);
     }
