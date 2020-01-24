@@ -14,6 +14,7 @@ export class PublicbadgesDrawer {
   @Prop() public badgeColor: string = "#3C3C3C";
   @Prop() public modalTheme: string = "light";
   @Prop() public testMode: boolean = false;
+  @Prop() public domainName: string = "https://example.org";
 
   // State
   @State() public open: boolean = false;
@@ -44,14 +45,13 @@ export class PublicbadgesDrawer {
     document.head.appendChild(linkNode);
 
     //const domainName: string = this.testMode ? "https://example.org" : window.location.origin
-    const domainName: string = "https://example.org"
 
 
     // fetch badges
     fetch('https://api.publicbadges.com/dev/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: `{ getAllBadges(domainName: "${domainName}") { badgeId name description status ...on SignedPublicBadge { evidence { proofId name description } } } }` }),
+      body: JSON.stringify({ query: `{ getAllBadges(domainName: "${this.domainName}") { badgeId name description status ...on SignedPublicBadge { evidence { proofId name description } } } }` }),
     }).then(res => {
       return res.json()
     }).then(res => {

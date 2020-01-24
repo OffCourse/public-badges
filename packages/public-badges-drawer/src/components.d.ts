@@ -19,6 +19,7 @@ export namespace Components {
   }
   interface PublicbadgesDrawer {
     'badgeColor': string;
+    'domainName': string;
     'modalTheme': string;
     'testMode': boolean;
   }
@@ -66,6 +67,7 @@ declare namespace LocalJSX {
   }
   interface PublicbadgesDrawer {
     'badgeColor'?: string;
+    'domainName'?: string;
     'modalTheme'?: string;
     'testMode'?: boolean;
   }
