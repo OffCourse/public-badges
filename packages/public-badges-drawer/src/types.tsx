@@ -6,16 +6,9 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
-  /** A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. */
   URL: any,
-  /** A field whose value is a generic Globally Unique Identifier: https://en.wikipedia.org/wiki/Universally_unique_identifier. */
   GUID: any,
-  /** 
- * A field whose value conforms to the standard internet email address format as
-   * specified in RFC822: https://www.w3.org/Protocols/rfc822/.
- */
   EmailAddress: any,
-  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any,
 };
 
@@ -65,6 +58,14 @@ export type ContactInput = {
 };
 
 
+
+export type Issuer = {
+   __typename?: 'Issuer',
+  issuerId: Scalars['URL'],
+  type?: Maybe<Scalars['String']>,
+  name?: Maybe<Scalars['String']>,
+  email: Scalars['EmailAddress'],
+};
 
 
 export type Mutation = {
