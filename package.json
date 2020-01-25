@@ -4,10 +4,11 @@
     "packages/public-badges-drawer",
     "packages/public-badges-backend"
   ],
-  "devDependencies": {
-    "workspace-release": "^0.5.1"
-  },
   "scripts": {
     "release": "yarn workspace-version"
+  },
+  "devDependencies": {
+    "husky": "^4.2.1",
+    "workspace-release": "^0.5.1"
   }
 }
