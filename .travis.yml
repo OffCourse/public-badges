@@ -7,6 +7,6 @@ cache:
 install:
   - yarn
 script:
-  - yarn workspace @offcourse/public-badges-drawer build
   - if [ -n "$TRAVIS_TAG" ]; then yarn workspace @offcourse/public-badges-backend deploy:pilot; fi
+  - yarn workspace @offcourse/public-badges-drawer build
   - if [ -n "$TRAVIS_TAG" ]; then node node_modules/.bin/workspace-publish; fi
