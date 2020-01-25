@@ -1,7 +1,8 @@
 {
   "private": true,
   "workspaces": [
-    "packages/public-badges-drawer"
+    "packages/public-badges-drawer",
+    "packages/public-badges-backend"
   ],
   "devDependencies": {
     "workspace-release": "^0.5.1"
