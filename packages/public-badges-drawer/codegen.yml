@@ -1,4 +1,4 @@
-schema: ../public-badges-graphql-schema/*.graphql
+schema: https://api.publicbadges.com/pilot/graphql
 documents: src/graphql/**/*.graphql
 generates:
   ./src/types.tsx:

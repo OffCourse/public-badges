@@ -2,7 +2,7 @@
   "private": true,
   "workspaces": [
     "packages/public-badges-drawer",
-    "packages/public-badges-backend"
+    "backend"
   ],
   "scripts": {
     "release": "yarn workspace-version"

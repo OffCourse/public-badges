@@ -12,7 +12,7 @@
     "invoke:remote": "sls invoke --stage dev",
     "prebuild": "rimraf dist && yarn codegen",
     "build": "tsc",
-    "postbuild": "cp -r src/handlers/graphql/schema dist/handlers/graphql",
+    "postbuild": "cp -r src/schema dist/",
     "predeploy": "yarn build",
     "predeploy:pilot": "yarn build",
     "deploy": "sls deploy --stage dev",
@@ -28,18 +28,20 @@
     "@graphql-codegen/typescript-resolvers": "1.9.1",
     "@types/jws": "^3.2.1",
     "@types/voca": "^1.4.0",
-    "concurrently": "^5.0.1",
-    "rimraf": "^3.0.0",
-    "serverless-domain-manager": "^3.3.1",
-    "tslint-plugin-prettier": "^2.1.0",
-    "typescript": "^3.7.3"
-  },
-  "dependencies": {
     "@types/aws-lambda": "^8.10.39",
     "@types/node": "^12.12.17",
     "@types/node-fetch": "^2.5.4",
     "@types/ramda": "^0.26.38",
     "@types/uuid": "^3.4.6",
+    "concurrently": "^5.0.1",
+    "lambda-local": "^1.6.3",
+    "rimraf": "^3.0.0",
+    "serverless-domain-manager": "^3.3.1",
+    "tslint": "^6.0.0",
+    "tslint-plugin-prettier": "^2.1.0",
+    "typescript": "^3.7.3"
+  },
+  "dependencies": {
     "apollo-server-lambda": "^2.9.13",
     "graphql": "^14.5.8",
     "graphql-import-node": "^0.0.4",
@@ -47,7 +49,6 @@
     "graphql-scalars": "^1.0.4",
     "graphql-tools": "^4.0.6",
     "jws": "^4.0.0",
-    "lambda-local": "^1.6.3",
     "module-alias": "^2.2.2",
     "ramda": "^0.26.1",
     "serverless": "^1.59.3",
@@ -58,5 +59,10 @@
     "@stores": "dist/stores",
     "@types": "dist/types",
     "@eventBus": "dist/eventBus"
+  },
+  "workspaces": {
+    "nohoist": [
+      "**/*"
+    ]
   }
 }
