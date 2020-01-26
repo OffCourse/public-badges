@@ -22,7 +22,7 @@
       "description": "Badge is Publicly Visible on Website",
       "narrative": [
         "Given a user wants to know if the organization subscribes to the Public Spaces Manifesto",
-        "And visits the organizations homepage",
+        "And visits the organization's homepage",
         "When the user scrolls to the footer of the page",
         "Then the user should see the Zero Badge",
         "And the Badge should be displayed with sufficient color contrast",
