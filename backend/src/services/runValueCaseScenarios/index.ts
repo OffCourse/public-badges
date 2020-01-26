@@ -38,13 +38,10 @@ const checkScenarios: (args: {
   const { name } = organization;
   const evidence = scenarios.map(
     ({ description: rawDescription, narrative: rawNarrative }) => {
-      const description = rawDescription.replace(
-        /(the.)?organization/i,
-        titleCase(name)
-      );
-      const narrative = rawNarrative.map(s =>
-        s.replace(/(the.)?organization/i, titleCase(name))
-      );
+      const [description, ...narrative] = [
+        rawDescription,
+        ...rawNarrative
+      ].map(s => s.replace(/(the.)?organization/i, titleCase(name)));
       return {
         proofId: uuid(),
         genre: "Gherkin Scenario",
