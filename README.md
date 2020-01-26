@@ -172,7 +172,7 @@ To configure the badges drawer the following (optional) html attributes are avai
 | modal-theme | "dark", "light" | "light"   |
 | test-mode   | "true", "false" | "false"   |
 
-##### badge-theme
+##### badge-color
 Depending on the background of where the drawer is placed this attribute allows setting it's color.
  
 ##### modal-theme
