@@ -8,6 +8,8 @@ import { ApprovedPublicBadge } from "../../types";
 })
 
 export class PublicbadgesModal {
+  modalEl!: HTMLElement;
+
   @Prop() public theme: string = "";
   @Prop() public mode: string = "";
   @Prop() public left: number = 0;
@@ -20,6 +22,11 @@ export class PublicbadgesModal {
     emit: (e) => e
   });
 
+  public componentDidLoad() {
+    if(this.mode === "vertical") {
+      window.scrollBy(0, this.modalEl.getBoundingClientRect().top - 10)
+    }
+  }
 
   public closeModalHandler = () => {
     this.closeDrawer.emit();
@@ -36,7 +43,7 @@ export class PublicbadgesModal {
     return (
       [
         <div id="modal-bg" onClick={ this.closeModalHandler }></div>,
-        <div id="modal" class={`${this.mode} ${this.theme} ${this.origin}`} style={{ left: this.left.toString()+"px"}}>
+        <div id="modal" class={`${this.mode} ${this.theme} ${this.origin}`} style={{ left: this.left.toString()+"px"}} ref={(el) => this.modalEl = el as HTMLElement}>
           <button class="close" onClick={ this.closeModalHandler }>
             <IconClose />
           </button>

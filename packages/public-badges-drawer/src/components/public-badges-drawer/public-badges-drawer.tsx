@@ -83,7 +83,7 @@ export class PublicbadgesDrawer {
     const spaceRight  = docWidth - left - width;
 
     this.modalMode = docWidth < 980 ? "vertical" : "horizontal";
-    this.modalLeft = Math.min(0, spaceRight + 40 - (docWidth < 980 ? 340 : 820));
+    this.modalLeft = Math.min(0, spaceRight + width - (docWidth < 980 ? 350 : 830));
     this.modalOrigin = top > spaceBottom ? "bottom" : "top";
   }
 
