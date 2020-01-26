@@ -11,6 +11,7 @@ import {
   Organization,
   BadgeIssuanceRequestedEvent
 } from "@types";
+import { titleCase } from "voca";
 
 import { registry, valueCase as valueCaseStore } from "@stores";
 import uuid from "uuid/v1";
@@ -30,18 +31,29 @@ const checkScenarios: (args: {
   valueCase: ValueCase;
   organization: Organization;
 }) => Promise<{ outcome: ScenarioOutcome; evidence: Proof[] }> = async ({
-  valueCase
+  valueCase,
+  organization
 }) => {
   const { scenarios } = valueCase;
-  const evidence = scenarios.map(({ description, narrative }) => {
-    return {
-      proofId: uuid(),
-      genre: "Gherkin Scenario",
-      name: slugify(description),
-      description,
-      narrative
-    };
-  });
+  const { name } = organization;
+  const evidence = scenarios.map(
+    ({ description: rawDescription, narrative: rawNarrative }) => {
+      const description = rawDescription.replace(
+        /(the.)?organization/i,
+        titleCase(name)
+      );
+      const narrative = rawNarrative.map(s =>
+        s.replace(/(the.)?organization/i, titleCase(name))
+      );
+      return {
+        proofId: uuid(),
+        genre: "Gherkin Scenario",
+        name: slugify(description),
+        description,
+        narrative
+      };
+    }
+  );
   return {
     outcome: ScenarioOutcome.PASSED,
     evidence
@@ -70,6 +82,7 @@ const runValueCaseScenarios: PublicBadgesHandler<
       });
       switch (outcome) {
         case ScenarioOutcome.PASSED: {
+          console.log(evidence);
           const badge: ApprovedPublicBadge = {
             ...detail,
             evidence,
