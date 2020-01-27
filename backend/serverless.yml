@@ -61,6 +61,7 @@ functions:
       - http:
           path: /fonts/{pathvar+}
           method: get
+          cors: true
   graphql:
     handler: dist/index.graphql
     events:
