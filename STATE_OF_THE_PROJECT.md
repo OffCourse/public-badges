@@ -51,9 +51,12 @@ State of Public Badges Project
 
 2. Mapping Ethical Internet
 
-+ What are we going to meassure?
++ What are we going to measure?
 
-+ How are we going to meassure it?
++ How are we going to measure it?
+
++ How are we going to value this?
+
 
 + How do we translate this information into actionable feedback
 

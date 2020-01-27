@@ -154,33 +154,28 @@ import publicbadges-drawer from "@offcourse/public-badges-drawer"
 or host it directly:
 
 ```html
-<script src="https://unpkg.com/@offcourse/public-badges-drawer@0.1.0/umd/container.production.min.js" async></script>
+<script type="module" src="https://unpkg.com/@offcourse/public-badges-drawer@latest/dist/publicbadges/publicbadges.esm.js"></script>
+<script src="https://unpkg.com/@offcourse/public-badges-drawer@latest/dist/publicbadges/publicbadges.js"></script>
 ```
 
 The Public Spaces Badges drawer is a [webcomponent](https://www.webcomponents.org/introduction)
 that you can use directly in your html.
 
 ```html
-<publicbadges-drawer badge-theme="dark" modal-theme="light" />
+<publicbadges-drawer />
 ```
 
 To configure the badges drawer the following (optional) html attributes are available:
 
-| attribute   | values          | default   |
-|-------------|-----------------|-----------|
-| badge-color | hex color code  | "#3C3C3C" |
-| modal-theme | "dark", "light" | "light"   |
-| test-mode   | "true", "false" | "false"   |
+| attribute   | values          | default   | description                                                                                     |
+|-------------|-----------------|-----------|-------------------------------------------------------------------------------------------------|
+| badge-color | hex color code  | "#3C3C3C" | Sets the color of the badges drawer. Make sure it has enough contrast with the backbround color  |
+| modal-theme | "dark", "light" | "light"   | Sets the color scheme of the modal (that appears when the drawer is clicked).                   |
+| test-mode   | "true", "false" | "false"   | Puts the badge drawer in test mode, handy for testing the positioning within the website.      |
 
-##### badge-color
-Depending on the background of where the drawer is placed this attribute allows setting it's color.
- 
-##### modal-theme
-Sets the color scheme of the modal (that appears when the drawer is clicked).
- 
-##### testMode
-Puts the badge drawer in test mode, handy for testing the positioning within the website.
-
+```html
+<publicbadges-drawer badge-color="#FFFFFF" modal-theme="dark" test-mode="true" />
+```
 
 Documentation for the use of webcomponents with your frontend framework of choice,
 can be found here: [https://stenciljs.com/docs/overview](https://stenciljs.com/docs/overview).
