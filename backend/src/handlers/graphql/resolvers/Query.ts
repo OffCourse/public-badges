@@ -7,10 +7,11 @@ const Query: QueryResolvers = {
     if (`${domainName}` === "https://example.org/") {
       return stores.badgeInstance.fetchAll({});
     }
-    const { organizationId } = await stores.registry.fetch({ domainName });
-    if (!organizationId) {
+    const organization = await stores.registry.fetch({ domainName });
+    if (!organization) {
       throw "not a known organization for now";
     }
+    const organizationId = organization.organizationId;
     return stores.badgeInstance.fetchAll({ organizationId });
   }
 };
