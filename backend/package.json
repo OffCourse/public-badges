@@ -13,7 +13,7 @@
     "invoke:remote": "sls invoke --stage dev",
     "prebuild": "rimraf dist && yarn codegen",
     "build": "tsc",
-    "postbuild": "cp -r src/schema dist/",
+    "postbuild": "cp -r src/schema src/assets dist",
     "predeploy": "yarn build",
     "predeploy:pilot": "yarn build",
     "deploy": "sls deploy --stage dev",
@@ -54,6 +54,7 @@
     "module-alias": "^2.2.2",
     "ramda": "^0.26.1",
     "serverless": "^1.59.3",
+    "serverless-aws-static-file-handler": "^2.0.4",
     "uuid": "^3.3.3",
     "voca": "^1.4.0"
   },

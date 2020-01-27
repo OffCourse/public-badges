@@ -1,7 +1,7 @@
 import "module-alias/register";
 import { map } from "ramda";
 import eventBus from "@eventBus";
-import { graphql, echo } from "./handlers";
+import { graphql, echo, serveAssets } from "./handlers";
 import { Handler as AWSHandler } from "aws-lambda";
 import { PublicBadgesHandler } from "@types";
 import * as services from "./services";
@@ -35,6 +35,7 @@ const {
 export {
   graphql,
   echo,
+  serveAssets,
   saveOrganization,
   saveBadge,
   approveOrganization,

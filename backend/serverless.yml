@@ -1,8 +1,13 @@
 service: public-badges
 plugins:
   - serverless-domain-manager
+  - serverless-aws-static-file-handler/plugins/BinaryMediaTypes
 
 custom:
+  apiGateway:
+    binaryMediaTypes:
+      - "fonts/woff2"
+      - "fonts/ttf"
   customDomain:
     domainName: api.publicbadges.com
     stage: ${opt:stage}
@@ -50,6 +55,12 @@ provider:
         - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.registry_lookup_table}/index/*"
 
 functions:
+  serveAssets:
+    handler: dist/index.serveAssets
+    events:
+      - http:
+          path: /fonts/{pathvar+}
+          method: get
   graphql:
     handler: dist/index.graphql
     events:
@@ -210,3 +221,4 @@ resources:
             ProvisionedThroughput:
               ReadCapacityUnits: 1
               WriteCapacityUnits: 1
+
