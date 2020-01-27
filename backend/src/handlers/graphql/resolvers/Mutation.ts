@@ -25,18 +25,17 @@ const Mutation: MutationResolvers = {
        The unavoidable perils of async ;-)
     **/
     await timeout(500);
-    const { organizationId } = await stores.registry.fetch({ domainName });
-
-    if (!organizationId) {
+    const organization = await stores.registry.fetch({ domainName });
+    if (!organization) {
       throw "ORG DOES NOT EXISTS";
     }
 
     const valueCase = await stores.valueCase.fetch({ valueCaseId });
-    console.log(valueCase);
     if (!valueCase) {
       throw "ValueCase does not exist";
     }
 
+    const organizationId = organization.organizationId;
     const badge = await stores.badgeInstance.fetch({
       organizationId,
       valueCaseId
