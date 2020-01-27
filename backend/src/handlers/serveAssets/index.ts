@@ -8,6 +8,6 @@ const fileHandler = new StaticFileHandler(clientFilesPath);
 
 const handler: AWSHandler = async (event, context) => {
   return fileHandler.get(event, context);
-};
+}
 
 export default handler;

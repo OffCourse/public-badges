@@ -880,7 +880,7 @@ var CustomStyle = /** @class */ (function () {
 
     var resourcesUrl = scriptElm ? scriptElm.getAttribute('data-resources-url') || scriptElm.src : '';
     var start = function() {
-      var url = new URL('./p-a243a9bb.system.js', resourcesUrl);
+      var url = new URL('./p-c2f7fbcd.system.js', resourcesUrl);
       System.import(url.href);
     };
 
