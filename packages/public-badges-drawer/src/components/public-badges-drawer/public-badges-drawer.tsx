@@ -41,7 +41,7 @@ export class PublicbadgesDrawer {
     const linkNode = document.createElement("link");
     linkNode.type = "text/css";
     linkNode.rel = "stylesheet";
-    linkNode.href = "http://api.publicbadges.com/dev/fonts/font.css";
+    linkNode.href = "https://api.publicbadges.com/dev/fonts/font.css";
     document.head.appendChild(linkNode);
 
     //const domainName: string = this.testMode ? "https://example.org" : window.location.origin
