@@ -23,12 +23,16 @@ State of Public Badges Project
   more ([waag.org](https://waag.org) and [vpro.nl](https://vpro.nl)) in the 
   next two weeks
 
++ Open Sourced the code along with core documentation and tools
+
 ### What is necessary for the 1.0 release?
 
 + Frontend and backend need to be tested in production environments
 
 + Refactoring, small additional features, and bug fixes on the basis 
   of the aforementioned tests
+
++ Better documentation
 
 
 ### What follows after that?
