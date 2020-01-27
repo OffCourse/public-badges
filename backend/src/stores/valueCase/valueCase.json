@@ -5,23 +5,23 @@
   "tags": ["manifesto", "intention"],
   "proposedBy": "https://offcourse.io/",
   "approvedBy": "sander@waag.org",
-  "description": "This badge is awarded to organization that publicly display their commitment\nto the values of the public spaces manifesto on their website.\n",
-  "narrative": "The Zero Badge is a way for organizations that are part of the Public Spaces\ncoalition to show their affiliation on their website. It provides visible\nevidence to the user that the organization has the intention to implement\nthe Public Spaces values in their online presence.\n",
+  "description": "This badge is awarded to organizations that publicly display their commitment\nto the values of the PublicSpaces manifesto on their website.\n",
+  "narrative": "The Zero Badge is a way for organizations that are part of the PublicSpaces\ncoalition to show their affiliation on their website. It provides visible\nevidence to the user that the organization has the intention to implement\nthe PublicSpaces values in their online presence.\n",
   "scenarios": [
     {
-      "description": "Organization is listed in Public Spaces Registry",
+      "description": "Organization is listed in the PublicSpaces Registry",
       "narrative": [
         "Given a user visits the organizations website",
         "And the website displays the Zero Badge",
-        "Then the organization is listed in the Public Spaces Registry",
+        "Then the organization is listed in the PublicSpaces Registry",
         "And the Badge is valid",
         "And the user knows that the organization subscribes to the Public Spaces manifesto"
       ]
     },
     {
-      "description": "Badge is Publicly Visible on Website",
+      "description": "Zero Badge is publicly visible on the organization's website",
       "narrative": [
-        "Given a user wants to know if the organization subscribes to the Public Spaces Manifesto",
+        "Given a user wants to know if the organization subscribes to the PublicSpaces Manifesto",
         "And visits the organization's homepage",
         "When the user scrolls to the footer of the page",
         "Then the user should see the Zero Badge",
@@ -30,9 +30,9 @@
       ]
     },
     {
-      "description": "Website links to Public Spaces Manifesto",
+      "description": "Organization's website links to the PublicSpaces Manifesto",
       "narrative": [
-        "Given a user wants to know what the Public Spaces manifesto entails",
+        "Given a user wants to know what the PublicSpaces manifesto entails",
         "And visits the website of an affiliated organization",
         "When the webiste displays the Zero Badge",
         "And the user clicks on the Badge",

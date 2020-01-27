@@ -45,7 +45,7 @@ const checkScenarios: (args: {
       return {
         proofId: uuid(),
         genre: "Gherkin Scenario",
-        name: slugify(description),
+        name: slugify(description).replace(/-s-/g, " "),
         description,
         narrative
       };

@@ -54,9 +54,29 @@ provider:
         - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.registry_lookup_table}"
         - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:custom.registry_lookup_table}/index/*"
 
+package:
+  exclude:
+    - dist/assets
+    - node_modules
+  include:
+    - node_modules/voca/**/*
+    - node_modules/uuid/**/*
+    - node_modules/ramda/**/*
+    - node_modules/module-alias/**/*
+    - node_modules/jws/**/*
+
 functions:
   serveAssets:
     handler: dist/index.serveAssets
+    package:
+      individually: true
+      exclude:
+        - node_modules
+      include:
+        - dist/assets/**/*
+        - node_modules/middy/**/*
+        - node_modules/module-alias/**/*
+        - node_modules/serverless-aws-static-file-handler/**/*
     events:
       - http:
           path: /fonts/{pathvar+}
@@ -64,6 +84,21 @@ functions:
           cors: true
   graphql:
     handler: dist/index.graphql
+    package:
+      individually: true
+      exclude:
+        - node_modules
+        - dist/assets
+      include:
+        - node_modules/apollo-server-lambda/**/*
+        - node_modules/graphql/**/*
+        - node_modules/graphql-import-node/**/*
+        - node_modules/graphql-playground-middleware-lambda/**/*
+        - node_modules/graphql-scalars/**/*
+        - node_modules/graphql-tools/**/*
+        - node_modules/uuid/**/*
+        - node_modules/voca/**/*
+        - node_modules/ramda/**/*
     events:
       - http:
           path: graphql
