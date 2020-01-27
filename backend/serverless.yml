@@ -16,14 +16,14 @@ custom:
   registry_bucket: public-badges-registry-${opt:stage}
   registry_lookup_table: registry-lookup-${opt:stage}
   organization-status-index: organization-status-${opt:stage}
-  api: public-badges.api
-  save_organization: public-badges.save-organization
-  save_badge: public-badges.save-badge
-  run_value_case_scenarios: public-badges.run-value-case-scenarios
-  prepare_open_badge_artifact: public-badges.prepare-open-badge-artifact
-  sign_open_badge_artifact: public-badges.sign-open-badge-artifact
-  approve_organization: public-badges.approve-organization
-  update_registry_lookup: public-badges.update-registry-lookup
+  api: public-badges.api-${opt:stage}
+  save_organization: public-badges.save-organization-${opt:stage}
+  save_badge: public-badges.save-badge-${opt:stage}
+  run_value_case_scenarios: public-badges.run-value-case-scenarios-${opt:stage}
+  prepare_open_badge_artifact: public-badges.prepare-open-badge-artifact-${opt:stage}
+  sign_open_badge_artifact: public-badges.sign-open-badge-artifact-${opt:stage}
+  approve_organization: public-badges.approve-organization-${opt:stage}
+  update_registry_lookup: public-badges.update-registry-lookup-${opt:stage}
 
 provider:
   name: aws

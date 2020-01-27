@@ -2,11 +2,13 @@ import {
   OrganizationRegistrationRequestedEvent,
   OrganizationApprovalRequestedEvent,
   OrganizationApprovalAcceptedEvent,
+  OrganizationApprovalDelayedEvent,
   OrganizationApprovedEvent,
   BadgeIssuanceRequestedEvent,
   BadgeIssuanceApprovedEvent,
   BadgeInstanceUpdated,
   BadgeIssuanceRejectedEvent,
+  BadgeIssuanceDelayedEvent,
   BadgeInstanceSigned,
   OpenBadgeArtifactCreated,
   OpenBadgeArtifactSigned
@@ -20,10 +22,12 @@ export type PublicBadgesEvent =
   | OrganizationRegistrationRequestedEvent
   | OrganizationApprovalRequestedEvent
   | OrganizationApprovalAcceptedEvent
+  | OrganizationApprovalDelayedEvent
   | OrganizationApprovedEvent
   | BadgeIssuanceRequestedEvent
   | BadgeIssuanceApprovedEvent
   | BadgeIssuanceRejectedEvent
+  | BadgeIssuanceDelayedEvent
   | BadgeInstanceUpdated
   | BadgeInstanceSigned
   | OpenBadgeArtifactCreated

@@ -33,6 +33,10 @@ export interface OrganizationApprovalAcceptedEvent extends PBEvent {
   detailType: PublicBadgesEventType.ORGANIZATION_APPROVAL_ACCEPTED;
   detail: PendingOrganization;
 }
+export interface OrganizationApprovalDelayedEvent extends PBEvent {
+  detailType: PublicBadgesEventType.ORGANIZATION_APPROVAL_DELAYED;
+  detail: PendingOrganization;
+}
 
 export interface OrganizationApprovedEvent extends PBEvent {
   detailType: PublicBadgesEventType.ORGANIZATION_APPROVED;
@@ -51,6 +55,11 @@ export interface BadgeIssuanceApprovedEvent extends PBEvent {
 
 export interface BadgeIssuanceRejectedEvent extends PBEvent {
   detailType: PublicBadgesEventType.BADGE_ISSUANCE_REJECTED;
+  detail: RejectedPublicBadge;
+}
+
+export interface BadgeIssuanceDelayedEvent extends PBEvent {
+  detailType: PublicBadgesEventType.BADGE_ISSUANCE_DELAYED;
   detail: RejectedPublicBadge;
 }
 

@@ -40,7 +40,7 @@ const saveOrganization: PublicBadgesHandler<InputEvent, OutputEvent> = async ({
       const organization: ApprovedOrganization = {
         ...detail,
         status: OrganizationStatus.Approved,
-        approvedBy: "yeehaa@fasljfsd.com",
+        approvedBy: "sander@waag.org",
         approvedOn: `${Date.now()}`
       };
       await putOrganization(id, organization);

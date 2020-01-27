@@ -9,7 +9,9 @@ import {
   PublicBadgeStatus,
   Proof,
   Organization,
-  BadgeIssuanceRequestedEvent
+  BadgeIssuanceRequestedEvent,
+  BadgeIssuanceDelayedEvent,
+  OrganizationStatus
 } from "@types";
 import { titleCase } from "voca";
 
@@ -20,41 +22,55 @@ import { slugify } from "voca";
 export type InputEvent = BadgeIssuanceRequestedEvent;
 export type OutputEvent =
   | BadgeIssuanceApprovedEvent
-  | BadgeIssuanceRejectedEvent;
+  | BadgeIssuanceRejectedEvent
+  | BadgeIssuanceDelayedEvent;
 
 enum ScenarioOutcome {
   PASSED = "PASSED",
-  FAILED = "FAILED"
+  FAILED = "FAILED",
+  DELAYED = "DELAYED"
 }
+
+type ScenarioResult = {
+  outcome: ScenarioOutcome;
+  evidence: Proof[];
+};
 
 const checkScenarios: (args: {
   valueCase: ValueCase;
   organization: Organization;
-}) => Promise<{ outcome: ScenarioOutcome; evidence: Proof[] }> = async ({
-  valueCase,
-  organization
-}) => {
+}) => Promise<ScenarioResult> = async ({ valueCase, organization }) => {
   const { scenarios } = valueCase;
-  const { name } = organization;
-  const evidence = scenarios.map(
-    ({ description: rawDescription, narrative: rawNarrative }) => {
-      const [description, ...narrative] = [
-        rawDescription,
-        ...rawNarrative
-      ].map(s => s.replace(/(the.)?organization/i, titleCase(name)));
+  const { name, status } = organization;
+  switch (status) {
+    case OrganizationStatus.Approved: {
+      const evidence = scenarios.map(
+        ({ description: rawDescription, narrative: rawNarrative }) => {
+          const [description, ...narrative] = [
+            rawDescription,
+            ...rawNarrative
+          ].map(s => s.replace(/(the.)?organization/i, titleCase(name)));
+          return {
+            proofId: uuid(),
+            genre: "Gherkin Scenario",
+            name: slugify(description).replace(/-s-/g, " "),
+            description,
+            narrative
+          };
+        }
+      );
       return {
-        proofId: uuid(),
-        genre: "Gherkin Scenario",
-        name: slugify(description).replace(/-s-/g, " "),
-        description,
-        narrative
+        outcome: ScenarioOutcome.PASSED,
+        evidence
       };
     }
-  );
-  return {
-    outcome: ScenarioOutcome.PASSED,
-    evidence
-  };
+    case OrganizationStatus.Pending: {
+      return { outcome: ScenarioOutcome.DELAYED, evidence: [] };
+    }
+    default: {
+      return { outcome: ScenarioOutcome.FAILED, evidence: [] };
+    }
+  }
 };
 
 const runValueCaseScenarios: PublicBadgesHandler<
@@ -79,7 +95,6 @@ const runValueCaseScenarios: PublicBadgesHandler<
       });
       switch (outcome) {
         case ScenarioOutcome.PASSED: {
-          console.log(evidence);
           const badge: ApprovedPublicBadge = {
             ...detail,
             evidence,
@@ -87,6 +102,17 @@ const runValueCaseScenarios: PublicBadgesHandler<
           };
           return {
             detailType: EV.BADGE_ISSUANCE_APPROVED,
+            detail: badge
+          };
+        }
+        case ScenarioOutcome.DELAYED: {
+          const badge: RejectedPublicBadge = {
+            ...detail,
+            evidence,
+            status: PublicBadgeStatus.Pending
+          };
+          return {
+            detailType: EV.BADGE_ISSUANCE_DELAYED,
             detail: badge
           };
         }
