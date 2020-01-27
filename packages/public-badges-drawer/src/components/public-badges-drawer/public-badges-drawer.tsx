@@ -37,13 +37,23 @@ export class PublicbadgesDrawer {
       this.el.style.setProperty("--modal-color-fg", modalColorFg);
     }
 
-    // add font css
-    const linkNode = document.createElement("link");
-    linkNode.type = "text/css";
-    linkNode.rel = "stylesheet";
-    linkNode.href = "https://api.publicbadges.com/dev/fonts/font.css";
-    document.head.appendChild(linkNode);
+    // add font/css
+    const linkCss = document.createElement("link");
+    linkCss.type = "text/css";
+    linkCss.rel = "stylesheet";
+    linkCss.href = "https://api.publicbadges.com/dev/fonts/font.css";
+    document.head.appendChild(linkCss);
 
+    const linkFont = document.createElement("link");
+    linkFont.type = "font/ttf";
+    linkFont.rel = "preload";
+    linkFont.as = "font";
+    linkFont.crossOrigin = "anonymous";
+    linkFont.href = "https://api.publicbadges.com/dev/fonts/ManropeGX.ttf";
+    document.head.appendChild(linkFont);
+
+
+    // temp disabled 
     //const domainName: string = this.testMode ? "https://example.org" : window.location.origin
 
 

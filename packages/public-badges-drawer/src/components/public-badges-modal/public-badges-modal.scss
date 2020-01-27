@@ -23,12 +23,15 @@ $vf-weight-heading: 650;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.25);
   //font-family: 'Geomanist', sans-serif;
   font-size: 14px;
-  font-family: 'Manrope VF', Manrope, sans-serif;
+  font-family: Manrope, sans-serif;
   font-weight: $f-weight-normal;
-  font-variation-settings: 'wght' $vf-weight-normal;
-  font-variation-ligatures: normal;
-  font-feature-settings:'calt', 'liga';
 
+  @supports (font-variation-settings: normal) {
+    font-family: 'Manrope VF', sans-serif;
+    font-variation-settings: 'wght' $vf-weight-normal;
+    font-variation-ligatures: normal;
+    font-feature-settings:'calt', 'liga';
+  }
   
   //clip-path: polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%);
 
