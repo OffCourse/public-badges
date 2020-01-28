@@ -5,8 +5,8 @@ State of Public Badges Project
 
 ### What did we accomplish so far?
 
-+ Mapped the domain of evidence-based ethical certification of internet 
-  products and translated it into data models
++ Mapped the domain of evidence-based certification of the ethical internet 
+  and translated it into data models
 
 + Build and deployed the infrastructure for badge issuance.
 
@@ -23,6 +23,8 @@ State of Public Badges Project
   more ([waag.org](https://waag.org) and [vpro.nl](https://vpro.nl)) in the 
   next two weeks
 
++ Interoperability with the OpenBadges Ecosystem
+
 + Open Sourced the code along with core documentation and tools
 
 ### What is necessary for the 1.0 release?
@@ -32,7 +34,9 @@ State of Public Badges Project
 + Refactoring, small additional features, and bug fixes on the basis 
   of the aforementioned tests
 
-+ Better documentation
++ Better documentation and rationale
+
++ Improved experience for mobile browsers
 
 
 ### What follows after that?
