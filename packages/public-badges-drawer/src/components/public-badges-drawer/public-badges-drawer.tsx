@@ -37,18 +37,32 @@ export class PublicbadgesDrawer {
       this.el.style.setProperty("--modal-color-fg", modalColorFg);
     }
 
-    // add font css
-    const linkNode = document.createElement("link");
-    linkNode.type = "text/css";
-    linkNode.rel = "stylesheet";
-    linkNode.href = "https://api.publicbadges.com/dev/fonts/font.css";
-    document.head.appendChild(linkNode);
+    //const fontUrl = "https://api.publicbadges.com/dev/";
+    //const fontUrl = "http://publicbadges.ao.waag.org/manrope/";
+    const fontUrl = "https://fonts.publicbadges.com/";
 
+    // add font/css
+    const linkCss = document.createElement("link");
+    linkCss.type = "text/css";
+    linkCss.rel = "stylesheet";
+    linkCss.href = fontUrl + "font.css";
+    document.head.appendChild(linkCss);
+
+    const linkFont = document.createElement("link");
+    linkFont.type = "font/ttf";
+    linkFont.rel = "preload";
+    linkFont.as = "font";
+    linkFont.crossOrigin = "anonymous";
+    linkFont.href = fontUrl + "ManropeGX.ttf";
+    document.head.appendChild(linkFont);
+
+
+    // temp disabled 
     //const domainName: string = this.testMode ? "https://example.org" : window.location.origin
 
 
     // fetch badges
-    fetch('https://api.publicbadges.com/dev/graphql', {
+    fetch('https://api.publicbadges.com/pilot/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: `{ getAllBadges(domainName: "${this.domainName}") { badgeId name description status ...on SignedPublicBadge { evidence { proofId name description } } } }` }),
