@@ -30,18 +30,20 @@ const PublicbadgesDrawer = class {
             this.el.style.setProperty("--modal-color-bg", modalColorBg);
             this.el.style.setProperty("--modal-color-fg", modalColorFg);
         }
+        const fontUrl = "https://api.publicbadges.com/dev/";
+        //const fontUrl = "http://publicbadges.ao.waag.org/manrope/";
         // add font/css
         const linkCss = document.createElement("link");
         linkCss.type = "text/css";
         linkCss.rel = "stylesheet";
-        linkCss.href = "https://api.publicbadges.com/dev/fonts/font.css";
+        linkCss.href = fontUrl + "font.css";
         document.head.appendChild(linkCss);
         const linkFont = document.createElement("link");
         linkFont.type = "font/ttf";
         linkFont.rel = "preload";
         linkFont.as = "font";
         linkFont.crossOrigin = "anonymous";
-        linkFont.href = "https://api.publicbadges.com/dev/fonts/ManropeGX.ttf";
+        linkFont.href = fontUrl + "ManropeGX.ttf";
         document.head.appendChild(linkFont);
         // temp disabled 
         //const domainName: string = this.testMode ? "https://example.org" : window.location.origin
