@@ -36,6 +36,8 @@ State of Public Badges Project
 
 + Better documentation and rationale
 
++ Small set of regression tests
+
 + Improved experience for mobile browsers
 
 
