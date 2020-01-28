@@ -23,6 +23,8 @@ State of Public Badges Project
   more ([waag.org](https://waag.org) and [vpro.nl](https://vpro.nl)) in the 
   next two weeks
 
++ Interoperability with the OpenBadges Ecosystem
+
 + Open Sourced the code along with core documentation and tools
 
 ### What is necessary for the 1.0 release?
