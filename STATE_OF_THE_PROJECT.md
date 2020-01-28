@@ -5,8 +5,8 @@ State of Public Badges Project
 
 ### What did we accomplish so far?
 
-+ Mapped the domain of evidence-based ethical certification of internet 
-  products and translated it into data models
++ Mapped the domain of evidence-based certification of the ethical internet 
+  and translated it into data models
 
 + Build and deployed the infrastructure for badge issuance.
 
