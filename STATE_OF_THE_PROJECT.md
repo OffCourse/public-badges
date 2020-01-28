@@ -32,7 +32,9 @@ State of Public Badges Project
 + Refactoring, small additional features, and bug fixes on the basis 
   of the aforementioned tests
 
-+ Better documentation
++ Better documentation and rationale
+
++ Improved experience for mobile browsers
 
 
 ### What follows after that?
