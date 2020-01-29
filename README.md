@@ -20,7 +20,7 @@ the choice of values within a pluralist landscape.
 ## Flow [TODO]
 
 For a more detailed explanation of how the Public Badges Flow works, we refer you to the
-following [poster] (/Poster Public Badges.pdf) for now. 
+following [poster](/Poster Public Badges.pdf) for now. 
 
 
 ## Contributors
