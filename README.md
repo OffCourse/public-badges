@@ -25,7 +25,7 @@ but we aim to broaden our scope and reach later this year.
 ## Flow [TODO]
 
 For a more detailed explanation of how the Public Badges Flow works, we refer you to the
-following [poster](/Poster Public Badges.pdf) for now. 
+following [poster](./Poster%20Public%20Badges.pdf) for now. 
 
 
 ## Contributors
