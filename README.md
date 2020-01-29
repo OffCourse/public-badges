@@ -16,6 +16,8 @@ The goal of the Public Badges is not to come up with an one size fits all value
 system for the internet. Instead, it is a tool to facilitate discussion about
 the choice of values within a pluralist landscape.
 
+## Pilot Phase - Zero Badge
+
 We are currently in a pilot phase, testing the so-called [Zero
 Badge](./ZERO_BADGE.md). This phase is only open to current members of the 
 [PublicSpaces Coalition](https://publicspaces.net/the-coalition/), 
