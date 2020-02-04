@@ -151,7 +151,6 @@ import publicbadges-drawer from "@offcourse/public-badges-drawer"
 or host it directly:
 
 ```html
-<script type="module" src="https://unpkg.com/@offcourse/public-badges-drawer@latest/dist/publicbadges/publicbadges.esm.js"></script>
 <script src="https://unpkg.com/@offcourse/public-badges-drawer@latest/dist/publicbadges/publicbadges.js"></script>
 ```
 
