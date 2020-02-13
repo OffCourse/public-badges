@@ -115,7 +115,7 @@ and the variables are:
 ```json
 {
   "input": {
-    "valueCaseId": "88c7a930-3181-11ea-9858-b312ce22102d@zero",
+    "valueCaseId": "88c7a930-3181-11ea-9858-b312ce22102d",
     "domainName": "https://offcourse.io/"
   }
 }
