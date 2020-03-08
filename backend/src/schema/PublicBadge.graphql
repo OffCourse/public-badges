@@ -4,6 +4,7 @@ enum PublicBadgeStatus {
   SIGNED
   REJECTED
 }
+
 type Proof {
   proofId: GUID!
   name: String!
@@ -16,7 +17,7 @@ interface PublicBadge {
   badgeId: GUID!
   status: PublicBadgeStatus!
   valueCaseId: ID!
-  valueCase: ValueCase!
+  valueCase(language: Language): ValueCase!
   name: String!
   tags: [String]!
   description: String!
@@ -29,7 +30,7 @@ type PendingPublicBadge implements PublicBadge {
   badgeId: GUID!
   status: PublicBadgeStatus!
   valueCaseId: ID!
-  valueCase: ValueCase!
+  valueCase(language: Language): ValueCase!
   name: String!
   tags: [String]!
   description: String!
@@ -42,7 +43,7 @@ type ApprovedPublicBadge implements PublicBadge {
   badgeId: GUID!
   status: PublicBadgeStatus!
   valueCaseId: ID!
-  valueCase: ValueCase!
+  valueCase(language: Language): ValueCase!
   name: String!
   tags: [String]!
   description: String!
@@ -56,7 +57,7 @@ type RejectedPublicBadge implements PublicBadge {
   badgeId: GUID!
   status: PublicBadgeStatus!
   valueCaseId: ID!
-  valueCase: ValueCase!
+  valueCase(language: Language): ValueCase!
   name: String!
   tags: [String]!
   description: String!
@@ -70,7 +71,7 @@ type SignedPublicBadge implements PublicBadge {
   badgeId: GUID!
   status: PublicBadgeStatus!
   valueCaseId: ID!
-  valueCase: ValueCase!
+  valueCase(language: Language): ValueCase!
   name: String!
   tags: [String]!
   description: String!

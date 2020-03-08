@@ -1,6 +1,7 @@
 import * as Schema from "./Schema.graphql";
 import * as Query from "./Query.graphql";
 import * as Mutation from "./Mutation.graphql";
+import * as Language from "./Language.graphql";
 import * as PublicBadge from "./PublicBadge.graphql";
 import * as ValueCase from "./ValueCase.graphql";
 import * as Organization from "./Organization.graphql";
@@ -13,6 +14,7 @@ const typeDefs = [
   Issuer,
   Scalars,
   Query,
+  Language,
   Mutation,
   OpenBadge,
   PublicBadge,

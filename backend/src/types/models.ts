@@ -3,6 +3,7 @@ import {
   PendingOrganization as PO,
   OrganizationStatus,
   PublicBadge as PB,
+  Localization as LC,
   ValueCase as VC,
   ApprovedPublicBadge as APB,
   SignedPublicBadge as SPB,
@@ -22,6 +23,7 @@ export type ApprovedOrganization = Omit<AO, "status"> & {
 };
 
 export type ValueCaseProxy = ValueCase;
+
 export type ValueCase = Omit<VC, "proposedBy"> & {
   proposedBy: string;
 };

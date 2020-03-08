@@ -1,4 +1,9 @@
-import { ScenarioResolvers, ValueCaseResolvers } from "@types";
+import {
+  ScenarioResolvers,
+  LocalizationResolvers,
+  ValueCaseLocalizationResolvers,
+  ValueCaseResolvers
+} from "@types";
 
 const Scenario: ScenarioResolvers = {
   description({ description }) {
@@ -6,6 +11,30 @@ const Scenario: ScenarioResolvers = {
   },
   narrative({ narrative }) {
     return narrative;
+  }
+};
+
+const ValueCaseLocalization: ValueCaseLocalizationResolvers = {
+  name({ name }) {
+    return name;
+  },
+  tags({ tags }) {
+    return tags;
+  },
+  description({ description }) {
+    return description;
+  },
+  narrative({ narrative }) {
+    return narrative;
+  },
+  scenarios({ scenarios }) {
+    return scenarios;
+  }
+};
+
+const Localization: LocalizationResolvers = {
+  NL({ NL }) {
+    return NL;
   }
 };
 
@@ -36,9 +65,13 @@ const ValueCase: ValueCaseResolvers = {
   narrative({ narrative }) {
     return narrative;
   },
+  localization({ localization }) {
+    return localization;
+  },
   scenarios({ scenarios }) {
     return scenarios;
   }
 };
 
-export { ValueCase, Scenario };
+export { ValueCase, Scenario, Localization, ValueCaseLocalization };
+

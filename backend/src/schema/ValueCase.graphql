@@ -3,6 +3,18 @@ type Scenario {
   narrative: [String!]!
 }
 
+type ValueCaseLocalization {
+  name: String!
+  tags: [String]!
+  description: String!
+  narrative: String!
+  scenarios: [Scenario!]!
+}
+
+type Localization {
+  NL: ValueCaseLocalization
+}
+
 type ValueCase {
   valueCaseId: GUID!
   image: URL!
@@ -13,6 +25,7 @@ type ValueCase {
   description: String!
   narrative: String!
   scenarios: [Scenario!]!
+  localization: Localization
 }
 
 input ValueCaseInput {

@@ -33,14 +33,29 @@ const PublicBadge: PublicBadgeResolvers = {
   status({ status }) {
     return status;
   },
-  async valueCase({ valueCaseId }, _args, { stores }) {
+  async valueCase({ valueCaseId }, args, { stores }) {
+    const language = args?.language;
     const valueCase = await stores.valueCase.fetch({
       valueCaseId: valueCaseId
     });
+
     if (!valueCase) {
       throw "invalid badge, no corresponding value case";
     }
-    return valueCase;
+
+    if (!language) {
+      return valueCase;
+    }
+
+    const localization =
+      valueCase.localization && valueCase.localization[language];
+
+    if (!localization) {
+      throw "this badge is not translated in the language that you requested";
+    }
+    const { name, tags, narrative, scenarios, description } = localization;
+
+    return { ...valueCase, ...localization };
   },
   name({ name }) {
     return name;
