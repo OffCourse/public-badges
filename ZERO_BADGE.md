@@ -151,7 +151,7 @@ import publicbadges-drawer from "@offcourse/public-badges-drawer"
 or host it directly:
 
 ```html
-<script src="https://unpkg.com/@offcourse/public-badges-drawer@latest/dist/publicbadges/publicbadges.js"></script>
+<script src="https://unpkg.com/@offcourse/public-badges-drawer@0.1.0-0/dist/publicbadges/publicbadges.js"></script>
 ```
 
 The Public Spaces Badges drawer is a [webcomponent](https://www.webcomponents.org/introduction)
