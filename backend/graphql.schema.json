@@ -30,6 +30,16 @@
                   }
                 },
                 "defaultValue": null
+              },
+              {
+                "name": "language",
+                "description": "",
+                "type": {
+                  "kind": "ENUM",
+                  "name": "Language",
+                  "ofType": null
+                },
+                "defaultValue": null
               }
             ],
             "type": {
@@ -98,6 +108,29 @@
         "possibleTypes": null
       },
       {
+        "kind": "ENUM",
+        "name": "Language",
+        "description": "",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "NL",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "EN",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
         "kind": "INTERFACE",
         "name": "PublicBadge",
         "description": "",
@@ -153,18 +186,7 @@
           {
             "name": "valueCase",
             "description": "",
-            "args": [
-              {
-                "name": "language",
-                "description": "",
-                "type": {
-                  "kind": "ENUM",
-                  "name": "Language",
-                  "ofType": null
-                },
-                "defaultValue": null
-              }
-            ],
+            "args": [],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -357,23 +379,6 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
-        "name": "Language",
-        "description": "",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "NL",
-            "description": "",
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
         "possibleTypes": null
       },
       {
@@ -2767,7 +2772,7 @@
             "deprecationReason": null
           },
           {
-            "name": "name",
+            "name": "genre",
             "description": "",
             "args": [],
             "type": {
@@ -2783,7 +2788,7 @@
             "deprecationReason": null
           },
           {
-            "name": "genre",
+            "name": "name",
             "description": "",
             "args": [],
             "type": {
@@ -2900,18 +2905,7 @@
           {
             "name": "valueCase",
             "description": "",
-            "args": [
-              {
-                "name": "language",
-                "description": "",
-                "type": {
-                  "kind": "ENUM",
-                  "name": "Language",
-                  "ofType": null
-                },
-                "defaultValue": null
-              }
-            ],
+            "args": [],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -3092,18 +3086,7 @@
           {
             "name": "valueCase",
             "description": "",
-            "args": [
-              {
-                "name": "language",
-                "description": "",
-                "type": {
-                  "kind": "ENUM",
-                  "name": "Language",
-                  "ofType": null
-                },
-                "defaultValue": null
-              }
-            ],
+            "args": [],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -3308,18 +3291,7 @@
           {
             "name": "valueCase",
             "description": "",
-            "args": [
-              {
-                "name": "language",
-                "description": "",
-                "type": {
-                  "kind": "ENUM",
-                  "name": "Language",
-                  "ofType": null
-                },
-                "defaultValue": null
-              }
-            ],
+            "args": [],
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -3524,18 +3496,7 @@
           {
             "name": "valueCase",
             "description": "",
-            "args": [
-              {
-                "name": "language",
-                "description": "",
-                "type": {
-                  "kind": "ENUM",
-                  "name": "Language",
-                  "ofType": null
-                },
-                "defaultValue": null
-              }
-            ],
+            "args": [],
             "type": {
               "kind": "NON_NULL",
               "name": null,

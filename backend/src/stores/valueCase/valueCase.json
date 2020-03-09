@@ -42,40 +42,39 @@
   ],
   "localization": {
     "NL": {
-      "name": "Zero Badge",
-      "tags": ["manifesto", "intention"],
-      "description": "Dit vignette wordt toegekend aan organisaties die zich publiekelijk commiteren aan de waarden van het PublicSpaces manifest op hum website",
-      "narrative": "The Zero Badge is a way for organizations that are part of the PublicSpaces\ncoalition to show their affiliation on their website. It provides visible\nevidence to the user that the organization has the intention to implement\nthe PublicSpaces values in their online presence.\n",
+      "name": "BLA BLA BLA",
+      "tags": ["bla", "bla bla"],
+      "description": "BLA BLA BLA",
+      "narrative": "BLA BLA BLA",
       "scenarios": [
         {
-          "description": "Organization is listed in the PublicSpaces Registry",
+          "description": "BLA Organization BLA",
           "narrative": [
-            "Given a user visits the organizations website",
-            "And the website displays the Zero Badge",
-            "Then the organization is listed in the PublicSpaces Registry",
-            "And the Badge is valid",
-            "And the user knows that the organization subscribes to the Public Spaces manifesto"
+            "Organization BLA BLA",
+            "BLA BLA Organizations",
+            "BLA Organization BLA",
+            "BLA BLA BLA",
+            "BLA BLA BLA"
           ]
         },
         {
-          "description": "Zero Badge is publicly visible on the organization's website",
+          "description": "BLA BLA Organization",
           "narrative": [
-            "Given a user wants to know if the organization subscribes to the PublicSpaces Manifesto",
-            "And visits the organization's homepage",
-            "When the user scrolls to the footer of the page",
-            "Then the user should see the Zero Badge",
-            "And the Badge should be displayed with sufficient color contrast",
-            "And the Badge should have sufficient padding around it"
+            "Organization BLA BLA",
+            "BLA BLA Organizations",
+            "BLA Organization BLA",
+            "BLA BLA BLA",
+            "BLA BLA BLA"
           ]
         },
         {
-          "description": "Organization's website links to the PublicSpaces Manifesto",
+          "description": "BLA BLA BLA",
           "narrative": [
-            "Given a user wants to know what the PublicSpaces manifesto entails",
-            "And visits the website of an affiliated organization",
-            "When the webiste displays the Zero Badge",
-            "And the user clicks on the Badge",
-            "Then the user should be redirected to the Public Spaces manifesto"
+            "Organization BLA BLA",
+            "BLA BLA Organizations",
+            "BLA Organization BLA",
+            "BLA BLA BLA",
+            "BLA BLA BLA"
           ]
         }
       ]

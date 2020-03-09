@@ -2,6 +2,7 @@ import {
   ApprovedOrganization as AO,
   PendingOrganization as PO,
   OrganizationStatus,
+  Language,
   PublicBadge as PB,
   Localization as LC,
   ValueCase as VC,
@@ -46,5 +47,6 @@ export {
   OpenBadgeClass,
   Issuer,
   Proof,
+  Language,
   PublicBadgeStatus
 } from "./generated/graphql";

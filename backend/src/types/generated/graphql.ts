@@ -43,11 +43,6 @@ export type ApprovedPublicBadge = PublicBadge & {
   recipient: Organization,
 };
 
-
-export type ApprovedPublicBadgeValueCaseArgs = {
-  language: Maybe<Language>
-};
-
 export type Contact = {
   name: Scalars['String'],
   email: Scalars['EmailAddress'],
@@ -69,7 +64,8 @@ export type Issuer = {
 
 
 export enum Language {
-  Nl = 'NL'
+  Nl = 'NL',
+  En = 'EN'
 }
 
 export type Localization = {
@@ -175,15 +171,10 @@ export type PendingPublicBadge = PublicBadge & {
   recipient: Organization,
 };
 
-
-export type PendingPublicBadgeValueCaseArgs = {
-  language: Maybe<Language>
-};
-
 export type Proof = {
   proofId: Scalars['GUID'],
-  name: Scalars['String'],
   genre: Scalars['String'],
+  name: Scalars['String'],
   description: Scalars['String'],
   narrative: Array<Scalars['String']>,
 };
@@ -199,11 +190,6 @@ export type PublicBadge = {
   narrative: Scalars['String'],
   recipientId: Scalars['ID'],
   recipient: Organization,
-};
-
-
-export type PublicBadgeValueCaseArgs = {
-  language: Maybe<Language>
 };
 
 export type PublicBadgeInput = {
@@ -225,7 +211,8 @@ export type Query = {
 
 
 export type QueryGetAllBadgesArgs = {
-  domainName: Scalars['URL']
+  domainName: Scalars['URL'],
+  language: Maybe<Language>
 };
 
 
@@ -248,11 +235,6 @@ export type RejectedPublicBadge = PublicBadge & {
   recipient: Organization,
 };
 
-
-export type RejectedPublicBadgeValueCaseArgs = {
-  language: Maybe<Language>
-};
-
 export type Scenario = {
   description: Scalars['String'],
   narrative: Array<Scalars['String']>,
@@ -273,11 +255,6 @@ export type SignedPublicBadge = PublicBadge & {
   expires: Scalars['String'],
   artifact: OpenBadgeArtifact,
   recipient: Organization,
-};
-
-
-export type SignedPublicBadgeValueCaseArgs = {
-  language: Maybe<Language>
 };
 
 
@@ -384,11 +361,11 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>,
   URL: ResolverTypeWrapper<Scalars['URL']>,
+  Language: Language,
   PublicBadge: ResolverTypeWrapper<PublicBadgeProxy>,
   GUID: ResolverTypeWrapper<Scalars['GUID']>,
   PublicBadgeStatus: PublicBadgeStatus,
   ID: ResolverTypeWrapper<Scalars['ID']>,
-  Language: Language,
   ValueCase: ResolverTypeWrapper<ValueCaseProxy>,
   String: ResolverTypeWrapper<Scalars['String']>,
   Organization: ResolverTypeWrapper<Organization>,
@@ -425,11 +402,11 @@ export type ResolversTypes = ResolversObject<{
 export type ResolversParentTypes = ResolversObject<{
   Query: {},
   URL: Scalars['URL'],
+  Language: Language,
   PublicBadge: PublicBadgeProxy,
   GUID: Scalars['GUID'],
   PublicBadgeStatus: PublicBadgeStatus,
   ID: Scalars['ID'],
-  Language: Language,
   ValueCase: ValueCaseProxy,
   String: Scalars['String'],
   Organization: Organization,
@@ -478,7 +455,7 @@ export type ApprovedPublicBadgeResolvers<ContextType = ApolloContext, ParentType
   badgeId: Resolver<ResolversTypes['GUID'], ParentType, ContextType>,
   status: Resolver<ResolversTypes['PublicBadgeStatus'], ParentType, ContextType>,
   valueCaseId: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
-  valueCase: Resolver<ResolversTypes['ValueCase'], ParentType, ContextType, ApprovedPublicBadgeValueCaseArgs>,
+  valueCase: Resolver<ResolversTypes['ValueCase'], ParentType, ContextType>,
   name: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   tags: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>,
   description: Resolver<ResolversTypes['String'], ParentType, ContextType>,
@@ -585,7 +562,7 @@ export type PendingPublicBadgeResolvers<ContextType = ApolloContext, ParentType 
   badgeId: Resolver<ResolversTypes['GUID'], ParentType, ContextType>,
   status: Resolver<ResolversTypes['PublicBadgeStatus'], ParentType, ContextType>,
   valueCaseId: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
-  valueCase: Resolver<ResolversTypes['ValueCase'], ParentType, ContextType, PendingPublicBadgeValueCaseArgs>,
+  valueCase: Resolver<ResolversTypes['ValueCase'], ParentType, ContextType>,
   name: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   tags: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>,
   description: Resolver<ResolversTypes['String'], ParentType, ContextType>,
@@ -596,8 +573,8 @@ export type PendingPublicBadgeResolvers<ContextType = ApolloContext, ParentType 
 
 export type ProofResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['Proof'] = ResolversParentTypes['Proof']> = ResolversObject<{
   proofId: Resolver<ResolversTypes['GUID'], ParentType, ContextType>,
-  name: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   genre: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  name: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   description: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   narrative: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>,
 }>;
@@ -607,7 +584,7 @@ export type PublicBadgeResolvers<ContextType = ApolloContext, ParentType extends
   badgeId: Resolver<ResolversTypes['GUID'], ParentType, ContextType>,
   status: Resolver<ResolversTypes['PublicBadgeStatus'], ParentType, ContextType>,
   valueCaseId: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
-  valueCase: Resolver<ResolversTypes['ValueCase'], ParentType, ContextType, PublicBadgeValueCaseArgs>,
+  valueCase: Resolver<ResolversTypes['ValueCase'], ParentType, ContextType>,
   name: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   tags: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>,
   description: Resolver<ResolversTypes['String'], ParentType, ContextType>,
@@ -625,7 +602,7 @@ export type RejectedPublicBadgeResolvers<ContextType = ApolloContext, ParentType
   badgeId: Resolver<ResolversTypes['GUID'], ParentType, ContextType>,
   status: Resolver<ResolversTypes['PublicBadgeStatus'], ParentType, ContextType>,
   valueCaseId: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
-  valueCase: Resolver<ResolversTypes['ValueCase'], ParentType, ContextType, RejectedPublicBadgeValueCaseArgs>,
+  valueCase: Resolver<ResolversTypes['ValueCase'], ParentType, ContextType>,
   name: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   tags: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>,
   description: Resolver<ResolversTypes['String'], ParentType, ContextType>,
@@ -644,7 +621,7 @@ export type SignedPublicBadgeResolvers<ContextType = ApolloContext, ParentType e
   badgeId: Resolver<ResolversTypes['GUID'], ParentType, ContextType>,
   status: Resolver<ResolversTypes['PublicBadgeStatus'], ParentType, ContextType>,
   valueCaseId: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
-  valueCase: Resolver<ResolversTypes['ValueCase'], ParentType, ContextType, SignedPublicBadgeValueCaseArgs>,
+  valueCase: Resolver<ResolversTypes['ValueCase'], ParentType, ContextType>,
   name: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   tags: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>,
   description: Resolver<ResolversTypes['String'], ParentType, ContextType>,
