@@ -13,6 +13,7 @@ export class PublicbadgesDrawer {
   // Props
   @Prop() public badgeColor: string = "#3C3C3C";
   @Prop() public modalTheme: "dark" | "light" = "light";
+  @Prop() public language: "EN" | "NL" | "DE" = "EN";
   @Prop() public testMode: boolean = false;
 
   // State
@@ -60,7 +61,7 @@ export class PublicbadgesDrawer {
     fetch('https://api.publicbadges.com/pilot/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: `{ getAllBadges(domainName: "${domainName}") { badgeId name description status ...on SignedPublicBadge { evidence { proofId name description } } } }` }),
+      body: JSON.stringify({ query: `{ getAllBadges(domainName: "${domainName}", language: ${this.language}) { badgeId name description status ...on SignedPublicBadge { evidence { proofId name description } } } }` }),
     }).then(res => {
       return res.json()
     }).then(res => {

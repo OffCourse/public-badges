@@ -1,4 +1,4 @@
-packages/public-badges-drawer/www/build/
+packages/public-badges-drawer/www/**/*
 
 # MACOS
 .DS_Store
