@@ -6,17 +6,17 @@ const PublicbadgesDrawer = class {
         // Props
         this.badgeColor = "#3C3C3C";
         this.modalTheme = "light";
+        this.language = "EN";
         this.testMode = false;
-        this.domainName = "https://example.org";
         // State
-        this.open = false;
-        this.modalMode = "";
+        this.isOpen = false;
+        this.modalOrientation = "vertical";
         this.modalLeft = 0;
-        this.modalOrigin = "";
+        this.modalOrigin = "top";
         // Handlers
         this.openDrawer = () => {
             this.calculatePositioning();
-            this.open = true;
+            this.isOpen = true;
         };
     }
     // Lifecycle Methods
@@ -30,8 +30,7 @@ const PublicbadgesDrawer = class {
             this.el.style.setProperty("--modal-color-bg", modalColorBg);
             this.el.style.setProperty("--modal-color-fg", modalColorFg);
         }
-        const fontUrl = "https://api.publicbadges.com/dev/";
-        //const fontUrl = "http://publicbadges.ao.waag.org/manrope/";
+        const fontUrl = "https://fonts.publicbadges.com/";
         // add font/css
         const linkCss = document.createElement("link");
         linkCss.type = "text/css";
@@ -45,13 +44,12 @@ const PublicbadgesDrawer = class {
         linkFont.crossOrigin = "anonymous";
         linkFont.href = fontUrl + "ManropeGX.ttf";
         document.head.appendChild(linkFont);
-        // temp disabled 
-        //const domainName: string = this.testMode ? "https://example.org" : window.location.origin
+        const domainName = this.testMode ? "https://example.org" : window.location.origin;
         // fetch badges
         fetch('https://api.publicbadges.com/dev/graphql', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query: `{ getAllBadges(domainName: "${this.domainName}") { badgeId name description status ...on SignedPublicBadge { evidence { proofId name description } } } }` }),
+            body: JSON.stringify({ query: `{ getAllBadges(domainName: "${domainName}", language: ${this.language}) { badgeId name description status ...on SignedPublicBadge { evidence { proofId name description } } } }` }),
         }).then(res => {
             return res.json();
         }).then(res => {
@@ -62,36 +60,40 @@ const PublicbadgesDrawer = class {
     }
     //
     calculatePositioning() {
-        const top = this.el ? this.el.offsetTop : 0;
-        const left = this.el ? this.el.offsetLeft : 0;
+        const doc = document.documentElement;
+        const body = document.body;
+        const docWidth = window.innerWidth;
+        const docHeight = Math.max(body.scrollHeight, body.offsetHeight, doc.clientHeight, doc.scrollHeight, doc.offsetHeight);
+        const docScrollTop = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+        const elementTop = this.el ? this.el.getBoundingClientRect().top : 0;
+        const top = docScrollTop + elementTop;
+        const left = this.el ? this.el.getBoundingClientRect().left : 0;
         const width = this.el ? this.el.offsetWidth : 0;
         const height = this.el ? this.el.offsetHeight : 0;
-        const docWidth = window.innerWidth;
-        const docHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
-        const spaceBottom = docHeight - top - height;
-        const spaceRight = docWidth - left - width;
-        this.modalMode = docWidth < 980 ? "vertical" : "horizontal";
+        const spaceBottom = docHeight - (top + height);
+        const spaceRight = docWidth - (left + width);
+        this.modalOrientation = docWidth < 980 ? "vertical" : "horizontal";
         this.modalLeft = Math.min(0, spaceRight + width - (docWidth < 980 ? 350 : 830));
         this.modalOrigin = top > spaceBottom ? "bottom" : "top";
     }
     handleKeyDown(ev) {
         if (ev.key === "Escape") {
-            this.open = false;
+            this.isOpen = false;
         }
     }
     closeDrawer() {
-        this.open = false;
+        this.isOpen = false;
     }
     handleWindowResize() {
-        if (this.open)
+        if (this.isOpen)
             this.calculatePositioning();
     }
     // Render
     render() {
         var _a;
         if (this.badges) {
-            return (h(Host, { style: { zIndex: this.open ? "9999" : "1" } }, h("publicbadges-circle", { badgesCount: (_a = this.badges) === null || _a === void 0 ? void 0 : _a.length, interactive: this.open ? false : true, testMode: this.testMode, onClick: this.openDrawer }), this.open &&
-                h("publicbadges-modal", { theme: this.modalTheme, mode: this.modalMode, left: this.modalLeft, origin: this.modalOrigin, badges: this.badges })));
+            return (h(Host, { style: { zIndex: this.isOpen ? "9999" : "1" } }, h("publicbadges-circle", { badgesCount: (_a = this.badges) === null || _a === void 0 ? void 0 : _a.length, interactive: this.isOpen ? false : true, testMode: this.testMode, onClick: this.openDrawer }), this.isOpen &&
+                h("publicbadges-modal", { theme: this.modalTheme, mode: this.modalOrientation, left: this.modalLeft, origin: this.modalOrigin, badges: this.badges })));
         }
     }
     get el() { return getElement(this); }
