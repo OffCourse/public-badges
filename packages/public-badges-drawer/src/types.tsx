@@ -68,6 +68,18 @@ export type Issuer = {
 };
 
 
+export enum Language {
+  Nl = 'NL',
+  En = 'EN',
+  De = 'DE'
+}
+
+export type Localization = {
+   __typename?: 'Localization',
+  NL?: Maybe<ValueCaseLocalization>,
+  DE?: Maybe<ValueCaseLocalization>,
+};
+
 export type Mutation = {
    __typename?: 'Mutation',
   applyForBadge?: Maybe<PublicBadge>,
@@ -179,8 +191,8 @@ export type PendingPublicBadge = PublicBadge & {
 export type Proof = {
    __typename?: 'Proof',
   proofId: Scalars['GUID'],
-  name: Scalars['String'],
   genre: Scalars['String'],
+  name: Scalars['String'],
   description: Scalars['String'],
   narrative: Array<Scalars['String']>,
 };
@@ -213,11 +225,19 @@ export enum PublicBadgeStatus {
 export type Query = {
    __typename?: 'Query',
   getAllBadges?: Maybe<Array<Maybe<PublicBadge>>>,
+  getValueCase?: Maybe<ValueCase>,
 };
 
 
 export type QueryGetAllBadgesArgs = {
-  domainName: Scalars['URL']
+  domainName: Scalars['URL'],
+  language?: Maybe<Language>
+};
+
+
+export type QueryGetValueCaseArgs = {
+  valueCaseId: Scalars['GUID'],
+  language?: Maybe<Language>
 };
 
 export type RejectedPublicBadge = PublicBadge & {
@@ -271,6 +291,7 @@ export type ValueCase = {
   description: Scalars['String'],
   narrative: Scalars['String'],
   scenarios: Array<Scenario>,
+  localization?: Maybe<Localization>,
 };
 
 export type ValueCaseInput = {
@@ -279,6 +300,15 @@ export type ValueCaseInput = {
   tags: Array<Maybe<Scalars['String']>>,
   narrative: Scalars['String'],
   description: Scalars['String'],
+};
+
+export type ValueCaseLocalization = {
+   __typename?: 'ValueCaseLocalization',
+  name: Scalars['String'],
+  tags: Array<Maybe<Scalars['String']>>,
+  description: Scalars['String'],
+  narrative: Scalars['String'],
+  scenarios: Array<Scenario>,
 };
 
 export type GetAllBadgesQueryVariables = {

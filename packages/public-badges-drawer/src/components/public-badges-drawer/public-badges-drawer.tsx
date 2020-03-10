@@ -12,15 +12,14 @@ export class PublicbadgesDrawer {
 
   // Props
   @Prop() public badgeColor: string = "#3C3C3C";
-  @Prop() public modalTheme: string = "light";
+  @Prop() public modalTheme: "dark" | "light" = "light";
   @Prop() public testMode: boolean = false;
-  @Prop() public domainName: string = "https://example.org";
 
   // State
-  @State() public open: boolean = false;
-  @State() public modalMode: string = "";
+  @State() public isOpen: boolean = false;
+  @State() public modalOrientation: "horizontal" | "vertical" = "vertical";
   @State() public modalLeft: number = 0;
-  @State() public modalOrigin: string = "";
+  @State() public modalOrigin: "bottom" | "top" = "top";
   @State() public badges: ApprovedPublicBadge[] | undefined;
 
 
@@ -37,8 +36,6 @@ export class PublicbadgesDrawer {
       this.el.style.setProperty("--modal-color-fg", modalColorFg);
     }
 
-    //const fontUrl = "https://api.publicbadges.com/dev/";
-    //const fontUrl = "http://publicbadges.ao.waag.org/manrope/";
     const fontUrl = "https://fonts.publicbadges.com/";
 
     // add font/css
@@ -57,15 +54,13 @@ export class PublicbadgesDrawer {
     document.head.appendChild(linkFont);
 
 
-    // temp disabled 
-    //const domainName: string = this.testMode ? "https://example.org" : window.location.origin
-
+    const domainName: string = this.testMode ? "https://example.org" : window.location.origin
 
     // fetch badges
     fetch('https://api.publicbadges.com/pilot/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: `{ getAllBadges(domainName: "${this.domainName}") { badgeId name description status ...on SignedPublicBadge { evidence { proofId name description } } } }` }),
+      body: JSON.stringify({ query: `{ getAllBadges(domainName: "${domainName}") { badgeId name description status ...on SignedPublicBadge { evidence { proofId name description } } } }` }),
     }).then(res => {
       return res.json()
     }).then(res => {
@@ -78,25 +73,31 @@ export class PublicbadgesDrawer {
 
   //
   private calculatePositioning() {
-    const top: number = this.el ? this.el.offsetTop : 0;
-    const left: number = this.el ? this.el.offsetLeft : 0;
+    const doc = document.documentElement;
+    const body = document.body;
+
+    const docWidth: number = window.innerWidth
+    const docHeight: number = Math.max(
+      body.scrollHeight,
+      body.offsetHeight, 
+      doc.clientHeight,
+      doc.scrollHeight,
+      doc.offsetHeight
+    );
+
+    const docScrollTop: number = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0)
+    const elementTop: number = this.el ? this.el.getBoundingClientRect().top : 0;
+
+    const top: number = docScrollTop + elementTop;
+    const left: number = this.el ? this.el.getBoundingClientRect().left : 0;
 
     const width: number = this.el ? this.el.offsetWidth : 0;
     const height: number = this.el ? this.el.offsetHeight : 0;
 
-    const docWidth: number = window.innerWidth
-    const docHeight: number = Math.max(
-      document.body.scrollHeight,
-      document.body.offsetHeight, 
-      document.documentElement.clientHeight,
-      document.documentElement.scrollHeight,
-      document.documentElement.offsetHeight
-    );
+    const spaceBottom = docHeight - (top + height);
+    const spaceRight  = docWidth - (left + width);
 
-    const spaceBottom = docHeight - top - height;
-    const spaceRight  = docWidth - left - width;
-
-    this.modalMode = docWidth < 980 ? "vertical" : "horizontal";
+    this.modalOrientation = docWidth < 980 ? "vertical" : "horizontal";
     this.modalLeft = Math.min(0, spaceRight + width - (docWidth < 980 ? 350 : 830));
     this.modalOrigin = top > spaceBottom ? "bottom" : "top";
   }
@@ -106,24 +107,24 @@ export class PublicbadgesDrawer {
   public openDrawer = () => {
     this.calculatePositioning();
 
-    this.open = true;
+    this.isOpen = true;
   };
 
   @Listen('keydown', { target: 'window' })
   handleKeyDown(ev: KeyboardEvent){
     if(ev.key === "Escape") {
-      this.open = false;
+      this.isOpen = false;
     }
   }
 
   @Listen("closeDrawer")
   public closeDrawer() {
-    this.open = false;
+    this.isOpen = false;
   }
 
   @Listen('resize', { target: 'window' })
   handleWindowResize(){
-    if(this.open) this.calculatePositioning();
+    if(this.isOpen) this.calculatePositioning();
   }
 
 
@@ -131,17 +132,17 @@ export class PublicbadgesDrawer {
   public render() {
     if(this.badges) {
       return (
-        <Host style={{ zIndex: this.open ? "9999" : "1" }}>
+        <Host style={{ zIndex: this.isOpen ? "9999" : "1" }}>
           <publicbadges-circle
             badgesCount={this.badges?.length}
-            interactive={this.open ? false : true}
+            interactive={this.isOpen ? false : true}
             testMode={this.testMode}
             onClick={ this.openDrawer }>
           </publicbadges-circle>
-          { this.open &&
+          { this.isOpen &&
             <publicbadges-modal
               theme={this.modalTheme}
-              mode={this.modalMode}
+              mode={this.modalOrientation}
               left={this.modalLeft}
               origin={this.modalOrigin}
               badges={this.badges}>

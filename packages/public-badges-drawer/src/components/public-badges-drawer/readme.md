@@ -7,12 +7,11 @@
 
 ## Properties
 
-| Property     | Attribute     | Description | Type      | Default                 |
-| ------------ | ------------- | ----------- | --------- | ----------------------- |
-| `badgeColor` | `badge-color` |             | `string`  | `"#3C3C3C"`             |
-| `domainName` | `domain-name` |             | `string`  | `"https://example.org"` |
-| `modalTheme` | `modal-theme` |             | `string`  | `"light"`               |
-| `testMode`   | `test-mode`   |             | `boolean` | `false`                 |
+| Property     | Attribute     | Description | Type                | Default     |
+| ------------ | ------------- | ----------- | ------------------- | ----------- |
+| `badgeColor` | `badge-color` |             | `string`            | `"#3C3C3C"` |
+| `modalTheme` | `modal-theme` |             | `"dark" or "light"` | `"light"`   |
+| `testMode`   | `test-mode`   |             | `boolean`           | `false`     |
 
 
 ## Dependencies
