@@ -78,6 +78,44 @@
           ]
         }
       ]
+    },
+    "DE": {
+      "name": "GENAU GENAU GENAU",
+      "tags": ["bla", "bla bla"],
+      "description": "GENAU GENAU GENAU",
+      "narrative": "GENAU GENAU GENAU",
+      "scenarios": [
+        {
+          "description": "GENAU Organization GENAU",
+          "narrative": [
+            "Organization GENAU GENAU",
+            "JA GENAU Organizations",
+            "GENAU Organization GENAU",
+            "GENAU JA JA",
+            "JA JA GENAU"
+          ]
+        },
+        {
+          "description": "GENAU GENAU Organization",
+          "narrative": [
+            "GENAU JA JA",
+            "JA JA GENAU",
+            "GENAU GENAU Organizations",
+            "GENAU GENAU GENAU",
+            "GENAU GENAU GENAU"
+          ]
+        },
+        {
+          "description": "GENAU GENAU GENAU",
+          "narrative": [
+            "Organization GENAU GENAU",
+            "GENAU GENAU Organizations",
+            "GENAU Organization GENAU",
+            "GENAU GENAU GENAU",
+            "JA JA JA"
+          ]
+        }
+      ]
     }
   }
 }

@@ -2,6 +2,7 @@ import { QueryResolvers, Language } from "@types";
 
 const Query: QueryResolvers = {
   async getAllBadges(_root, { domainName, language }, context) {
+    context.language = language || Language.En;
     const { stores } = context;
     if (`${domainName}` === "https://example.org/") {
       return stores.badgeInstance.fetchAll({});
@@ -15,7 +16,6 @@ const Query: QueryResolvers = {
 
     const organizationId = organization.organizationId;
 
-    context.language = language || Language.En;
     context.organizationName = organization.name;
 
     return stores.badgeInstance.fetchAll({

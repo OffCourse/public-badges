@@ -35,6 +35,9 @@ const ValueCaseLocalization: ValueCaseLocalizationResolvers = {
 const Localization: LocalizationResolvers = {
   NL({ NL }) {
     return NL;
+  },
+  DE({ DE }) {
+    return DE;
   }
 };
 

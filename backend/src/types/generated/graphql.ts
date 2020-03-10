@@ -65,11 +65,13 @@ export type Issuer = {
 
 export enum Language {
   Nl = 'NL',
-  En = 'EN'
+  En = 'EN',
+  De = 'DE'
 }
 
 export type Localization = {
   NL: Maybe<ValueCaseLocalization>,
+  DE: Maybe<ValueCaseLocalization>,
 };
 
 export type Mutation = {
@@ -491,6 +493,7 @@ export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 
 export type LocalizationResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['Localization'] = ResolversParentTypes['Localization']> = ResolversObject<{
   NL: Resolver<Maybe<ResolversTypes['ValueCaseLocalization']>, ParentType, ContextType>,
+  DE: Resolver<Maybe<ResolversTypes['ValueCaseLocalization']>, ParentType, ContextType>,
 }>;
 
 export type MutationResolvers<ContextType = ApolloContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
