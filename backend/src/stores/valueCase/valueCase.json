@@ -39,5 +39,83 @@
         "Then the user should be redirected to the Public Spaces manifesto"
       ]
     }
-  ]
+  ],
+  "localization": {
+    "NL": {
+      "name": "BLA BLA BLA",
+      "tags": ["bla", "bla bla"],
+      "description": "BLA BLA BLA",
+      "narrative": "BLA BLA BLA",
+      "scenarios": [
+        {
+          "description": "BLA Organization BLA",
+          "narrative": [
+            "Organization BLA BLA",
+            "BLA BLA Organizations",
+            "BLA Organization BLA",
+            "BLA BLA BLA",
+            "BLA BLA BLA"
+          ]
+        },
+        {
+          "description": "BLA BLA Organization",
+          "narrative": [
+            "Organization BLA BLA",
+            "BLA BLA Organizations",
+            "BLA Organization BLA",
+            "BLA BLA BLA",
+            "BLA BLA BLA"
+          ]
+        },
+        {
+          "description": "BLA BLA BLA",
+          "narrative": [
+            "Organization BLA BLA",
+            "BLA BLA Organizations",
+            "BLA Organization BLA",
+            "BLA BLA BLA",
+            "BLA BLA BLA"
+          ]
+        }
+      ]
+    },
+    "DE": {
+      "name": "GENAU GENAU GENAU",
+      "tags": ["bla", "bla bla"],
+      "description": "GENAU GENAU GENAU",
+      "narrative": "GENAU GENAU GENAU",
+      "scenarios": [
+        {
+          "description": "GENAU Organization GENAU",
+          "narrative": [
+            "Organization GENAU GENAU",
+            "JA GENAU Organizations",
+            "GENAU Organization GENAU",
+            "GENAU JA JA",
+            "JA JA GENAU"
+          ]
+        },
+        {
+          "description": "GENAU GENAU Organization",
+          "narrative": [
+            "GENAU JA JA",
+            "JA JA GENAU",
+            "GENAU GENAU Organizations",
+            "GENAU GENAU GENAU",
+            "GENAU GENAU GENAU"
+          ]
+        },
+        {
+          "description": "GENAU GENAU GENAU",
+          "narrative": [
+            "Organization GENAU GENAU",
+            "GENAU GENAU Organizations",
+            "GENAU Organization GENAU",
+            "GENAU GENAU GENAU",
+            "JA JA JA"
+          ]
+        }
+      ]
+    }
+  }
 }

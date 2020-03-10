@@ -10,6 +10,8 @@ export {
   OpenBadgeProofResolvers,
   ContactResolvers,
   OrganizationResolvers,
+  ValueCaseLocalizationResolvers,
+  LocalizationResolvers,
   PendingOrganizationResolvers,
   ScenarioResolvers,
   ValueCaseResolvers,

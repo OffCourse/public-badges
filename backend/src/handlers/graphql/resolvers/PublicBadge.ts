@@ -1,8 +1,10 @@
+import { titleCase } from "voca";
 import {
   PublicBadgeResolvers,
   PublicBadgeStatus,
   PendingPublicBadgeResolvers,
   ApprovedPublicBadgeResolvers,
+  Language,
   RejectedPublicBadgeResolvers,
   SignedPublicBadgeResolvers
 } from "@types";
@@ -33,31 +35,45 @@ const PublicBadge: PublicBadgeResolvers = {
   status({ status }) {
     return status;
   },
-  async valueCase({ valueCaseId }, _args, { stores }) {
+  async valueCase({ valueCaseId }, _args, { language, stores }) {
     const valueCase = await stores.valueCase.fetch({
-      valueCaseId: valueCaseId
+      language,
+      valueCaseId
     });
-    if (!valueCase) {
-      throw "invalid badge, no corresponding value case";
-    }
     return valueCase;
   },
-  name({ name }) {
+  async name({ valueCaseId }, _args, { language, stores }) {
+    const { name } = await stores.valueCase.fetch({
+      language,
+      valueCaseId
+    });
     return name;
   },
-  tags({ tags }) {
+  async tags({ valueCaseId }, _args, { language, stores }) {
+    const { tags } = await stores.valueCase.fetch({
+      language,
+      valueCaseId
+    });
     return tags;
   },
-  description({ description }) {
+  async description({ valueCaseId }, _args, { language, stores }) {
+    const { description } = await stores.valueCase.fetch({
+      language,
+      valueCaseId
+    });
     return description;
   },
-  narrative({ narrative }) {
+  async narrative({ valueCaseId }, _args, { language, stores }) {
+    const { narrative } = await stores.valueCase.fetch({
+      language,
+      valueCaseId
+    });
     return narrative;
   },
   recipientId({ recipientId }) {
     return recipientId;
   },
-  recipient({ recipientId }, _args, { stores }) {
+  recipient({ recipientId }, _args, { stores}) {
     return stores.registry.fetch({ organizationId: recipientId });
   }
 };
@@ -68,8 +84,27 @@ const PendingPublicBadge: PendingPublicBadgeResolvers = {
 
 const ApprovedPublicBadge: ApprovedPublicBadgeResolvers = {
   ...PendingPublicBadge,
-  evidence({ evidence }) {
-    return evidence;
+  async evidence({ valueCaseId, evidence }, _args, { language, organizationName, stores }) {
+    if (!language || language === Language.En) {
+      return evidence;
+    }
+    const { scenarios } = await stores.valueCase.fetch({
+      language,
+      valueCaseId
+    });
+
+    return scenarios.map(({description: rawDescription, narrative: rawNarrative}, index) => {
+       const [description, ...narrative] = [
+            rawDescription,
+            ...rawNarrative
+          ].map(s => s.replace(/(the.)?organization/i, titleCase(organizationName)));
+
+          return {
+            ...evidence[index],
+            description,
+            narrative
+          };
+    });
   }
 };
 
@@ -97,3 +132,4 @@ export {
   RejectedPublicBadge,
   SignedPublicBadge
 };
+

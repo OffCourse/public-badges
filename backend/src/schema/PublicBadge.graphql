@@ -4,10 +4,11 @@ enum PublicBadgeStatus {
   SIGNED
   REJECTED
 }
+
 type Proof {
   proofId: GUID!
-  name: String!
   genre: String!
+  name: String!
   description: String!
   narrative: [String!]!
 }

@@ -1,10 +1,13 @@
 import eventBus, { PublicBadgesEventBus } from "@eventBus";
 import * as stores from "@stores";
+import { Language } from "@types";
 
 export interface ApolloContext {
   rawEvent: { headers: { origin: string } };
   functionContext: { functionName: string };
   stores: stores.PublicBadgesStores;
+  language?: Language;
+  organizationName?: string;
   eventBus: PublicBadgesEventBus;
 }
 

@@ -6,7 +6,6 @@ const PublicbadgesDrawer = class {
         // Props
         this.badgeColor = "#3C3C3C";
         this.modalTheme = "light";
-        this.language = "EN";
         this.testMode = false;
         // State
         this.isOpen = false;
@@ -46,10 +45,10 @@ const PublicbadgesDrawer = class {
         document.head.appendChild(linkFont);
         const domainName = this.testMode ? "https://example.org" : window.location.origin;
         // fetch badges
-        fetch('https://api.publicbadges.com/dev/graphql', {
+        fetch('https://api.publicbadges.com/pilot/graphql', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query: `{ getAllBadges(domainName: "${domainName}", language: ${this.language}) { badgeId name description status ...on SignedPublicBadge { evidence { proofId name description } } } }` }),
+            body: JSON.stringify({ query: `{ getAllBadges(domainName: "${domainName}") { badgeId name description status ...on SignedPublicBadge { evidence { proofId name description } } } }` }),
         }).then(res => {
             return res.json();
         }).then(res => {

@@ -1,209 +1,63 @@
 PUBLIC BADGES
 =============
 
+## Rationale [WIP]
 
-# Zero Badge
+Public Badges are an evidence-based certification system for the ethical
+internet. As part of the [PublicSpaces](https://publicspaces.net) initiative, 
+our aim is to (re)establish trust relations, between citizens, organizations,
+and govenments.
 
-The Zero Badge is a way for organizations that are part of the Public
-Spaces coalition to show their affiliation on their website. It provides
-visible evidence to the user that the organization has the intention to
-implement the Public Spaces values in their online presence.
+By combining [Open Badges](https://openbadges.org/) with automated unit tests,
+we make the ethical values of organizations, products, projects, and protocols
+visbile as well as measurable. 
 
+The goal of the Public Badges is not to come up with an one size fits all value
+system for the internet. Instead, it is a tool to facilitate discussion about
+the choice of values within a pluralist landscape.
 
-## Get Involved
+## Pilot Phase - Zero Badge
 
-### 1. Make sure that your organization meets the criteria for Zero Badge
+We are currently in a pilot phase, testing the so-called [Zero
+Badge](./ZERO_BADGE.md). This phase is only open to current members of the 
+[PublicSpaces Coalition](https://publicspaces.net/the-coalition/), 
+but we aim to broaden our scope and reach later this year. 
 
-During this phase of development, it is only possible for the founding
-partners of Public Spaces to apply for the Zero Badge.
-
-In a later phase, we will open this project up to other organizations.
-
-If you're organization that is interested in joining the Public Spaces coalition,
-please contact us: [contact@public-spaces.org](contact@public-spaces.org).
-
-
-### 2. Register Organization
-
-When you have embedded the badge in your webpage, you are ready to register the organization.
-
-You can call the api directly, or you can use our [graphql playground](https://api.publicbadges.com/pilot/playground). 
-Here you can also find documentation on our graphql schema.
+The current state and envisioned roadmap of the project can be found
+[here](./STATE_OF_THE_PROJECT.md)
 
 
-#### Example Request
+## Flow [TODO]
 
-```bash
-curl -X POST 'https://api.publicbadges.com/pilot/graphql'
-  -H "Content-Type: application/json"
-  -d '{
-    "query": "...",
-    "variables": "..."
-  }'
-```
-
-where query is:
-
-```graphql
-mutation Register($input: OrganizationInput!){
-  registerOrganization(input: $input) {
-    domainName
-    organizationId
-    status
-  }
-}
-``` 
-
-and the variables are:
-
-```json
-{
-  "input": {
-    "name": "offcourse",
-    "domainName": "https://offcourse.io",
-    "contact": {
-      "name": "yeehaa",
-      "email": "contact@offcourse.io"
-    },
-    "admin": {
-      "name": "yeehaa",
-      "email": "contact@offcourse.io"
-    }
-  }
-}
-```
-
-**Example Response**
-
-```json
-{
-  "organizationId": "e79a6c18-787e-4868-8e65-e6a4530fb419",
-  "status": "PENDING"
-}
-```
-
-An example of a complete curl request can be found here: [./sample-requests/register-organization.sh](./sample-requests/register-organization.sh)
+For a more detailed explanation of how the Public Badges Flow works, we refer you to the
+following [poster](./Poster%20Public%20Badges.pdf) for now. 
 
 
-### 3. Apply for the Zero Badge
+## Contributors
 
-When you have embedded the badge in your webpage, you are ready to apply for
-the zero-badge.
+This project is in a very early stage. Currently, we are not actively looking for
+contributors, but that does not mean you are not welcome to reach out to us. It
+may take us a bit to be ready to onboard you, but at least we can start a 
+conversation and get to know each other.
 
-You can call the api directly, or you can use our [graphql playground](https://api.publicbadges.com/pilot/playground)
+Since this project, involves much more than code alone, don't hesitate to get involved 
+if you don't know how to program at all. If all goes well, we'll need people with various 
+skill sets to make this project a success: writers, political theorists, 
+lawyers, designers, coders or just anyone  who is passionate about the future of the ethical 
+internet and the ways we are going to govern it. 
 
-#### Example Request
-
-```bash
-curl -X POST 'https://api.publicbadges.com/pilot/graphql'
-  -H "Content-Type: application/json"
-  -d '{
-    "query": "...",
-    "variables": "..."
-  }'
-```
-
-where query is:
-
-```graphql
-mutation($input: PublicBadgeInput!){
-  applyForBadge(input: $input){
-    badgeId
-    status
-  }
-}
-``` 
-and the variables are:
-
-```json
-{
-  "input": {
-    "valueCaseId": "88c7a930-3181-11ea-9858-b312ce22102d@zero",
-    "domainName": "https://offcourse.io/"
-  }
-}
-```
-
-**Example Response**
-
-```json
-{
-  "badgeId": "e79a6c18-787e-4868-8e65-e6a4530fb419",
-  "status": "PENDING"
-}
-```
-
-An example of a complete curl request can be found here: [./sample-requests/apply-for-badge.sh](./sample-requests/apply-for-badge.sh)
-
-### 4. Embed the Public Badges Drawer into your webpage
-
-In order to acquire the Zero Badge, you have to include the Public Badges Drawer 
-webcomponent on your organization's website.
-
-You can download it from npm:
-
-```bash
-npm install @offcourse/public-badges-drawer
-yarn add @offcourse/public-badges-drawer
-```
-
-```js
-import publicbadges-drawer from "@offcourse/public-badges-drawer"
-```
-
-or host it directly:
-
-```html
-<script type="module" src="https://unpkg.com/@offcourse/public-badges-drawer@latest/dist/publicbadges/publicbadges.esm.js"></script>
-<script src="https://unpkg.com/@offcourse/public-badges-drawer@latest/dist/publicbadges/publicbadges.js"></script>
-```
-
-The Public Spaces Badges drawer is a [webcomponent](https://www.webcomponents.org/introduction)
-that you can use directly in your html.
-
-```html
-<publicbadges-drawer />
-```
-
-To configure the badges drawer the following (optional) html attributes are available:
-
-| attribute   | values          | default   | description                                                                                     |
-|-------------|-----------------|-----------|-------------------------------------------------------------------------------------------------|
-| badge-color | hex color code  | "#3C3C3C" | Sets the color of the badges drawer. Make sure it has enough contrast with the backbround color  |
-| modal-theme | "dark", "light" | "light"   | Sets the color scheme of the modal (that appears when the drawer is clicked).                   |
-| test-mode   | "true", "false" | "false"   | Puts the badge drawer in test mode, handy for testing the positioning within the website.      |
-
-```html
-<publicbadges-drawer badge-color="#FFFFFF" modal-theme="dark" test-mode="true" />
-```
-
-Documentation for the use of webcomponents with your frontend framework of choice,
-can be found here: [https://stenciljs.com/docs/overview](https://stenciljs.com/docs/overview).
-
-
-### 5. Wait for Acceptance
-
-Upon submission of your application, we will check if your organization meets the
-requirements to get the zero badge. The two main criteria are:
-
-- Your organization is a member of the public spaces coalition.
-- Your organization has included the Public Spaces Badge Container on their
-website.
-
-The exact scenarios that the we test can be found here: [Zero Badge Feature](/src-feature)
-
-As soon as your organization is verified and the badge is issued, it will appear
-in automatically your badge container. You can also download the
-[open badge artifact](./src-fixture) manually through the link provided.
+If that's you, don't hesitate to contact us. You are welcome!
 
 
 ## Maintainers
 
-[Jan Hein Hoogstad](https://github.com/yeehaa123): Concept development, system architecture, and backend development
+[Jan Hein Hoogstad](https://github.com/yeehaa123): Concept development, system architecture, 
+and backend development
 
 [Alain Otjens](https://github.com/alain0): UI/UX design and frontend development
 
-[Sander van der Waal](https://github.com/sandervdwaal): Community and Project Management and Documentation
+[Sander van der Waal](https://github.com/sandervdwaal): Community and Project 
+Management and Documentation
 
 Many thanks to Chris Julien, Laurens de Knijff, and Marieke Veling for their
 substantial contributions during earlier phases of this project's development.

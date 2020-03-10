@@ -1,18 +1,36 @@
-import { QueryResolvers } from "@types";
+import { QueryResolvers, Language } from "@types";
 
 const Query: QueryResolvers = {
-  async getAllBadges(_root, args, { stores }) {
-    const domainName = args?.domainName;
-    console.log(domainName);
+  async getAllBadges(_root, { domainName, language }, context) {
+    context.language = language || Language.En;
+    const { stores } = context;
     if (`${domainName}` === "https://example.org/") {
       return stores.badgeInstance.fetchAll({});
     }
+
     const organization = await stores.registry.fetch({ domainName });
+
     if (!organization) {
       throw "not a known organization for now";
     }
+
     const organizationId = organization.organizationId;
-    return stores.badgeInstance.fetchAll({ organizationId });
+
+    context.organizationName = organization.name;
+
+    return stores.badgeInstance.fetchAll({
+      organizationId
+    });
+  },
+  async getValueCase(_root, args, { stores }) {
+    const valueCaseId = args.valueCaseId;
+    const language = args?.language;
+    const valueCase = await stores.valueCase.fetch({ valueCaseId, language });
+
+    if (!valueCase) {
+      throw "invalid badge, no corresponding value case";
+    }
+    return valueCase;
   }
 };
 
