@@ -10,7 +10,7 @@ const server = new ApolloServer({
   context,
   introspection: true,
   playground: {
-    endpoint: "/dev/graphql"
+    endpoint: "/pilot/graphql"
   }
 });
 

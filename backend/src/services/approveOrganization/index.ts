@@ -18,10 +18,10 @@ const approveOrganization: PublicBadgesHandler<
   switch (detailType) {
     case EV.ORGANIZATION_APPROVAL_REQUESTED: {
       const whitelist = [
-        "offcourse", 
-        "vpro", 
-        "waag", 
-        "samenbeter", 
+        "offcourse",
+        "vpro",
+        "waag",
+        "samenbeter",
         "eye filmmuseum"
       ];
       const name = detail.name.toLowerCase();
