@@ -93,7 +93,7 @@ const PublicbadgesDrawer = class {
         var _a;
         if (this.badges) {
             return (h(Host, { style: { zIndex: this.isOpen ? "9999" : "1" } }, h("publicbadges-circle", { badgesCount: (_a = this.badges) === null || _a === void 0 ? void 0 : _a.length, interactive: this.isOpen ? false : true, testMode: this.testMode, onClick: this.openDrawer }), this.isOpen &&
-                h("publicbadges-modal", { theme: this.modalTheme, mode: this.modalOrientation, left: this.modalLeft, origin: this.modalOrigin, badges: this.badges })));
+                h("publicbadges-modal", { theme: this.modalTheme, mode: this.modalOrientation, left: this.modalLeft, origin: this.modalOrigin, language: this.language, badges: this.badges })));
         }
     }
     get el() { return getElement(this); }

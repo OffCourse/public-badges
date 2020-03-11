@@ -13,7 +13,7 @@ export class PublicbadgesDrawer {
   // Props
   @Prop() public badgeColor: string = "#3C3C3C";
   @Prop() public modalTheme: "dark" | "light" = "light";
-  @Prop() public language: "EN" | "NL" | "DE" = "EN";
+  @Prop() public language: "EN" | "NL" = "EN";
   @Prop() public testMode: boolean = false;
 
   // State
@@ -146,6 +146,7 @@ export class PublicbadgesDrawer {
               mode={this.modalOrientation}
               left={this.modalLeft}
               origin={this.modalOrigin}
+              language={this.language}
               badges={this.badges}>
             </publicbadges-modal> }
         </Host>

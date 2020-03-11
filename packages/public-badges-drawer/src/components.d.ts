@@ -19,12 +19,13 @@ export namespace Components {
   }
   interface PublicbadgesDrawer {
     'badgeColor': string;
-    'language': "EN" | "NL" | "DE";
+    'language': "EN" | "NL";
     'modalTheme': "dark" | "light";
     'testMode': boolean;
   }
   interface PublicbadgesModal {
     'badges': ApprovedPublicBadge[];
+    'language': "EN" | "NL";
     'left': number;
     'mode': string;
     'origin': string;
@@ -67,12 +68,13 @@ declare namespace LocalJSX {
   }
   interface PublicbadgesDrawer {
     'badgeColor'?: string;
-    'language'?: "EN" | "NL" | "DE";
+    'language'?: "EN" | "NL";
     'modalTheme'?: "dark" | "light";
     'testMode'?: boolean;
   }
   interface PublicbadgesModal {
     'badges'?: ApprovedPublicBadge[];
+    'language'?: "EN" | "NL";
     'left'?: number;
     'mode'?: string;
     'onCloseDrawer'?: (event: CustomEvent<any>) => void;

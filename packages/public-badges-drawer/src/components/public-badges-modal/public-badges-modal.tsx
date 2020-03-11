@@ -1,5 +1,6 @@
 import { Component, Prop, State, Event, EventEmitter, h } from "@stencil/core";
 import { IconClose, IconCheck, IconCheckSmall, IconArrowDown, IconMore } from "../../assets/icons";
+import { Metadata } from "../../assets/metadata";
 import { ApprovedPublicBadge } from "../../types";
 
 @Component({
@@ -14,6 +15,7 @@ export class PublicbadgesModal {
   @Prop() public mode: string = "";
   @Prop() public left: number = 0;
   @Prop() public origin: string = "top";
+  @Prop() public language: "EN" | "NL" = "EN";
   @Prop() public badges: ApprovedPublicBadge[] = [];
 
   @State() public openBadge: number | null = null
@@ -38,7 +40,7 @@ export class PublicbadgesModal {
 
 
   public render() {
-    const baseURL = "https://publicspaces.net";
+    const metadata = Metadata[this.language];
 
     return (
       [
@@ -75,14 +77,13 @@ export class PublicbadgesModal {
               </ul>
             </div>
             <div id="about" class="column">
-              <h1>PublicSpaces</h1>
-              <h2>internet for the common good</h2>
-              <p>PublicSpaces reclaims the internet as a force for the common good and advocates a new internet that strengthens the public domain. <a href={`${baseURL}/manifesto`}target="_blank" rel="noopener noreferrer">Read our manifesto</a> to see the values we want to see at the core of our digital lives.</p>
+              <h1>{metadata.title}</h1>
+              <h2>{metadata.subtitle}</h2>
+              <div innerHTML={metadata.about(metadata.baseURL)}></div>
               <p>
-                <a class="more"
-                  href={baseURL}
-                  target="_blank"
-                  rel="noopener noreferrer">more about PublicSpaces<IconMore />
+                <a class="more" href={metadata.baseURL} target="_blank" rel="noopener noreferrer">
+                  {metadata.more}
+                  <IconMore />
                 </a>
               </p>
             </div>
