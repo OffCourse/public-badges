@@ -5,6 +5,7 @@ const Query: QueryResolvers = {
     context.language = language || Language.En;
     const { stores } = context;
     if (`${domainName}` === "https://example.org/") {
+      context.organizationName = "Randomio";
       return stores.badgeInstance.fetchAll({});
     }
 
