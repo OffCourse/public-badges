@@ -165,12 +165,13 @@ To configure the badges drawer the following (optional) html attributes are avai
 
 | attribute   | values          | default   | description                                                                                     |
 |-------------|-----------------|-----------|-------------------------------------------------------------------------------------------------|
-| badge-color | hex color code  | "#3C3C3C" | Sets the color of the badges drawer. Make sure it has enough contrast with the backbround color  |
+| badge-color | hex color code  | "#3C3C3C" | Sets the color of the badges drawer. Make sure it has enough contrast with the backbround color |
 | modal-theme | "dark", "light" | "light"   | Sets the color scheme of the modal (that appears when the drawer is clicked).                   |
-| test-mode   | "true", "false" | "false"   | Puts the badge drawer in test mode, handy for testing the positioning within the website.      |
+| language    | "EN", "NL"      | "EN"      | Sets the language of the badges drawer                                                          |
+| test-mode   | "true", "false" | "false"   | Puts the badge drawer in test mode, handy for testing the positioning within the website.       |
 
 ```html
-<publicbadges-drawer badge-color="#FFFFFF" modal-theme="dark" test-mode="true" />
+<publicbadges-drawer badge-color="#FFFFFF" modal-theme="dark" language="NL" test-mode="true" />
 ```
 
 Documentation for the use of webcomponents with your frontend framework of choice,
