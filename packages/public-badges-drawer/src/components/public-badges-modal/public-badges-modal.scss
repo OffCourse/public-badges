@@ -202,6 +202,11 @@ a.more {
     &:last-child {
       padding-bottom: 10px;
     }
+
+    @media (max-width: 359px) {
+      width: 300px;
+      padding: 20px 5px;
+    }
   }
 
   .horizontal & {
