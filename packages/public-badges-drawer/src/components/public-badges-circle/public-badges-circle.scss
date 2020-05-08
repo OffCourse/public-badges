@@ -21,7 +21,6 @@ svg {
   fill: none;
   stroke: var(--badge-color);
   stroke-width: 2;
-  //animation: spin 300ms ease paused;
   transition: transform 300ms ease;
   transform: rotate(-90deg);
 
@@ -33,13 +32,6 @@ svg {
   transform: rotate(-100deg);
 }
 
-// svg:hover .circle {
-//   animation-play-state: running;
-// }
-// @keyframes spin {
-//   from { transform: rotate(-90deg); }
-//   to { transform: rotate(270deg); }
-// }
 
 .badges circle {
   fill: var(--badge-color);
@@ -66,9 +58,11 @@ svg {
   transition: opacity 300ms ease;
 }
 
-text {
+text.test-mode {
   fill: #E1231E;
+  stroke: #FFF;
+  stroke-width: 1px;
   font-weight: bold;
   font-size: 18px;
-  font-family: monospace;
+  font-family: sans-serif;
 }

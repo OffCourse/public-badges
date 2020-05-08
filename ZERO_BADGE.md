@@ -163,15 +163,16 @@ that you can use directly in your html.
 
 To configure the badges drawer the following (optional) html attributes are available:
 
-| attribute   | values          | default   | description                                                                                     |
-|-------------|-----------------|-----------|-------------------------------------------------------------------------------------------------|
-| badge-color | hex color code  | "#3C3C3C" | Sets the color of the badges drawer. Make sure it has enough contrast with the backbround color |
-| modal-theme | "dark", "light" | "light"   | Sets the color scheme of the modal (that appears when the drawer is clicked).                   |
-| language    | "EN", "NL"      | "EN"      | Sets the language of the badges drawer                                                          |
-| test-mode   | "true", "false" | "false"   | Puts the badge drawer in test mode, handy for testing the positioning within the website.       |
+| attribute   | values          | default               | description                                                                                     |
+|-------------|-----------------|-----------------------|-------------------------------------------------------------------------------------------------|
+| badge-color | hex color code  | "#3C3C3C"             | Sets the color of the badges drawer. Make sure it has enough contrast with the backbround color |
+| modal-theme | "dark", "light" | "light"               | Sets the color scheme of the modal (that appears when the drawer is clicked).                   |
+| language    | "EN", "NL"      | "EN"                  | Sets the language of the badges drawer                                                          |
+| test-mode   | "true", "false" | "false"               | Puts the badge drawer in test mode, handy for testing the positioning within the website.       |
+| test-domain | string          | "https://example.org" | Domain name used when in test mode                                                              |
 
 ```html
-<publicbadges-drawer badge-color="#FFFFFF" modal-theme="dark" language="NL" test-mode="true" />
+<publicbadges-drawer badge-color="#FFFFFF" modal-theme="dark" language="NL" test-mode="true" test-domain="https://yourdomain.org" />
 ```
 
 Documentation for the use of webcomponents with your frontend framework of choice,

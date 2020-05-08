@@ -1,7 +1,9 @@
 import { Component, Prop, State, Event, EventEmitter, h } from "@stencil/core";
+import { ApprovedPublicBadge } from "../../types";
+import { ModalPositioning } from "../../interfaces";
 import { IconClose, IconCheck, IconCheckSmall, IconArrowDown, IconMore } from "../../assets/icons";
 import { Metadata } from "../../assets/metadata";
-import { ApprovedPublicBadge } from "../../types";
+
 
 @Component({
   tag: "publicbadges-modal",
@@ -11,12 +13,10 @@ import { ApprovedPublicBadge } from "../../types";
 export class PublicbadgesModal {
   modalEl!: HTMLElement;
 
-  @Prop() public theme: string = "";
-  @Prop() public mode: string = "";
-  @Prop() public left: number = 0;
-  @Prop() public origin: string = "top";
-  @Prop() public language: "EN" | "NL" = "EN";
   @Prop() public badges: ApprovedPublicBadge[] = [];
+  @Prop() public theme: string = "";
+  @Prop() public language: "EN" | "NL" = "EN";
+  @Prop() public positioning: ModalPositioning = { orientation: "vertical", left: 0, origin: "top" };
 
   @State() public openBadge: number | null = null
 
@@ -25,7 +25,7 @@ export class PublicbadgesModal {
   });
 
   public componentDidLoad() {
-    if(this.mode === "vertical") {
+    if(this.positioning.orientation === "vertical") {
       window.scrollBy(0, this.modalEl.getBoundingClientRect().top - 10)
     }
   }
@@ -41,11 +41,12 @@ export class PublicbadgesModal {
 
   public render() {
     const metadata = Metadata[this.language];
+    const { orientation, left, origin } = this.positioning
 
     return (
       [
         <div id="modal-bg" onClick={ this.closeModalHandler }></div>,
-        <div id="modal" class={`${this.mode} ${this.theme} ${this.origin}`} style={{ left: this.left.toString()+"px"}} ref={(el) => this.modalEl = el as HTMLElement}>
+        <div id="modal" class={`${orientation} ${this.theme} ${origin}`} style={{ left: left.toString()+"px"}} ref={(el) => this.modalEl = el as HTMLElement}>
           <button class="close" onClick={ this.closeModalHandler }>
             <IconClose />
           </button>
