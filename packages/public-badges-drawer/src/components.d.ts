@@ -10,6 +10,9 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
   ApprovedPublicBadge,
 } from './types';
+import {
+  ModalPositioning,
+} from './interfaces';
 
 export namespace Components {
   interface PublicbadgesCircle {
@@ -21,14 +24,13 @@ export namespace Components {
     'badgeColor': string;
     'language': "EN" | "NL";
     'modalTheme': "dark" | "light";
+    'testDomain': string;
     'testMode': boolean;
   }
   interface PublicbadgesModal {
     'badges': ApprovedPublicBadge[];
     'language': "EN" | "NL";
-    'left': number;
-    'mode': string;
-    'origin': string;
+    'positioning': ModalPositioning;
     'theme': string;
   }
 }
@@ -70,15 +72,14 @@ declare namespace LocalJSX {
     'badgeColor'?: string;
     'language'?: "EN" | "NL";
     'modalTheme'?: "dark" | "light";
+    'testDomain'?: string;
     'testMode'?: boolean;
   }
   interface PublicbadgesModal {
     'badges'?: ApprovedPublicBadge[];
     'language'?: "EN" | "NL";
-    'left'?: number;
-    'mode'?: string;
     'onCloseDrawer'?: (event: CustomEvent<any>) => void;
-    'origin'?: string;
+    'positioning'?: ModalPositioning;
     'theme'?: string;
   }
 
