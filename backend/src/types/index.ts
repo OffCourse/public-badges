@@ -19,18 +19,27 @@ export type ResourceKind = "buckets" | "tables";
 
 export type ResourcesMap = Record<ResourceKind, string[]>;
 
+type Function = {
+  variableName?: string;
+  sources?: { buckets?: string[]; functions: string[]; eventTypes: string[] };
+};
+
+type Functions = {
+  [key: string]: Function;
+};
+
 export type ExternalConfig = {
   templateTitle: string;
   packageConfig: any;
   plugins: string[];
   customDomain: any;
-  functions: { [key: string]: { variableName?: string } };
+  functions: Functions;
 } & ResourcesMap;
 
 type Mapping = Record<string, { resourceName: string }>;
 
 export type InternalConfig = Record<"buckets" | "tables", Mapping> & {
-  functions: { [key: string]: { variableName?: string } };
+  functions: Functions;
   templateTitle: string;
   package: any;
   plugins: string[];

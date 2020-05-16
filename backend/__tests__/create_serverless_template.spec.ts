@@ -71,8 +71,6 @@ describe("functions section", () => {
     expect(expectedEntries).toStrictEqual(actualEntries);
   });
 
-  console.log(data.functions.updateRegistry, config.functions.updateRegistry);
-
   test("correct handler names", () => {
     const getHandlerNames = (functions: any) => {
       const vals = values(functions);
@@ -80,5 +78,9 @@ describe("functions section", () => {
       return names.sort();
     };
     expect(getHandlerNames(data.functions)).toEqual(getHandlerNames(section));
+  });
+
+  test("correct echo handler data", () => {
+    expect(data.functions.echo).toEqual(section.echo);
   });
 });

@@ -5,9 +5,12 @@ const plugins = [
   "serverless-aws-static-file-handler/plugins/BinaryMediaTypes"
 ];
 
-const buckets = ["registry"];
+const REGISTRY_BUCKET = "registry";
+
+const buckets = [REGISTRY_BUCKET];
 
 const tables = ["registry_lookup"];
+const RUN_VALUE_CASE_SCENARIOS = "runValueCaseScenarios";
 
 const functions = {
   graphql: { variableName: "api" },
@@ -16,9 +19,15 @@ const functions = {
   approveOrganization: {},
   prepareOpenBadgeArtifact: {},
   updateRegistry: { variableName: "updateRegistryLookup" },
-  runValueCaseScenarios: {},
+  [RUN_VALUE_CASE_SCENARIOS]: {},
   signOpenBadgeArtifact: {},
-  echo: {},
+  echo: {
+    sources: {
+      buckets: [REGISTRY_BUCKET],
+      functions: [RUN_VALUE_CASE_SCENARIOS],
+      eventTypes: ["BADGE_ISSUANCE_REJECTED"]
+    }
+  },
   serveAssets: {}
 };
 
