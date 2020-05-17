@@ -1,12 +1,12 @@
 import { InternalConfig, ResourceKind } from "../types";
-import { curry, reduce } from "ramda";
+import { toPairs, curry, reduce } from "ramda";
 import { snakeCase, kebabCase } from "voca";
 
 function createBucketName(templateTitle: string, bucketName: string) {
-  return `${templateTitle}-${bucketName}-\${opt:stage}`;
+  return `${templateTitle}-${bucketName.replace("_bucket", "")}-\${opt:stage}`;
 }
 function createTableName(_templateTitle: string, tableName: string) {
-  return `${kebabCase(tableName)}-\${opt:stage}`;
+  return `${kebabCase(tableName.replace("_table", ""))}-\${opt:stage}`;
 }
 
 function createFunctionName(templateTitle: string, functionName: string) {
@@ -17,10 +17,6 @@ function createFunctionConfig({
   functions,
   templateTitle
 }: Pick<InternalConfig, "functions" | "templateTitle">) {
-  const blacklist = ["echo", "serveAssets"];
-  const entries = Object.entries(functions).filter(
-    ([key]) => !blacklist.includes(key)
-  );
   return reduce(
     (acc, [key, value]) => {
       const name = value.variableName ? value.variableName : key;
@@ -29,7 +25,7 @@ function createFunctionConfig({
       return { ...acc, [keyName]: entry };
     },
     {},
-    entries
+    toPairs(functions)
   );
 }
 
@@ -79,4 +75,3 @@ function createCustomSection({
 }
 
 export default createCustomSection;
-

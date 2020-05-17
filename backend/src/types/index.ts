@@ -21,7 +21,7 @@ export type ResourcesMap = Record<ResourceKind, string[]>;
 
 export type ExternalEventSourceConfig = {
   handlerName: string;
-  eventType: string;
+  eventTypes: string[];
 };
 
 export type ExternalEventSourcesConfig = {
@@ -32,7 +32,9 @@ export type ExternalEventSourcesConfig = {
 export type ExternalFunctionConfig = {
   variableName?: string;
   sources?: ExternalEventSourcesConfig;
+  resources?: string[];
 };
+
 export type InternalFunctionConfig = {
   handler: string;
   events: any[];

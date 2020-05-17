@@ -11,6 +11,7 @@ import {
 } from "../src/createTemplate";
 
 import * as externalConfig from "../config";
+
 const config = createGeneralConfig(externalConfig);
 
 const file = fs.readFileSync("./__tests__/serverless.yml", "utf8");
@@ -87,6 +88,22 @@ describe("functions section", () => {
   test("runValueCaseScenarios handler data", () => {
     expect(data.functions.runValueCaseScenarios).toEqual(
       section.runValueCaseScenarios
+    );
+  });
+
+  test("updateRegistry handler data", () => {
+    expect(data.functions.updateRegistry).toEqual(section.updateRegistry);
+  });
+
+  test("saveOrganization handler data", () => {
+    expect(data.functions.saveOrganization).toEqual(section.saveOrganization);
+  });
+  test("saveBadge handler data", () => {
+    expect(data.functions.saveBadge).toEqual(section.saveBadge);
+  });
+  test("prepareOpenBadgeArtifact handler data", () => {
+    expect(data.functions.prepareOpenBadgeArtifact).toEqual(
+      section.prepareOpenBadgeArtifact
     );
   });
 });

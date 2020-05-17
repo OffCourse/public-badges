@@ -1,5 +1,5 @@
-import { fromPairs, toPairs, map, curry } from "ramda";
-import { snakeCase } from "voca";
+import { fromPairs, toPairs, map, reduce } from "ramda";
+import { snakeCase, upperCase } from "voca";
 import {
   InternalConfig,
   ExternalEventSourcesConfig,
@@ -12,25 +12,29 @@ function createHandlerLocation(name: string) {
   return `dist/index.${name}`;
 }
 
+function createVariableReference(name: string) {
+  return `\${self:custom.${snakeCase(name)}}`;
+}
+
 function createBucketsSources(bucketNames?: string[]) {
   if (!bucketNames) {
     return [];
   }
   return map(bucketName => {
-    return { s3: `\${self:custom.${bucketName}_bucket}` };
+    return { s3: createVariableReference(bucketName) };
   }, bucketNames);
 }
 
 function createEventBridgeEntry(eventSources: ExternalEventSourceConfig[]) {
-  const detailTypes = map(({ eventType }) => eventType, eventSources);
+  const detailTypes = map(({ eventTypes }) => eventTypes, eventSources);
   const sources = map(
-    ({ handlerName }) => `\${self:custom.${snakeCase(handlerName)}}`,
+    ({ handlerName }) => createVariableReference(handlerName),
     eventSources
   );
   return {
     eventBridge: {
       pattern: {
-        "detail-type": detailTypes,
+        "detail-type": detailTypes.flat(),
         source: sources
       }
     }
@@ -48,27 +52,41 @@ function createEventsData({
   return [...bucketEntries, eventBridgeEntry];
 }
 
-function createEnvironmentEntry(templateTitle: string, handlerName: string) {
+function createEnvironmentEntry(handlerName: string, resources?: string[]) {
+  const variables = resources
+    ? reduce(
+        (acc, name) => {
+          const key = upperCase(name);
+          return { ...acc, [key]: createVariableReference(name) };
+        },
+        {},
+        resources
+      )
+    : [];
   return {
-    HANDLER_NAME: `${templateTitle}.${handlerName}`
+    HANDLER_NAME: createVariableReference(handlerName),
+    ...variables
   };
 }
 
-function createFunctionEntry(
-  templateTitle: string,
-  [handlerName, { sources }]: [string, ExternalFunctionConfig]
-): [string, InternalFunctionConfig] {
+function createFunctionEntry([
+  handlerName,
+  { variableName, sources, resources }
+]: [string, ExternalFunctionConfig]): [string, InternalFunctionConfig] {
   const handler = createHandlerLocation(handlerName);
   const events = sources ? createEventsData(sources) : [];
-  const environment = createEnvironmentEntry(templateTitle, handlerName);
+  const environment = createEnvironmentEntry(
+    variableName || handlerName,
+    resources
+  );
   return [handlerName, { handler, events, environment }];
 }
 
-function createFunctionSection({ functions, templateTitle }: InternalConfig) {
+function createFunctionSection({ functions }: InternalConfig) {
   const functionEntries = toPairs(functions);
-  const createEntry = curry(createFunctionEntry)(templateTitle);
-  const entries = map(createEntry, functionEntries);
+  const entries = map(createFunctionEntry, functionEntries);
   return fromPairs(entries);
 }
 
 export default createFunctionSection;
+

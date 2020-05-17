@@ -1,6 +1,5 @@
 import { ResourceKind, ExternalConfig } from "../types";
 import { reduce } from "ramda";
-import { slice } from "voca";
 
 function createResourceConfig(
   resourceKind: ResourceKind,
@@ -8,8 +7,7 @@ function createResourceConfig(
 ) {
   return reduce(
     (acc, resourceName: string) => {
-      const key = `${resourceName}_${slice(resourceKind, 0, -1)}`;
-      return { ...acc, [key]: { resourceName } };
+      return { ...acc, [resourceName]: { resourceName } };
     },
     {},
     config[resourceKind]

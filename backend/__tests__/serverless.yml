@@ -11,6 +11,7 @@ custom:
   registry_bucket: public-badges-registry-${opt:stage}
   registry_lookup_table: registry-lookup-${opt:stage}
   organization-status-index: organization-status-${opt:stage}
+  echo: public-badges.echo-${opt:stage}
   api: public-badges.api-${opt:stage}
   save_organization: public-badges.save-organization-${opt:stage}
   save_badge: public-badges.save-badge-${opt:stage}
@@ -198,7 +199,7 @@ functions:
             detail-type: 
              - BADGE_ISSUANCE_REJECTED
     environment:
-      HANDLER_NAME: public-badges.echo
+      HANDLER_NAME: ${self:custom.echo}
 
 resources:
   Resources:
