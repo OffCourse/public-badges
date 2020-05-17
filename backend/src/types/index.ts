@@ -19,13 +19,30 @@ export type ResourceKind = "buckets" | "tables";
 
 export type ResourcesMap = Record<ResourceKind, string[]>;
 
-type Function = {
+export type ExternalEventSourceConfig = {
+  handlerName: string;
+  eventType: string;
+};
+
+export type ExternalEventSourcesConfig = {
+  buckets?: string[];
+  eventSources: ExternalEventSourceConfig[];
+};
+
+export type ExternalFunctionConfig = {
   variableName?: string;
-  sources?: { buckets?: string[]; functions: string[]; eventTypes: string[] };
+  sources?: ExternalEventSourcesConfig;
+};
+export type InternalFunctionConfig = {
+  handler: string;
+  events: any[];
+  environment: {
+    HANDLER_NAME: string;
+  };
 };
 
 type Functions = {
-  [key: string]: Function;
+  [key: string]: ExternalFunctionConfig;
 };
 
 export type ExternalConfig = {

@@ -24,8 +24,12 @@ const functions = {
   echo: {
     sources: {
       buckets: [REGISTRY_BUCKET],
-      functions: [RUN_VALUE_CASE_SCENARIOS],
-      eventTypes: ["BADGE_ISSUANCE_REJECTED"]
+      eventSources: [
+        {
+          handlerName: RUN_VALUE_CASE_SCENARIOS,
+          eventType: "BADGE_ISSUANCE_REJECTED"
+        }
+      ]
     }
   },
   serveAssets: {}
