@@ -70,7 +70,6 @@ function createCustomSection({
   customDomain
 }: InternalConfig) {
   return {
-    apiGateway: { binaryMediaTypes: ["fonts/woff2", "fonts/ttf"] },
     customDomain,
     ...createResourceConfig("buckets", { resources: buckets, templateTitle }),
     ...createResourceConfig("tables", { resources: tables, templateTitle }),

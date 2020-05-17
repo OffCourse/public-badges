@@ -80,7 +80,13 @@ describe("functions section", () => {
     expect(getHandlerNames(data.functions)).toEqual(getHandlerNames(section));
   });
 
-  test("correct echo handler data", () => {
+  test("echo handler data", () => {
     expect(data.functions.echo).toEqual(section.echo);
+  });
+
+  test("runValueCaseScenarios handler data", () => {
+    expect(data.functions.runValueCaseScenarios).toEqual(
+      section.runValueCaseScenarios
+    );
   });
 });

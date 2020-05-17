@@ -1,9 +1,6 @@
 const templateTitle = "public-badges";
 
-const plugins = [
-  "serverless-domain-manager",
-  "serverless-aws-static-file-handler/plugins/BinaryMediaTypes"
-];
+const plugins = ["serverless-domain-manager"];
 
 const REGISTRY_BUCKET = "registry";
 
@@ -31,8 +28,7 @@ const functions = {
         }
       ]
     }
-  },
-  serveAssets: {}
+  }
 };
 
 const packageConfig = {

@@ -1,13 +1,8 @@
 service: public-badges
 plugins:
   - serverless-domain-manager
-  - serverless-aws-static-file-handler/plugins/BinaryMediaTypes
 
 custom:
-  apiGateway:
-    binaryMediaTypes:
-      - "fonts/woff2"
-      - "fonts/ttf"
   customDomain:
     domainName: api.publicbadges.com
     stage: ${opt:stage}
@@ -66,22 +61,6 @@ package:
     - node_modules/jws/**/*
 
 functions:
-  serveAssets:
-    handler: dist/index.serveAssets
-    package:
-      individually: true
-      exclude:
-        - node_modules
-      include:
-        - dist/assets/**/*
-        - node_modules/middy/**/*
-        - node_modules/module-alias/**/*
-        - node_modules/serverless-aws-static-file-handler/**/*
-    events:
-      - http:
-          path: /fonts/{pathvar+}
-          method: get
-          cors: true
   graphql:
     handler: dist/index.graphql
     package:
