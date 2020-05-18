@@ -1,7 +1,7 @@
 import fs from "fs";
 import YAML from "yaml";
 
-import { map, keys, values } from "ramda";
+import { keys } from "ramda";
 
 import {
   createCustomSection,
@@ -64,46 +64,7 @@ describe("provider section", () => {
 });
 
 describe("functions section", () => {
-  const section = createFunctionSection(config);
-
-  test("correct function entry names", () => {
-    const expectedEntries = keys(section).sort();
-    const actualEntries = keys(data.functions).sort();
-    expect(expectedEntries).toStrictEqual(actualEntries);
-  });
-
-  test("correct handler names", () => {
-    const getHandlerNames = (functions: any) => {
-      const vals = values(functions);
-      const names = map(({ handler }) => handler, vals);
-      return names.sort();
-    };
-    expect(getHandlerNames(data.functions)).toEqual(getHandlerNames(section));
-  });
-
-  test("echo handler data", () => {
-    expect(data.functions.echo).toEqual(section.echo);
-  });
-
-  test("runValueCaseScenarios handler data", () => {
-    expect(data.functions.runValueCaseScenarios).toEqual(
-      section.runValueCaseScenarios
-    );
-  });
-
-  test("updateRegistry handler data", () => {
-    expect(data.functions.updateRegistry).toEqual(section.updateRegistry);
-  });
-
-  test("saveOrganization handler data", () => {
-    expect(data.functions.saveOrganization).toEqual(section.saveOrganization);
-  });
-  test("saveBadge handler data", () => {
-    expect(data.functions.saveBadge).toEqual(section.saveBadge);
-  });
-  test("prepareOpenBadgeArtifact handler data", () => {
-    expect(data.functions.prepareOpenBadgeArtifact).toEqual(
-      section.prepareOpenBadgeArtifact
-    );
+  test("functions handler data", () => {
+    expect(data.functions).toEqual(createFunctionSection(config));
   });
 });

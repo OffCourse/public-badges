@@ -1,61 +1,51 @@
 import { InternalConfig, ResourceKind } from "../types";
-import { toPairs, curry, reduce } from "ramda";
-import { snakeCase, kebabCase } from "voca";
+import { toPairs, fromPairs, map, curry } from "ramda";
+import { snakeCase } from "voca";
 
-function createBucketName(templateTitle: string, bucketName: string) {
-  return `${templateTitle}-${bucketName.replace("_bucket", "")}-\${opt:stage}`;
-}
-function createTableName(_templateTitle: string, tableName: string) {
-  return `${kebabCase(tableName.replace("_table", ""))}-\${opt:stage}`;
-}
+import {
+  createFunctionName,
+  createTableName,
+  createBucketName
+} from "./helpers";
 
-function createFunctionName(templateTitle: string, functionName: string) {
-  return `${templateTitle}.${kebabCase(functionName)}-\${opt:stage}`;
-}
-
-function createFunctionConfig({
-  functions,
-  templateTitle
-}: Pick<InternalConfig, "functions" | "templateTitle">) {
-  return reduce(
-    (acc, [key, value]) => {
-      const name = value.variableName ? value.variableName : key;
-      const keyName = `${snakeCase(name)}`;
-      const entry = createFunctionName(templateTitle, keyName);
-      return { ...acc, [keyName]: entry };
-    },
-    {},
-    toPairs(functions)
-  );
+function createFunctionPair(
+  templateTitle: string,
+  [key, value]: [string, any]
+): [string, string] {
+  const name = value.variableName ? value.variableName : key;
+  const keyName = `${snakeCase(name)}`;
+  const entry = createFunctionName(templateTitle, keyName);
+  return [keyName, entry];
 }
 
-const selectResourceCreator: Record<
-  ResourceKind,
-  (templateTitle: string, bucketName: string) => string
-> = {
-  buckets: createBucketName,
-  tables: createTableName
-};
+function createResourcePair(
+  templateTitle: string,
+  resourceKind: string,
+  resourceName: string
+): [string, string] {
+  const createEntry =
+    resourceKind === "buckets" ? createBucketName : createTableName;
+  return [resourceName, createEntry(templateTitle, resourceName)];
+}
+
+function createFunctionConfig(
+  templateTitle: string,
+  functions: { [key: string]: { variableName?: string } }
+) {
+  const createPair = curry(createFunctionPair)(templateTitle);
+  const rawPairs = toPairs(functions);
+  const newPairs = map(createPair, rawPairs);
+  return fromPairs(newPairs);
+}
 
 function createResourceConfig(
   resourceKind: ResourceKind,
-  config: {
-    templateTitle: string;
-    resources: { [key: string]: { resourceName: string } };
-  }
+  templateTitle: string,
+  resources: string[]
 ) {
-  /* BUG: this one should also be prefixed with templateTitle */
-  const createEntry = curry(selectResourceCreator[resourceKind])(
-    config.templateTitle
-  );
-  return reduce(
-    (acc, [key, { resourceName }]) => {
-      const entry = createEntry(resourceName);
-      return { ...acc, [key]: entry };
-    },
-    {},
-    Object.entries(config.resources)
-  );
+  const createPair = curry(createResourcePair)(templateTitle)(resourceKind);
+  const newPairs = map(createPair, resources);
+  return fromPairs(newPairs);
 }
 
 function createCustomSection({
@@ -67,9 +57,9 @@ function createCustomSection({
 }: InternalConfig) {
   return {
     customDomain,
-    ...createResourceConfig("buckets", { resources: buckets, templateTitle }),
-    ...createResourceConfig("tables", { resources: tables, templateTitle }),
-    ...createFunctionConfig({ functions, templateTitle }),
+    ...createResourceConfig("buckets", templateTitle, buckets),
+    ...createResourceConfig("tables", templateTitle, tables),
+    ...createFunctionConfig(templateTitle, functions),
     "organization-status-index": "organization-status-${opt:stage}"
   };
 }

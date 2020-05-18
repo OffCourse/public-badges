@@ -1,117 +1,22 @@
-const templateTitle = "public-badges";
-
-const plugins = ["serverless-domain-manager"];
-
-const REGISTRY_BUCKET = "registry_bucket";
-const REGISTRY_LOOKUP_TABLE = "registry_lookup_table";
-const UPDATE_REGISTRY_LOOKUP = "updateRegistryLookup";
-
-const buckets = [REGISTRY_BUCKET];
-
-const tables = [REGISTRY_LOOKUP_TABLE];
-
-const RUN_VALUE_CASE_SCENARIOS = "runValueCaseScenarios";
-const APPROVE_ORGANIZATION = "approveOrganization";
-const API = "api";
-const SAVE_ORGANIZATION = "saveOrganization";
-const SIGN_OPENBADGE_ARTIFACT = "signOpenBadgeArtifact";
-
-const ORGANIZATION_APPROVAL_ACCEPTED = "ORGANIZATION_APPROVAL_ACCEPTED";
-const ORGANIZATION_REGISTRATION_REQUESTED =
-  "ORGANIZATION_REGISTRATION_REQUESTED";
-const BADGE_ISSUANCE_REQUESTED = "BADGE_ISSUANCE_REQUESTED";
-const BADGE_ISSUANCE_REJECTED = "BADGE_ISSUANCE_REJECTED";
-const BADGE_ISSUANCE_APPROVED = "BADGE_ISSUANCE_APPROVED";
-const OPEN_BADGES_ARTIFACT_SIGNED = "OPEN_BADGES_ARTIFACT_SIGNED";
-
-const functions = {
-  graphql: { variableName: API },
-  [SAVE_ORGANIZATION]: {
-    resources: [REGISTRY_BUCKET],
-    sources: {
-      eventSources: [
-        {
-          handlerName: API,
-          eventTypes: [ORGANIZATION_REGISTRATION_REQUESTED]
-        },
-        {
-          handlerName: APPROVE_ORGANIZATION,
-          eventTypes: [ORGANIZATION_APPROVAL_ACCEPTED]
-        }
-      ]
-    }
-  },
-  saveBadge: {
-    resources: [REGISTRY_BUCKET],
-    sources: {
-      eventSources: [
-        {
-          handlerName: API,
-          eventTypes: [BADGE_ISSUANCE_REQUESTED]
-        },
-        {
-          handlerName: RUN_VALUE_CASE_SCENARIOS,
-          eventTypes: [BADGE_ISSUANCE_APPROVED, BADGE_ISSUANCE_REJECTED]
-        },
-        {
-          handlerName: SIGN_OPENBADGE_ARTIFACT,
-          eventTypes: [OPEN_BADGES_ARTIFACT_SIGNED]
-        }
-      ]
-    }
-  },
-  approveOrganization: {},
-  prepareOpenBadgeArtifact: {
-    resources: [REGISTRY_BUCKET],
-    sources: {
-      eventSources: [
-        {
-          handlerName: RUN_VALUE_CASE_SCENARIOS,
-          eventTypes: [BADGE_ISSUANCE_APPROVED]
-        }
-      ]
-    }
-  },
-  updateRegistry: {
-    resources: [REGISTRY_LOOKUP_TABLE],
-    variableName: UPDATE_REGISTRY_LOOKUP,
-    sources: {
-      eventSources: [
-        {
-          handlerName: API,
-          eventTypes: [ORGANIZATION_REGISTRATION_REQUESTED]
-        },
-        {
-          handlerName: APPROVE_ORGANIZATION,
-          eventTypes: [ORGANIZATION_APPROVAL_ACCEPTED]
-        }
-      ]
-    }
-  },
-  [RUN_VALUE_CASE_SCENARIOS]: {
-    resources: [REGISTRY_BUCKET],
-    sources: {
-      eventSources: [
-        {
-          handlerName: API,
-          eventTypes: [BADGE_ISSUANCE_REQUESTED]
-        }
-      ]
-    }
-  },
-  [SIGN_OPENBADGE_ARTIFACT]: {},
-  echo: {
-    sources: {
-      buckets: [REGISTRY_BUCKET],
-      eventSources: [
-        {
-          handlerName: RUN_VALUE_CASE_SCENARIOS,
-          eventTypes: [BADGE_ISSUANCE_REJECTED]
-        }
-      ]
-    }
-  }
+import { PublicBadgesResources as RS } from "./src/types/resources";
+import functionMap from "./src/functionMap";
+const { graphql, ...rest } = functionMap;
+const apiPackageData = {
+  individually: true,
+  exclude: ["node_modules", "dist/assets"],
+  include: [
+    "node_modules/apollo-server-lambda/**/*",
+    "node_modules/graphql/**/*",
+    "node_modules/graphql-import-node/**/*",
+    "node_modules/graphql-playground-middleware-lambda/**/*",
+    "node_modules/graphql-scalars/**/*",
+    "node_modules/graphql-tools/**/*",
+    "node_modules/uuid/**/*",
+    "node_modules/voca/**/*",
+    "node_modules/ramda/**/*"
+  ]
 };
+const functions = { graphql: { package: apiPackageData, ...graphql }, ...rest };
 
 const packageConfig = {
   exclude: ["dist/assets", "node_modules"],
@@ -131,6 +36,11 @@ const customDomain = {
   createRoute53Record: true
 };
 
+const templateTitle = "public-badges";
+const plugins = ["serverless-domain-manager"];
+const buckets = [RS.REGISTRY_BUCKET];
+const tables = [RS.REGISTRY_LOOKUP_TABLE];
+
 export {
   templateTitle,
   packageConfig,
@@ -140,4 +50,3 @@ export {
   plugins,
   customDomain
 };
-

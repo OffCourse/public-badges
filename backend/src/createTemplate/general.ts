@@ -1,23 +1,9 @@
-import { ResourceKind, ExternalConfig } from "../types";
-import { reduce } from "ramda";
-
-function createResourceConfig(
-  resourceKind: ResourceKind,
-  config: ExternalConfig
-) {
-  return reduce(
-    (acc, resourceName: string) => {
-      return { ...acc, [resourceName]: { resourceName } };
-    },
-    {},
-    config[resourceKind]
-  );
-}
+import { ExternalConfig } from "../types";
 
 function createGeneralConfig(config: ExternalConfig) {
-  const buckets = createResourceConfig("buckets", config);
-  const tables = createResourceConfig("tables", config);
   const {
+    buckets,
+    tables,
     functions,
     customDomain,
     packageConfig,

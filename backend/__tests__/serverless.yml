@@ -96,7 +96,7 @@ functions:
       REGISTRY_BUCKET: ${self:custom.registry_bucket}
       HANDLER_NAME: ${self:custom.api}
       REGISTRY_LOOKUP_TABLE: ${self:custom.registry_lookup_table}
-      ORGANIZATION_STATUS_INDEX: ${self:custom.organization-status-index}
+      ORGANIZATION_STATUS_INDEX: ${self:custom.organization_status_index}
   saveOrganization:
     handler: dist/index.saveOrganization
     events:

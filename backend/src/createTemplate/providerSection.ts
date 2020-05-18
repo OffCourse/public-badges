@@ -1,5 +1,5 @@
 import { InternalConfig } from "../types";
-import { keys, map } from "ramda";
+import { map } from "ramda";
 
 function createBucketRoleStatement(bucketName: string) {
   const actions = ["ListBucket", "GetObject", "PutObject", "PutObjectAcl"];
@@ -32,13 +32,13 @@ function createTableRoleStatement(tableName: string) {
 }
 
 function createRoleStatements({ buckets, tables }: InternalConfig) {
-  const bucketEntries = map(createBucketRoleStatement, keys(buckets));
+  const bucketEntries = map(createBucketRoleStatement, buckets);
 
   const eventEntries = [
     { Effect: "Allow", Action: ["events:PutEvents"], Resource: "*" }
   ];
 
-  const tableEntries = map(createTableRoleStatement, keys(tables));
+  const tableEntries = map(createTableRoleStatement, tables);
 
   return [...bucketEntries, ...eventEntries, ...tableEntries];
 }

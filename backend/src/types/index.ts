@@ -24,14 +24,21 @@ export type ExternalEventSourceConfig = {
   eventTypes: string[];
 };
 
+type ExternalHTTPSourceConfig = {
+  path: string;
+  methods: string[];
+};
+
 export type ExternalEventSourcesConfig = {
   buckets?: string[];
-  eventSources: ExternalEventSourceConfig[];
+  http?: ExternalHTTPSourceConfig[];
+  eventSources?: ExternalEventSourceConfig[];
 };
 
 export type ExternalFunctionConfig = {
   variableName?: string;
   sources?: ExternalEventSourcesConfig;
+  package?: any;
   resources?: string[];
 };
 
@@ -55,9 +62,9 @@ export type ExternalConfig = {
   functions: Functions;
 } & ResourcesMap;
 
-type Mapping = Record<string, { resourceName: string }>;
-
-export type InternalConfig = Record<"buckets" | "tables", Mapping> & {
+export type InternalConfig = {
+  buckets: string[];
+  tables: string[];
   functions: Functions;
   templateTitle: string;
   package: any;
