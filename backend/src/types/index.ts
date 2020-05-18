@@ -17,7 +17,7 @@ export interface EventBus<E extends Event> {
 // these two should maybe move to other file
 export type ResourceKind = "buckets" | "tables";
 
-export type ResourcesMap = Record<ResourceKind, string[]>;
+export type ResourcesMap = Record<ResourceKind, { [key: string]: any }>;
 
 export type ExternalEventSourceConfig = {
   handlerName: string;
@@ -63,8 +63,8 @@ export type ExternalConfig = {
 } & ResourcesMap;
 
 export type InternalConfig = {
-  buckets: string[];
-  tables: string[];
+  buckets: { [key: string]: any };
+  tables: { [key: string]: any };
   functions: Functions;
   templateTitle: string;
   package: any;

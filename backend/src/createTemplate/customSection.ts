@@ -1,5 +1,5 @@
 import { InternalConfig, ResourceKind } from "../types";
-import { toPairs, fromPairs, map, curry } from "ramda";
+import { toPairs, fromPairs, keys, map, curry } from "ramda";
 import { snakeCase } from "voca";
 
 import {
@@ -57,8 +57,12 @@ function createCustomSection({
 }: InternalConfig) {
   return {
     customDomain,
-    ...createResourceConfig("buckets", templateTitle, buckets),
-    ...createResourceConfig("tables", templateTitle, tables),
+    ...createResourceConfig(
+      "buckets",
+      templateTitle,
+      keys(buckets) as string[]
+    ),
+    ...createResourceConfig("tables", templateTitle, keys(tables) as string[]),
     ...createFunctionConfig(templateTitle, functions),
     "organization-status-index": "organization-status-${opt:stage}"
   };

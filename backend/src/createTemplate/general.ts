@@ -4,6 +4,7 @@ function createGeneralConfig(config: ExternalConfig) {
   const {
     buckets,
     tables,
+    tableData,
     functions,
     customDomain,
     packageConfig,
@@ -13,6 +14,7 @@ function createGeneralConfig(config: ExternalConfig) {
   return {
     buckets,
     tables,
+    tableData,
     functions,
     customDomain,
     package: packageConfig,

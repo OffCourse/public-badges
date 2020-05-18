@@ -203,7 +203,7 @@ functions:
 
 resources:
   Resources:
-    registryTable:
+    registryLookupTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: ${self:custom.registry_lookup_table}

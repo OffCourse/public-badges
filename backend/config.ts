@@ -38,8 +38,66 @@ const customDomain = {
 
 const templateTitle = "public-badges";
 const plugins = ["serverless-domain-manager"];
-const buckets = [RS.REGISTRY_BUCKET];
-const tables = [RS.REGISTRY_LOOKUP_TABLE];
+const buckets = { [RS.REGISTRY_BUCKET]: {} };
+const tables = {
+  [RS.REGISTRY_LOOKUP_TABLE]: {
+    AttributeDefinitions: [
+      {
+        AttributeName: "organizationId",
+        AttributeType: "S"
+      },
+      {
+        AttributeName: "identityType",
+        AttributeType: "S"
+      },
+      {
+        AttributeName: "identityKey",
+        AttributeType: "S"
+      },
+      {
+        AttributeName: "approvalStatus",
+        AttributeType: "S"
+      }
+    ],
+    KeySchema: [
+      {
+        AttributeName: "identityKey",
+        KeyType: "HASH"
+      },
+      {
+        AttributeName: "identityType",
+        KeyType: "RANGE"
+      }
+    ],
+    ProvisionedThroughput: {
+      ReadCapacityUnits: 1,
+      WriteCapacityUnits: 1
+    },
+    GlobalSecondaryIndexes: [
+      {
+        IndexName: "organization-status-${opt:stage}",
+        KeySchema: [
+          {
+            AttributeName: "approvalStatus",
+            KeyType: "HASH"
+          },
+          {
+            AttributeName: "organizationId",
+            KeyType: "RANGE"
+          }
+        ],
+        Projection: {
+          NonKeyAttributes: [],
+          ProjectionType: "KEYS_ONLY"
+        },
+        ProvisionedThroughput: {
+          ReadCapacityUnits: 1,
+          WriteCapacityUnits: 1
+        }
+      }
+    ]
+  }
+};
 
 export {
   templateTitle,

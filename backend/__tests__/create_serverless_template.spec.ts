@@ -7,7 +7,8 @@ import {
   createCustomSection,
   createProviderSection,
   createFunctionSection,
-  createGeneralConfig
+  createGeneralConfig,
+  createResourcesSection
 } from "../src/createTemplate";
 
 import * as externalConfig from "../config";
@@ -45,11 +46,6 @@ describe("plugins section", () => {
     expect(data.plugins).toStrictEqual(config.plugins);
   });
 });
-describe("package section", () => {
-  test("correct entries", () => {
-    expect(data.package).toStrictEqual(config.package);
-  });
-});
 
 describe("custom section", () => {
   test("correct entries", () => {
@@ -63,8 +59,20 @@ describe("provider section", () => {
   });
 });
 
+describe("package section", () => {
+  test("correct entries", () => {
+    expect(data.package).toStrictEqual(config.package);
+  });
+});
+
 describe("functions section", () => {
-  test("functions handler data", () => {
+  test("correct entries", () => {
     expect(data.functions).toEqual(createFunctionSection(config));
+  });
+});
+
+describe("resources section", () => {
+  test("correct entries", () => {
+    expect(data.resources).toEqual(createResourcesSection(config));
   });
 });
