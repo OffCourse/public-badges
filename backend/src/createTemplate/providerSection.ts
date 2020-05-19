@@ -1,15 +1,18 @@
 import { InternalConfig } from "../types";
-import { keys, map } from "ramda";
+import { keys, values, map } from "ramda";
+import { createVariableReference } from "./helpers";
 
-function createBucketRoleStatement(bucketName: string) {
+function createBucketRoleStatement({
+  variableReference
+}: {
+  variableReference: string;
+}) {
   const actions = ["ListBucket", "GetObject", "PutObject", "PutObjectAcl"];
+  const baseRef = `arn:aws:s3:::${variableReference}`;
   return {
     Effect: "Allow",
     Action: map(action => `s3:${action}`, actions),
-    Resource: [
-      `arn:aws:s3:::\${self:custom.${bucketName}}`,
-      `arn:aws:s3:::\${self:custom.${bucketName}}/*`
-    ]
+    Resource: [baseRef, `${baseRef}/*`]
   };
 }
 function createTableRoleStatement(tableName: string) {
@@ -21,21 +24,18 @@ function createTableRoleStatement(tableName: string) {
     "UpdateItem",
     "DeleteItem"
   ];
+  const tableRef = `arn:aws:dynamodb:\${opt:region, self:provider.region}:*:table/${createVariableReference(
+    tableName
+  )}`;
   return {
     Effect: "Allow",
     Action: map(action => `dynamodb:${action}`, actions),
-    Resource: [
-      `arn:aws:dynamodb:\${opt:region, self:provider.region}:*:table/\${self:custom.${tableName}}`,
-      `arn:aws:dynamodb:\${opt:region, self:provider.region}:*:table/\${self:custom.${tableName}}/index/*`
-    ]
+    Resource: [tableRef, `${tableRef}/index/*`]
   };
 }
 
 function createRoleStatements({ buckets, tables }: InternalConfig) {
-  const bucketEntries = map(
-    createBucketRoleStatement,
-    keys(buckets) as string[]
-  );
+  const bucketEntries = map(createBucketRoleStatement, values(buckets));
 
   const eventEntries = [
     { Effect: "Allow", Action: ["events:PutEvents"], Resource: "*" }

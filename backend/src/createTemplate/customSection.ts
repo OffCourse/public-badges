@@ -1,4 +1,4 @@
-import { InternalConfig, ResourceKind } from "../types";
+import { InternalConfig } from "../types";
 import { toPairs, fromPairs, keys, map, curry } from "ramda";
 import { snakeCase } from "voca";
 
@@ -39,7 +39,7 @@ function createFunctionConfig(
 }
 
 function createResourceConfig(
-  resourceKind: ResourceKind,
+  resourceKind: "buckets" | "tables",
   templateTitle: string,
   resources: string[]
 ) {

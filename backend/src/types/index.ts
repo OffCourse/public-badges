@@ -14,11 +14,6 @@ export interface EventBus<E extends Event> {
   put: (event: E) => Promise<E["detail"]>;
 }
 
-// these two should maybe move to other file
-export type ResourceKind = "buckets" | "tables";
-
-export type ResourcesMap = Record<ResourceKind, { [key: string]: any }>;
-
 export type ExternalEventSourceConfig = {
   handlerName: string;
   eventTypes: string[];
@@ -54,17 +49,37 @@ type Functions = {
   [key: string]: ExternalFunctionConfig;
 };
 
+export type ExternalTableConfig = {
+  AttributeDefinitions: any;
+  KeySchema: any;
+  ProvisionedThroughput: any;
+  GlobalSecondaryIndexes: ExternalIndexConfig[];
+};
+
+export type ExternalResourceEntry = string | [string, ExternalTableConfig];
+
 export type ExternalConfig = {
   templateTitle: string;
   packageConfig: any;
   plugins: string[];
   customDomain: any;
   functions: Functions;
-} & ResourcesMap;
+  buckets: ExternalResourceEntry[];
+  tables: ExternalResourceEntry[];
+};
+
+type ExternalIndexConfig = {
+  IndexName: string;
+  KeySchema: any;
+  Projection: any;
+  ProvisionedThroughput: any;
+};
 
 export type InternalConfig = {
-  buckets: { [key: string]: any };
-  tables: { [key: string]: any };
+  buckets: { [key: string]: { variableReference: string } };
+  tables: {
+    [key: string]: { variableReference: string; config?: ExternalTableConfig };
+  };
   functions: Functions;
   templateTitle: string;
   package: any;

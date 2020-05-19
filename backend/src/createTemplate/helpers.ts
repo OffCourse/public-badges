@@ -9,6 +9,11 @@ function createTableName(_templateTitle: string, tableName: string) {
   return `${kebabCase(tableName.replace("_table", ""))}-\${opt:stage}`;
 }
 
+/* BUG: this one should also be prefixed with templateTitle */
+function createIndexName(_templateTitle: string, indexName: string) {
+  return `${kebabCase(indexName.replace("_index", ""))}-\${opt:stage}`;
+}
+
 function createFunctionName(templateTitle: string, functionName: string) {
   return `${templateTitle}.${kebabCase(functionName)}-\${opt:stage}`;
 }
@@ -23,6 +28,7 @@ function createHandlerLocation(name: string) {
 
 export {
   createFunctionName,
+  createIndexName,
   createHandlerLocation,
   createTableName,
   createBucketName,
