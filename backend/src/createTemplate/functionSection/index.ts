@@ -22,7 +22,9 @@ function createFunctionEntry([
   return [handlerName, { handler, events, environment, ...rest }];
 }
 
-function createFunctionSection({ functions }: InternalConfig) {
+function createFunctionSection({
+  functions
+}: Pick<InternalConfig, "functions">) {
   const rawPairs = toPairs(functions);
   const newPairs = map(createFunctionEntry, rawPairs);
   return fromPairs(newPairs);

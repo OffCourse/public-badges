@@ -1,24 +1,40 @@
+import { map, fromPairs, toPairs } from "ramda";
 import createProviderSection from "./providerSection";
 import createCustomSection from "./customSection";
-import createGeneralConfig from "./general";
 import createFunctionSection from "./functionSection";
 import createResourcesSection from "./resourcesSection";
 
 import { ExternalConfig } from "../types";
+import { createResourceConfig } from "./helpers";
 
-function createTemplate(externalConfig: ExternalConfig) {
-  const config = createGeneralConfig(externalConfig);
-  const custom = createCustomSection(config);
-  const provider = createProviderSection(config);
-  const functions = createFunctionSection(config);
-  const resources = createResourcesSection(config);
+function createTemplate({
+  packageConfig,
+  plugins,
+  functions: f,
+  templateTitle,
+  customDomain,
+  ...externalConfig
+}: ExternalConfig) {
+  const buckets = fromPairs(map(createResourceConfig, externalConfig.buckets));
+  const tables = fromPairs(map(createResourceConfig, externalConfig.tables));
+  const functions = fromPairs(map(createResourceConfig, toPairs(f)));
+  const custom = createCustomSection({
+    buckets,
+    tables,
+    functions,
+    templateTitle,
+    customDomain
+  });
+  const provider = createProviderSection({ buckets, tables });
+  const functionsSection = createFunctionSection({ functions });
+  const resources = createResourcesSection({ templateTitle, tables });
   return {
-    service: config.templateTitle,
-    plugins: config.plugins,
+    service: templateTitle,
+    plugins,
     custom,
     provider,
-    package: config.package,
-    functions,
+    package: packageConfig,
+    functions: functionsSection,
     resources
   };
 }
@@ -27,7 +43,6 @@ export {
   createFunctionSection,
   createCustomSection,
   createProviderSection,
-  createGeneralConfig,
   createResourcesSection,
   createTemplate
 };

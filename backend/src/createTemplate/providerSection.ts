@@ -34,7 +34,10 @@ function createTableRoleStatement(tableName: string) {
   };
 }
 
-function createRoleStatements({ buckets, tables }: InternalConfig) {
+function createRoleStatements({
+  buckets,
+  tables
+}: Pick<InternalConfig, "buckets" | "tables">) {
   const bucketEntries = map(createBucketRoleStatement, values(buckets));
 
   const eventEntries = [
@@ -46,7 +49,9 @@ function createRoleStatements({ buckets, tables }: InternalConfig) {
   return [...bucketEntries, ...eventEntries, ...tableEntries];
 }
 
-function createProviderSection(config: InternalConfig) {
+function createProviderSection(
+  config: Pick<InternalConfig, "buckets" | "tables">
+) {
   return {
     name: "aws",
     runtime: "nodejs10.x",

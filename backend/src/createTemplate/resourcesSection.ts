@@ -27,7 +27,10 @@ function createTableResource(
   ];
 }
 
-function createResourcesSection({ tables, templateTitle }: InternalConfig) {
+function createResourcesSection({
+  tables,
+  templateTitle
+}: Pick<InternalConfig, "tables" | "templateTitle">) {
   const createTableResourceEntry = curry(createTableResource)(templateTitle);
   const tableResourcePairs = map(createTableResourceEntry, toPairs(tables));
   return { Resources: fromPairs(tableResourcePairs) };

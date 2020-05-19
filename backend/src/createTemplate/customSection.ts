@@ -1,6 +1,6 @@
-import { InternalConfig } from "../types";
 import { toPairs, fromPairs, keys, map, curry } from "ramda";
 import { snakeCase } from "voca";
+import { InternalConfig } from "@types";
 
 import {
   createFunctionName,
@@ -18,16 +18,6 @@ function createFunctionPair(
   return [keyName, entry];
 }
 
-function createResourcePair(
-  templateTitle: string,
-  resourceKind: string,
-  resourceName: string
-): [string, string] {
-  const createEntry =
-    resourceKind === "buckets" ? createBucketName : createTableName;
-  return [resourceName, createEntry(templateTitle, resourceName)];
-}
-
 function createFunctionConfig(
   templateTitle: string,
   functions: { [key: string]: { variableName?: string } }
@@ -36,6 +26,16 @@ function createFunctionConfig(
   const rawPairs = toPairs(functions);
   const newPairs = map(createPair, rawPairs);
   return fromPairs(newPairs);
+}
+
+function createResourcePair(
+  templateTitle: string,
+  resourceKind: string,
+  resourceName: string
+): [string, string] {
+  const createEntry =
+    resourceKind === "buckets" ? createBucketName : createTableName;
+  return [resourceName, createEntry(templateTitle, resourceName)];
 }
 
 function createResourceConfig(
@@ -55,15 +55,22 @@ function createCustomSection({
   templateTitle,
   customDomain
 }: InternalConfig) {
+  const bucketEntries = createResourceConfig(
+    "buckets",
+    templateTitle,
+    keys(buckets) as string[]
+  );
+  const tableEntries = createResourceConfig(
+    "tables",
+    templateTitle,
+    keys(tables) as string[]
+  );
+  const functionEntries = createFunctionConfig(templateTitle, functions);
   return {
     customDomain,
-    ...createResourceConfig(
-      "buckets",
-      templateTitle,
-      keys(buckets) as string[]
-    ),
-    ...createResourceConfig("tables", templateTitle, keys(tables) as string[]),
-    ...createFunctionConfig(templateTitle, functions),
+    ...bucketEntries,
+    ...tableEntries,
+    ...functionEntries,
     "organization-status-index": "organization-status-${opt:stage}"
   };
 }

@@ -51,12 +51,22 @@ type Functions = {
 
 export type ExternalTableConfig = {
   AttributeDefinitions: any;
+  variableName?: string;
   KeySchema: any;
   ProvisionedThroughput: any;
   GlobalSecondaryIndexes: ExternalIndexConfig[];
 };
 
-export type ExternalResourceEntry = string | [string, ExternalTableConfig];
+export type ExternalResourceEntry =
+  | string
+  | [string, ExternalTableConfig | ExternalFunctionConfig];
+
+export type InternalResourceEntry = {
+  name: string;
+  variableName?: string;
+  variableReference: string;
+  config?: any;
+};
 
 export type ExternalConfig = {
   templateTitle: string;
@@ -76,13 +86,9 @@ type ExternalIndexConfig = {
 };
 
 export type InternalConfig = {
-  buckets: { [key: string]: { variableReference: string } };
-  tables: {
-    [key: string]: { variableReference: string; config?: ExternalTableConfig };
-  };
-  functions: Functions;
   templateTitle: string;
-  package: any;
-  plugins: string[];
   customDomain: any;
+  buckets: { [key: string]: InternalResourceEntry };
+  tables: { [key: string]: InternalResourceEntry };
+  functions: { [key: string]: InternalResourceEntry };
 };
