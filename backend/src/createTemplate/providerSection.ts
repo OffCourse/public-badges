@@ -35,8 +35,8 @@ function createTableRoleStatement(tableName: string) {
 }
 
 function createRoleStatements({
-  buckets,
-  tables
+  buckets = {},
+  tables = {}
 }: Pick<InternalConfig, "buckets" | "tables">) {
   const bucketEntries = map(createBucketRoleStatement, values(buckets));
 

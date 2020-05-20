@@ -28,7 +28,7 @@ function createTableResource(
 }
 
 function createResourcesSection({
-  tables,
+  tables = {},
   templateTitle
 }: Pick<InternalConfig, "tables" | "templateTitle">) {
   const createTableResourceEntry = curry(createTableResource)(templateTitle);

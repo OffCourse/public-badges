@@ -10,7 +10,7 @@ custom:
     createRoute53Record: true
   registry_bucket: public-badges-registry-${opt:stage}
   registry_lookup_table: registry-lookup-${opt:stage}
-  organization-status-index: organization-status-${opt:stage}
+  organization_status_index: organization-status-${opt:stage}
   echo: public-badges.echo-${opt:stage}
   api: public-badges.api-${opt:stage}
   save_organization: public-badges.save-organization-${opt:stage}

@@ -11,8 +11,10 @@ import createEventsEntry from "./eventsEntry";
 
 function createFunctionEntry([
   handlerName,
-  { variableName, sources = {}, resources, ...rest }
-]: [string, ExternalFunctionConfig]): [string, InternalFunctionConfig] {
+  {
+    config: { variableName, sources = {}, resources, ...rest }
+  }
+]: [string, any]): [string, InternalFunctionConfig] {
   const handler = createHandlerLocation(handlerName);
   const events = createEventsEntry(sources);
   const environment = createEnvironmentEntry(
@@ -23,7 +25,7 @@ function createFunctionEntry([
 }
 
 function createFunctionSection({
-  functions
+  functions = {}
 }: Pick<InternalConfig, "functions">) {
   const rawPairs = toPairs(functions);
   const newPairs = map(createFunctionEntry, rawPairs);

@@ -61,9 +61,12 @@ export type ExternalResourceEntry =
   | string
   | [string, ExternalTableConfig | ExternalFunctionConfig];
 
+export type ResourceType = "table" | "bucket" | "index";
+
 export type InternalResourceEntry = {
   name: string;
   variableName?: string;
+  resourceType: ResourceType;
   variableReference: string;
   config?: any;
 };
@@ -76,6 +79,7 @@ export type ExternalConfig = {
   functions: Functions;
   buckets: ExternalResourceEntry[];
   tables: ExternalResourceEntry[];
+  indices: ExternalResourceEntry[];
 };
 
 type ExternalIndexConfig = {
@@ -87,8 +91,10 @@ type ExternalIndexConfig = {
 
 export type InternalConfig = {
   templateTitle: string;
-  customDomain: any;
-  buckets: { [key: string]: InternalResourceEntry };
-  tables: { [key: string]: InternalResourceEntry };
-  functions: { [key: string]: InternalResourceEntry };
+  customDomain?: any;
+  buckets?: { [key: string]: InternalResourceEntry };
+  resources: InternalResourceEntry[];
+  tables?: { [key: string]: InternalResourceEntry };
+  functions?: { [key: string]: InternalResourceEntry };
+  indices?: { [key: string]: InternalResourceEntry };
 };

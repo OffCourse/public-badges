@@ -1,0 +1,66 @@
+import createCustomSection from "./customSection";
+import {
+  TestResources as TR,
+  VariableReferences as VR,
+  buckets,
+  tables,
+  indices,
+  functions,
+  baseConfig,
+  custom
+} from "../../fixtures";
+
+xdescribe("custom section", () => {
+  test("returns null without base config", () => {
+    const config = baseConfig;
+    const actual = createCustomSection(config);
+    expect(actual).toEqual({});
+  });
+
+  test("accepts buckets", () => {
+    const config = { ...baseConfig, buckets };
+    const actual = createCustomSection(config);
+    expect(actual[TR.BUCKET]).toEqual(VR.BUCKET);
+  });
+
+  test("accepts tables", () => {
+    const config = { ...baseConfig, tables };
+    const actual = createCustomSection(config);
+    expect(actual[TR.TABLE]).toEqual(VR.TABLE);
+  });
+
+  test("accepts indices", () => {
+    const config = { ...baseConfig, indices };
+    const actual = createCustomSection(config);
+    expect(actual[TR.INDEX]).toEqual(VR.INDEX);
+  });
+
+  test("accepts functions", () => {
+    const config = { ...baseConfig, functions };
+    const actual = createCustomSection(config);
+    expect(actual[TR.FUNCTION]).toEqual(VR.FUNCTION);
+  });
+
+  test("passes through everything else", () => {
+    const config = { ...baseConfig, ...custom };
+    const actual = createCustomSection(config);
+    expect(actual[TR.CUSTOM_ENTRY]).toEqual("HI");
+  });
+
+  test("all together now", () => {
+    const config = {
+      ...baseConfig,
+      buckets,
+      tables,
+      indices,
+      functions,
+      ...custom
+    };
+    const actual = createCustomSection(config);
+    expect(actual[TR.BUCKET]).toEqual(VR.BUCKET);
+    expect(actual[TR.TABLE]).toEqual(VR.TABLE);
+    expect(actual[TR.INDEX]).toEqual(VR.INDEX);
+    expect(actual[TR.FUNCTION]).toEqual(VR.FUNCTION);
+    expect(actual[TR.CUSTOM_ENTRY]).toEqual("HI");
+  });
+});

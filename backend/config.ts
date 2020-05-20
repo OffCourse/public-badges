@@ -72,7 +72,7 @@ const tableConfig = {
 const templateTitle = "public-badges";
 const plugins = ["serverless-domain-manager"];
 const buckets = [RS.REGISTRY_BUCKET];
-const indices = { [RS.ORGANIZATION_STATUS_INDEX]: {} };
+const indices = [RS.ORGANIZATION_STATUS_INDEX];
 const tables: ExternalResourceEntry[] = [
   [RS.REGISTRY_LOOKUP_TABLE, tableConfig]
 ];

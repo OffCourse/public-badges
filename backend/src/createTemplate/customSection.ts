@@ -1,10 +1,11 @@
-import { toPairs, fromPairs, keys, map, curry } from "ramda";
+import { toPairs, fromPairs, map, curry } from "ramda";
 import { snakeCase } from "voca";
-import { InternalConfig } from "@types";
+import { InternalConfig, ResourceType } from "@types";
 
 import {
   createFunctionName,
   createTableName,
+  createIndexName,
   createBucketName
 } from "./helpers";
 
@@ -27,51 +28,30 @@ function createFunctionConfig(
   const newPairs = map(createPair, rawPairs);
   return fromPairs(newPairs);
 }
-
-function createResourcePair(
-  templateTitle: string,
-  resourceKind: string,
-  resourceName: string
-): [string, string] {
-  const createEntry =
-    resourceKind === "buckets" ? createBucketName : createTableName;
-  return [resourceName, createEntry(templateTitle, resourceName)];
-}
-
-function createResourceConfig(
-  resourceKind: "buckets" | "tables",
-  templateTitle: string,
-  resources: string[]
-) {
-  const createPair = curry(createResourcePair)(templateTitle)(resourceKind);
-  const newPairs = map(createPair, resources);
-  return fromPairs(newPairs);
-}
+const functionMap: Record<ResourceType, any> = {
+  bucket: createBucketName,
+  table: createTableName,
+  index: createIndexName
+};
 
 function createCustomSection({
-  buckets,
-  tables,
-  functions,
+  functions = {},
   templateTitle,
-  customDomain
-}: InternalConfig) {
-  const bucketEntries = createResourceConfig(
-    "buckets",
-    templateTitle,
-    keys(buckets) as string[]
-  );
-  const tableEntries = createResourceConfig(
-    "tables",
-    templateTitle,
-    keys(tables) as string[]
-  );
+  tables,
+  buckets,
+  indices,
+  resources,
+  ...rest
+}: InternalConfig): Record<string, string> {
+  console.log(resources);
+  const r: [string, string][] = map(({ resourceType, name }) => {
+    return [name, functionMap[resourceType](templateTitle, name)];
+  }, resources);
   const functionEntries = createFunctionConfig(templateTitle, functions);
   return {
-    customDomain,
-    ...bucketEntries,
-    ...tableEntries,
+    ...fromPairs(r),
     ...functionEntries,
-    "organization-status-index": "organization-status-${opt:stage}"
+    ...rest
   };
 }
 

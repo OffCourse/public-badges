@@ -28,12 +28,17 @@ function createHandlerLocation(name: string) {
 }
 
 function createResourceConfig(
+  resourceType: string,
   config: ExternalResourceEntry
 ): [string, InternalResourceEntry] {
   if (typeof config === "string") {
     return [
       config,
-      { name: config, variableReference: createVariableReference(config) }
+      {
+        name: config,
+        resourceType,
+        variableReference: createVariableReference(config)
+      }
     ];
   }
   const [key, externalConfig] = config;
@@ -41,6 +46,7 @@ function createResourceConfig(
     key,
     {
       name: key,
+      resourceType,
       variableName: externalConfig.variableName,
       variableReference: createVariableReference(key),
       config: externalConfig
