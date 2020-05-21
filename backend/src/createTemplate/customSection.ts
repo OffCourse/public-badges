@@ -1,5 +1,8 @@
-import { fromPairs, values, curry, map } from "ramda";
+import { curry, map } from "ramda";
 import { InternalResourceEntry, InternalConfig, ResourceType } from "@types";
+
+type Transformer = (templateTitle: string, name: string) => string;
+
 import {
   createFunctionName,
   createTableName,
@@ -7,10 +10,7 @@ import {
   createBucketName
 } from "./helpers";
 
-const functionMap: Record<
-  ResourceType,
-  (templateTitle: string, name: string) => string
-> = {
+const functionMap: Record<ResourceType, Transformer> = {
   bucket: createBucketName,
   table: createTableName,
   index: createIndexName,
@@ -19,10 +19,10 @@ const functionMap: Record<
 
 function _createName(
   templateTitle: string,
-  { resourceType, name }: InternalResourceEntry
+  { resourceType, variableName }: InternalResourceEntry
 ): [string, string] {
   const fn = functionMap[resourceType];
-  return [name, fn(templateTitle, name)];
+  return [variableName, fn(templateTitle, variableName)];
 }
 
 function createCustomSection({
@@ -30,12 +30,11 @@ function createCustomSection({
   resources: rr,
   ...rest
 }: InternalConfig): Record<string, string> {
-  const { buckets, tables, indices, functions } = rr;
   const createName = curry(_createName)(templateTitle);
-  const resources = values({ ...buckets, ...tables, ...indices, ...functions });
+  const resources = Object.values(rr).flat();
   const r = map(createName, resources);
   return {
-    ...fromPairs(r),
+    ...Object.fromEntries(r),
     ...rest
   };
 }

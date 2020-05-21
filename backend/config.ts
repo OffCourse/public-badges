@@ -1,6 +1,6 @@
 import { PublicBadgesResources as RS } from "./src/types/resources";
 import functionMap from "./src/functionMap";
-import { ExternalResourceEntry } from "@types";
+import { ExternalResourceEntry } from "./src/types";
 
 const domainName = `api.publicbadges.com`;
 
@@ -117,3 +117,4 @@ export {
   plugins,
   customDomain
 };
+

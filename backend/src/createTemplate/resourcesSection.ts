@@ -1,4 +1,4 @@
-import { map, toPairs, fromPairs, curry } from "ramda";
+import { map, fromPairs, curry } from "ramda";
 import { camelCase } from "voca";
 import { InternalConfig } from "../types";
 
@@ -6,9 +6,9 @@ import { createVariableReference, createIndexName } from "./helpers";
 
 function createTableResource(
   templateTitle: string,
-  [tableName, { config }]: [string, any]
+  { name, config }: any
 ): [string, any] {
-  const tableVariable = camelCase(tableName);
+  const tableVariable = camelCase(name);
   const { GlobalSecondaryIndexes: GSI = [], ...data } = config;
   const GlobalSecondaryIndexes = map(({ IndexName: IN, ...rest }) => {
     const IndexName = createIndexName(templateTitle, IN);
@@ -19,7 +19,7 @@ function createTableResource(
     {
       Type: "AWS::DynamoDB::Table",
       Properties: {
-        TableName: createVariableReference(tableName),
+        TableName: createVariableReference(name),
         GlobalSecondaryIndexes,
         ...data
       }
@@ -28,11 +28,11 @@ function createTableResource(
 }
 
 function createResourcesSection({
-  resources: { tables = {} },
+  resources: { tables = [] },
   templateTitle
 }: Pick<InternalConfig, "resources" | "templateTitle">) {
   const createTableResourceEntry = curry(createTableResource)(templateTitle);
-  const tableResourcePairs = map(createTableResourceEntry, toPairs(tables));
+  const tableResourcePairs = map(createTableResourceEntry, tables);
   return { Resources: fromPairs(tableResourcePairs) };
 }
 

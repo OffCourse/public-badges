@@ -11,7 +11,7 @@ const data = YAML.parse(file);
 
 const template = createTemplate(externalConfig);
 
-xdescribe("top level", () => {
+describe("top level", () => {
   test("is identitical to sample template", () => {
     expect(template).toStrictEqual(data);
   });
@@ -38,7 +38,7 @@ describe("individual sections", () => {
     expect(template.package).toEqual(data.package);
   });
 
-  xtest("functions section", () => {
+  test("functions section", () => {
     expect(template.functions).toEqual(data.functions);
   });
 

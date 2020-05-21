@@ -1,6 +1,5 @@
-import { InternalConfig } from "../types";
-import { keys, values, map } from "ramda";
-import { createVariableReference } from "./helpers";
+import { InternalConfig, InternalResourceEntry, Resources } from "../types";
+import { map } from "ramda";
 
 function createBucketRoleStatement({
   variableReference
@@ -8,14 +7,16 @@ function createBucketRoleStatement({
   variableReference: string;
 }) {
   const actions = ["ListBucket", "GetObject", "PutObject", "PutObjectAcl"];
-  const baseRef = `arn:aws:s3:::${variableReference}`;
+  const bucketRef = `arn:aws:s3:::${variableReference}`;
   return {
     Effect: "Allow",
     Action: map(action => `s3:${action}`, actions),
-    Resource: [baseRef, `${baseRef}/*`]
+    Resource: [bucketRef, `${bucketRef}/*`]
   };
 }
-function createTableRoleStatement(tableName: string) {
+function createTableRoleStatement({
+  variableReference
+}: InternalResourceEntry) {
   const actions = [
     "Query",
     "Scan",
@@ -24,9 +25,7 @@ function createTableRoleStatement(tableName: string) {
     "UpdateItem",
     "DeleteItem"
   ];
-  const tableRef = `arn:aws:dynamodb:\${opt:region, self:provider.region}:*:table/${createVariableReference(
-    tableName
-  )}`;
+  const tableRef = `arn:aws:dynamodb:\${opt:region, self:provider.region}:*:table/${variableReference}`;
   return {
     Effect: "Allow",
     Action: map(action => `dynamodb:${action}`, actions),
@@ -34,17 +33,14 @@ function createTableRoleStatement(tableName: string) {
   };
 }
 
-function createRoleStatements({
-  buckets = {},
-  tables = {}
-}: Pick<InternalConfig, "buckets" | "tables">) {
-  const bucketEntries = map(createBucketRoleStatement, values(buckets));
+function createRoleStatements({ buckets, tables }: Resources) {
+  const bucketEntries = map(createBucketRoleStatement, buckets);
 
   const eventEntries = [
     { Effect: "Allow", Action: ["events:PutEvents"], Resource: "*" }
   ];
 
-  const tableEntries = map(createTableRoleStatement, keys(tables) as string[]);
+  const tableEntries = map(createTableRoleStatement, tables);
 
   return [...bucketEntries, ...eventEntries, ...tableEntries];
 }
