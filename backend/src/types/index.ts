@@ -61,7 +61,8 @@ export type ExternalResourceEntry =
   | string
   | [string, ExternalTableConfig | ExternalFunctionConfig];
 
-export type ResourceType = "table" | "bucket" | "index";
+export type ResourceType = "table" | "bucket" | "index" | "function";
+export type ResourceCategory= "tables" | "buckets" | "indices" | "functions";
 
 export type InternalResourceEntry = {
   name: string;
@@ -89,12 +90,16 @@ type ExternalIndexConfig = {
   ProvisionedThroughput: any;
 };
 
+type Resources = Record<
+  ResourceCategory,
+  Record<string, InternalResourceEntry>
+>;
+
 export type InternalConfig = {
   templateTitle: string;
   customDomain?: any;
-  buckets?: { [key: string]: InternalResourceEntry };
-  resources: InternalResourceEntry[];
-  tables?: { [key: string]: InternalResourceEntry };
-  functions?: { [key: string]: InternalResourceEntry };
-  indices?: { [key: string]: InternalResourceEntry };
+  resources: Resources;
 };
+  resources: Resources;
+};
+

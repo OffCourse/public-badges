@@ -49,9 +49,9 @@ function createRoleStatements({
   return [...bucketEntries, ...eventEntries, ...tableEntries];
 }
 
-function createProviderSection(
-  config: Pick<InternalConfig, "buckets" | "tables">
-) {
+function createProviderSection({
+  resources: config
+}: Pick<InternalConfig, "resources">) {
   return {
     name: "aws",
     runtime: "nodejs10.x",

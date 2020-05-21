@@ -18,11 +18,11 @@ xdescribe("top level", () => {
 });
 
 describe("individual sections", () => {
-  xtest("service section", () => {
+  test("service section", () => {
     expect(template.service).toEqual(data.service);
   });
 
-  xtest("plugins section", () => {
+  test("plugins section", () => {
     expect(template.plugins).toEqual(data.plugins);
   });
 
@@ -30,11 +30,11 @@ describe("individual sections", () => {
     expect(template.custom).toEqual(data.custom);
   });
 
-  xtest("provider section", () => {
+  test("provider section", () => {
     expect(template.provider).toEqual(data.provider);
   });
 
-  xtest("package section", () => {
+  test("package section", () => {
     expect(template.package).toEqual(data.package);
   });
 
@@ -42,7 +42,7 @@ describe("individual sections", () => {
     expect(template.functions).toEqual(data.functions);
   });
 
-  xtest("resources section", () => {
+  test("resources section", () => {
     expect(template.resources).toEqual(data.resources);
   });
 });

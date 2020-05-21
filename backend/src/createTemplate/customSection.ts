@@ -1,7 +1,5 @@
-import { toPairs, fromPairs, map, curry } from "ramda";
-import { snakeCase } from "voca";
-import { InternalConfig, ResourceType } from "@types";
-
+import { fromPairs, values, curry, map } from "ramda";
+import { InternalResourceEntry, InternalConfig, ResourceType } from "@types";
 import {
   createFunctionName,
   createTableName,
@@ -9,48 +7,35 @@ import {
   createBucketName
 } from "./helpers";
 
-function createFunctionPair(
-  templateTitle: string,
-  [key, value]: [string, any]
-): [string, string] {
-  const name = value.variableName ? value.variableName : key;
-  const keyName = `${snakeCase(name)}`;
-  const entry = createFunctionName(templateTitle, keyName);
-  return [keyName, entry];
-}
-
-function createFunctionConfig(
-  templateTitle: string,
-  functions: { [key: string]: { variableName?: string } }
-) {
-  const createPair = curry(createFunctionPair)(templateTitle);
-  const rawPairs = toPairs(functions);
-  const newPairs = map(createPair, rawPairs);
-  return fromPairs(newPairs);
-}
-const functionMap: Record<ResourceType, any> = {
+const functionMap: Record<
+  ResourceType,
+  (templateTitle: string, name: string) => string
+> = {
   bucket: createBucketName,
   table: createTableName,
-  index: createIndexName
+  index: createIndexName,
+  function: createFunctionName
 };
 
+function _createName(
+  templateTitle: string,
+  { resourceType, name }: InternalResourceEntry
+): [string, string] {
+  const fn = functionMap[resourceType];
+  return [name, fn(templateTitle, name)];
+}
+
 function createCustomSection({
-  functions = {},
   templateTitle,
-  tables,
-  buckets,
-  indices,
-  resources,
+  resources: rr,
   ...rest
 }: InternalConfig): Record<string, string> {
-  console.log(resources);
-  const r: [string, string][] = map(({ resourceType, name }) => {
-    return [name, functionMap[resourceType](templateTitle, name)];
-  }, resources);
-  const functionEntries = createFunctionConfig(templateTitle, functions);
+  const { buckets, tables, indices, functions } = rr;
+  const createName = curry(_createName)(templateTitle);
+  const resources = values({ ...buckets, ...tables, ...indices, ...functions });
+  const r = map(createName, resources);
   return {
     ...fromPairs(r),
-    ...functionEntries,
     ...rest
   };
 }

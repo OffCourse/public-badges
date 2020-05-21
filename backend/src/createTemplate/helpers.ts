@@ -1,5 +1,9 @@
 import { snakeCase, kebabCase } from "voca";
-import { ExternalResourceEntry, InternalResourceEntry } from "../types";
+import {
+  ExternalResourceEntry,
+  InternalResourceEntry,
+  ResourceType
+} from "../types";
 
 function createBucketName(templateTitle: string, bucketName: string) {
   return `${templateTitle}-${bucketName.replace("_bucket", "")}-\${opt:stage}`;
@@ -20,7 +24,7 @@ function createFunctionName(templateTitle: string, functionName: string) {
 }
 
 function createVariableReference(name: string) {
-  return `\${self:custom.${snakeCase(name)}}`;
+  return `\${self:custom.${name}}`;
 }
 
 function createHandlerLocation(name: string) {
@@ -28,7 +32,7 @@ function createHandlerLocation(name: string) {
 }
 
 function createResourceConfig(
-  resourceType: string,
+  resourceType: ResourceType,
   config: ExternalResourceEntry
 ): [string, InternalResourceEntry] {
   if (typeof config === "string") {
@@ -41,14 +45,15 @@ function createResourceConfig(
       }
     ];
   }
-  const [key, externalConfig] = config;
+  const [key, { variableName, ...externalConfig }] = config;
+  const name = snakeCase(variableName || key);
   return [
-    key,
+    name,
     {
-      name: key,
+      name,
       resourceType,
-      variableName: externalConfig.variableName,
-      variableReference: createVariableReference(key),
+      variableName: variableName,
+      variableReference: createVariableReference(name),
       config: externalConfig
     }
   ];

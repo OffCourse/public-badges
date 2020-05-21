@@ -1,9 +1,5 @@
 import { fromPairs, toPairs, map } from "ramda";
-import {
-  InternalConfig,
-  ExternalFunctionConfig,
-  InternalFunctionConfig
-} from "../../types";
+import { InternalConfig, InternalFunctionConfig } from "../../types";
 import { createHandlerLocation } from "../helpers";
 
 import createEnvironmentEntry from "./environmentEntry";
@@ -25,8 +21,8 @@ function createFunctionEntry([
 }
 
 function createFunctionSection({
-  functions = {}
-}: Pick<InternalConfig, "functions">) {
+  resources: { functions = {} }
+}: Pick<InternalConfig, "resources">) {
   const rawPairs = toPairs(functions);
   const newPairs = map(createFunctionEntry, rawPairs);
   return fromPairs(newPairs);
